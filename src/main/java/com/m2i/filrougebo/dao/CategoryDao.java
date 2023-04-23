@@ -1,30 +1,33 @@
 package com.m2i.filrougebo.dao;
 
+import com.m2i.filrougebo.entity.Category;
+
 import java.util.List;
 
 public class CategoryDao implements IntCategoryDao{
+
     @Override
-    public boolean create(Object entity) {
-        return false;
+    public void create(Category entity) {
+
     }
 
     @Override
-    public List findAll() {
+    public List<Category> findAll() {
         return null;
     }
 
     @Override
-    public Object findById(Object o) {
+    public Category findById(Integer integer) {
         return null;
     }
 
     @Override
-    public void update(Object entity) {
+    public void update(Category entity) {
 
     }
 
     @Override
-    public void delete(Object entity) {
+    public void delete(Category entity) {
 
     }
 }

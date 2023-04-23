@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface GenericDao<T, ID> {
 
-    boolean create(T entity);
+    void create(T entity);
 
     List<T> findAll();
 

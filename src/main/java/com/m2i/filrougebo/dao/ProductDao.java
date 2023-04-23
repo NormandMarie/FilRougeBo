@@ -1,30 +1,33 @@
 package com.m2i.filrougebo.dao;
 
+import com.m2i.filrougebo.entity.Product;
+
 import java.util.List;
 
 public class ProductDao implements IntProductDao{
+
     @Override
-    public boolean create(Object entity) {
-        return false;
+    public void create(Product entity) {
+
     }
 
     @Override
-    public List findAll() {
+    public List<Product> findAll() {
         return null;
     }
 
     @Override
-    public Object findById(Object o) {
+    public Product findById(Integer integer) {
         return null;
     }
 
     @Override
-    public void update(Object entity) {
+    public void update(Product entity) {
 
     }
 
     @Override
-    public void delete(Object entity) {
+    public void delete(Product entity) {
 
     }
 }

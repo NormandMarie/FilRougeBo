@@ -1,4 +1,7 @@
 package com.m2i.filrougebo.dao;
 
-public interface IntAdminDao extends GenericDao{
+import com.m2i.filrougebo.entity.Admin;
+
+public interface IntAdminDao extends GenericDao<Admin, Integer>{
+
 }

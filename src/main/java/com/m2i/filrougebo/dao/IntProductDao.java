@@ -1,4 +1,7 @@
 package com.m2i.filrougebo.dao;
 
-public interface IntProductDao extends GenericDao{
+import com.m2i.filrougebo.entity.Product;
+
+public interface IntProductDao extends GenericDao<Product,Integer>{
+
 }
