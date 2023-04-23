@@ -15,7 +15,7 @@ public class CategoryDao implements IntCategoryDao{
     @Override
     public void create(Category entity) {
         try{
-            PreparedStatement ps=conn.prepareStatement("INSERT INTO category (name) VALUES (?)");
+            PreparedStatement ps=conn.prepareStatement("INSERT INTO categories (name) VALUES (?)");
             ps.setString(1,entity.getName());
             ps.executeUpdate();
         }catch (SQLException e){
@@ -26,7 +26,7 @@ public class CategoryDao implements IntCategoryDao{
     public List<Category> findAll() {
         List<Category> categories = new ArrayList<>();
         try {
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM category");
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM categories");
             ResultSet rs = ps.executeQuery();
             while (rs.next()){
                 Category category = new Category(rs.getInt("id"),rs.getString("name"));
@@ -43,7 +43,7 @@ public class CategoryDao implements IntCategoryDao{
     public Category findById(Integer integer) {
         Category category=null;
         try{
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM category WHERE id = ? ");
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM categories WHERE id = ? ");
             ps.setInt(1,integer);
             ResultSet rs = ps.executeQuery();
             if(rs.next()){
@@ -61,7 +61,7 @@ public class CategoryDao implements IntCategoryDao{
     @Override
     public void update(Category entity) {
         try {
-            PreparedStatement preparedStatement = conn.prepareStatement("UPDATE category SET name=? WHERE id=?");
+            PreparedStatement preparedStatement = conn.prepareStatement("UPDATE categories SET name=? WHERE id=?");
             preparedStatement.setString(1, entity.getName());
             preparedStatement.setInt(2, entity.getIdCategory());
             preparedStatement.executeUpdate();
@@ -73,7 +73,7 @@ public class CategoryDao implements IntCategoryDao{
     @Override
     public void delete(Category entity) {
         try{
-            PreparedStatement ps = conn.prepareStatement("DELETE FROM category WHERE id = ?");
+            PreparedStatement ps = conn.prepareStatement("DELETE FROM categories WHERE id = ?");
             ps.setInt(1,entity.getIdCategory());
             ps.executeUpdate();
         } catch (SQLException e) {
