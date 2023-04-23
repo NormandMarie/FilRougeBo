@@ -15,9 +15,8 @@ public class AdminDao implements IntAdminDao{
 
     @Override
     public void create(Admin entity) {
-        PreparedStatement ps;
         try{
-            ps=conn.prepareStatement("INSERT INTO admin (username, isSuperAdmin, password) VALUES (?,?,?)");
+            PreparedStatement ps=conn.prepareStatement("INSERT INTO admin (username, isSuperAdmin, password) VALUES (?,?,?)");
             ps.setString(1,entity.getUsername());
             ps.setBoolean(2, entity.isSuperAdmin());
             ps.setString(3,entity.getPassword());
