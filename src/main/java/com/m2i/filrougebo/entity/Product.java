@@ -12,7 +12,6 @@ public class Product {
     private String imgUrl;
     private double vat;
     private String description;
-    private String reference;
     private int stock;
     private int idCategory;
     private List<SeasonalMonths> seasonalMonths;
@@ -20,20 +19,30 @@ public class Product {
     public Product() {
     }
 
-    public Product(String productName, String unit, double pricePerUnit, String imgUrl, double vat, String description, String reference, int stock, int idCategory, List<SeasonalMonths> seasonalMonths) {
+    public Product(String productName, String unit, double pricePerUnit, String imgUrl, double vat, String description, int stock, int idCategory, List<SeasonalMonths> seasonalMonths) {
         this.productName = productName;
         this.unit = unit;
         this.pricePerUnit = pricePerUnit;
         this.imgUrl = imgUrl;
         this.vat = vat;
         this.description = description;
-        this.reference = reference;
         this.stock = stock;
         this.idCategory = idCategory;
         this.seasonalMonths = seasonalMonths;
     }
+    // constructeur sans liste seasonal, pour la méthode create. la donnée seasonal month est à préciser directement dans la table products_months!
+    public Product(String productName, String unit, double pricePerUnit, String imgUrl, double vat, String description,int stock, int idCategory) {
+        this.productName = productName;
+        this.unit = unit;
+        this.pricePerUnit = pricePerUnit;
+        this.imgUrl = imgUrl;
+        this.vat = vat;
+        this.description = description;
+        this.stock = stock;
+        this.idCategory = idCategory;
+    }
 
-    public Product(int idProduct, String productName, String unit, double pricePerUnit, String imgUrl, double vat, String description, String reference, int stock, int idCategory, List<SeasonalMonths> seasonalMonths) {
+    public Product(int idProduct, String productName, String unit, double pricePerUnit, String imgUrl, double vat, String description,int stock, int idCategory, List<SeasonalMonths> seasonalMonths) {
         this.idProduct = idProduct;
         this.productName = productName;
         this.unit = unit;
@@ -41,7 +50,6 @@ public class Product {
         this.imgUrl = imgUrl;
         this.vat = vat;
         this.description = description;
-        this.reference = reference;
         this.stock = stock;
         this.idCategory = idCategory;
         this.seasonalMonths = seasonalMonths;
@@ -101,14 +109,6 @@ public class Product {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getReference() {
-        return reference;
-    }
-
-    public void setReference(String reference) {
-        this.reference = reference;
     }
 
     public int getStock() {

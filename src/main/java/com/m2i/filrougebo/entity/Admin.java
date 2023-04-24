@@ -1,9 +1,9 @@
 package com.m2i.filrougebo.entity;
 
 public class Admin {
-    private int idAmin;
+    private int idAdmin;
     private String username;
-    private boolean isSuperAdmin;
+    private boolean isSuperAdmin=false;
     private String password;
 
     public Admin() {
@@ -15,19 +15,19 @@ public class Admin {
         this.password = password;
     }
 
-    public Admin(int idAmin, String username, boolean isSuperAdmin, String password) {
-        this.idAmin = idAmin;
+    public Admin(int idAdmin, String username, boolean isSuperAdmin, String password) {
+        this.idAdmin = idAdmin;
         this.username = username;
         this.isSuperAdmin = isSuperAdmin;
         this.password = password;
     }
 
-    public int getIdAmin() {
-        return idAmin;
+    public int getIdAdmin() {
+        return idAdmin;
     }
 
     public void setIdAmin(int idAmin) {
-        this.idAmin = idAmin;
+        this.idAdmin = idAmin;
     }
 
     public String getUsername() {
@@ -38,7 +38,7 @@ public class Admin {
         this.username = username;
     }
 
-    public boolean isSuperAdmin() {
+    public boolean getIsSuperAdmin() {
         return isSuperAdmin;
     }
 
