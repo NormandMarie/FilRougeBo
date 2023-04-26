@@ -68,27 +68,16 @@ public class ProductDao implements IntProductDao{
                 }
             }
 
-//            conn.commit();
-
             for (Month month : product.getSeasonalMonths()) {
                 pstCreateProductMonths.setInt(1, product.getIdProduct());
                 pstCreateProductMonths.setInt(2, month.id);
                 pstCreateProductMonths.executeUpdate();
-//                conn.commit();
             }
-
-//            conn.commit();
 
         } catch (SQLException e) {
             throw new RuntimeException("Error creating Product", e);
         }
-//        } finally {
-//            try {
-//                conn.rollback(save);
-//            } catch (SQLException e) {
-//                throw new RuntimeException("Could not rollback, integrity of DB may be compromised!", e);
-//            }
-//        }
+
     }
 
     @Override
@@ -97,8 +86,8 @@ public class ProductDao implements IntProductDao{
         List<Product> productList = new ArrayList<>();
         String sqlQuery = "SELECT id, name, unit, pricePerUnit, imgUrl, vat, description, stock, idCategory FROM Products";
 
-        try (PreparedStatement ps = conn.prepareStatement(sqlQuery);
-             ResultSet rs = ps.executeQuery()) {
+        try (PreparedStatement pst = conn.prepareStatement(sqlQuery);
+             ResultSet rs = pst.executeQuery()) {
 
             while (rs.next()) {
                 Product product = mapToProduct(rs);

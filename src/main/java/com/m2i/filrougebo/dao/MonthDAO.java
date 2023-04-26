@@ -10,6 +10,8 @@ import java.util.List;
 
 public class MonthDAO implements IntMonthDAO {
 
+    Connection conn = ConnectionManager.getInstance();
+
     private Month mapToMonth(ResultSet resultSet) throws SQLException {
         int id = resultSet.getInt("id");
         return Month.values()[id - 1];
@@ -24,47 +26,38 @@ public class MonthDAO implements IntMonthDAO {
     public List<Month> findAll() {
 
         List<Month> monthList = new ArrayList<>();
-        Connection connection = ConnectionManager.getInstance();
         String sqlQuery = "SELECT id, name FROM Months";
 
-        try {
-
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(sqlQuery);
-
-            while (resultSet.next()) {
-                Month month = mapToMonth(resultSet);
+        try (PreparedStatement pst = conn.prepareStatement(sqlQuery)) {
+            ResultSet rs = pst.executeQuery(sqlQuery);
+            while (rs.next()) {
+                Month month = mapToMonth(rs);
                 monthList.add(month);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Failed to gather MonthList from database.");
+            throw new RuntimeException("Failed to gather MonthList from database.", e);
         }
 
         return monthList;
     }
 
-
     @Override
     public Month findById(Integer id) {
 
-        Connection connection = ConnectionManager.getInstance();
         String sqlQuery = "SELECT id, name FROM Months WHERE id=?;";
         Month month = null;
 
-        try {
+        try (PreparedStatement pst = conn.prepareStatement(sqlQuery)) {
 
-            PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
-            preparedStatement.setInt(1, id);
-            ResultSet resultSet = preparedStatement.executeQuery();
+            pst.setInt(1, id);
+            ResultSet resultSet = pst.executeQuery();
 
             if (resultSet.next()) {
                 month = mapToMonth(resultSet);
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
+            throw new RuntimeException("Could not find month", e);
         }
 
         return month;
@@ -73,13 +66,12 @@ public class MonthDAO implements IntMonthDAO {
     public List<Month> findAllMonthsPerProduct(int productId) {
 
         List<Month> monthList = new ArrayList<>();
-        Connection connection = ConnectionManager.getInstance();
         String sqlQuery = "SELECT pm.idProduct, pm.idMonth as 'id' FROM Product_Months pm WHERE pm.idProduct = ?;";
 
-        try {
-            PreparedStatement prepStatement = connection.prepareStatement(sqlQuery);
-            prepStatement.setInt(1, productId);
-            ResultSet resultSet = prepStatement.executeQuery();
+        try (PreparedStatement pst = conn.prepareStatement(sqlQuery)) {
+
+            pst.setInt(1, productId);
+            ResultSet resultSet = pst.executeQuery();
 
             while (resultSet.next()) {
                 Month month = mapToMonth(resultSet);
@@ -87,12 +79,10 @@ public class MonthDAO implements IntMonthDAO {
             }
 
         } catch (SQLException e) {
-            // TODO: add some verbosity?
-            e.printStackTrace();
+            throw new RuntimeException("Could not find months", e);
         }
 
         return monthList;
-
 
     }
 
