@@ -30,8 +30,8 @@ public class ProductDao implements IntProductDao{
         Category category = categoryDAO.findById(idCategory);
 
         List<Month> seasonalMonths = new ArrayList<>();
-        MonthDAO monthDAO = new MonthDAO();
-        seasonalMonths = monthDAO.findAllMonthsPerProduct(id);
+        ProductMonthsDao productMonthsDao = new ProductMonthsDao();
+        seasonalMonths = productMonthsDao.findAllMonthsPerProduct(id);
 
         return new Product(id, name, unit, pricePerUnit, imgUrl, vat, description, stock, category, seasonalMonths);
 

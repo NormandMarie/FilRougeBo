@@ -8,8 +8,7 @@ import java.util.List;
 
 // TODO : Rename to ProductMonthsDAO ?
 
-public class MonthDAO implements IntMonthDAO {
-
+public class ProductMonthsDao {
     Connection conn = ConnectionManager.getInstance();
 
     private Month mapToMonth(ResultSet resultSet) throws SQLException {
@@ -17,12 +16,6 @@ public class MonthDAO implements IntMonthDAO {
         return Month.values()[id - 1];
     }
 
-    @Override
-    public void create(Month entity) {
-        throw new RuntimeException("You cannot create months.");
-    }
-
-    @Override
     public List<Month> findAll() {
 
         List<Month> monthList = new ArrayList<>();
@@ -41,7 +34,6 @@ public class MonthDAO implements IntMonthDAO {
         return monthList;
     }
 
-    @Override
     public Month findById(Integer id) {
 
         String sqlQuery = "SELECT id, name FROM Months WHERE id=?;";
@@ -86,13 +78,4 @@ public class MonthDAO implements IntMonthDAO {
 
     }
 
-    @Override
-    public void update(Month entity) {
-
-    }
-
-    @Override
-    public void delete(Month entity) {
-
-    }
 }

@@ -1,11 +1,10 @@
 package com.m2i.filrougebo.service;
 
-import com.m2i.filrougebo.dao.MonthDAO;
-import com.m2i.filrougebo.enums.Month;
+import com.m2i.filrougebo.dao.ProductMonthsDao;
 
 public class MonthService {
 
-    private MonthDAO monthDAO = new MonthDAO();
+    private ProductMonthsDao productMonthsDao = new ProductMonthsDao();
 
 
 }

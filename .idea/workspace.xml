@@ -9,10 +9,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d4353ece-acbb-4de6-9c25-035f0568f55b" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/m2i/filrougebo/dao/MonthDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/m2i/filrougebo/dao/MonthDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/m2i/filrougebo/dao/ProductDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/m2i/filrougebo/dao/ProductDao.java" afterDir="false" />
-    </list>
+    <list default="true" id="d4353ece-acbb-4de6-9c25-035f0568f55b" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
