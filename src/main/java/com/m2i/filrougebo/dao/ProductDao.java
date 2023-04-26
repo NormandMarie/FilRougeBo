@@ -108,40 +108,72 @@ public class ProductDao implements IntProductDao{
     }
 
     @Override
-    public void update(Product entity) {
+    public void update(Product product) {
 
-        String sqlQuery = "UPDATE Products SET" +
+        String sqlQueryUpdateProduct = "UPDATE Products SET" +
                 " name = ?" +
-                " unit = ?" +
-                " pricePerUnit = ?" +
-                " vat = ?" +
-                " description = ?" +
-                " stock = ?" +
-                " idCategory = ?" +
+                ", unit = ?" +
+                ", pricePerUnit = ?" +
+                ", imgUrl = ?" +
+                ", vat = ?" +
+                ", description = ?" +
+                ", stock = ?" +
+                ", idCategory = ?" +
                 " WHERE id = ?";
 
-        try (PreparedStatement preparedStatement = conn.prepareStatement(sqlQuery)) {
+        String sqlQueryDeleteProductMonths = "DELETE FROM product_months WHERE idProduct = ?";
+        String sqlQueryInsertProductMonths = "INSERT INTO product_months(idProduct, idMonth) VALUES (?, ?)";
 
-            preparedStatement.setString(1, entity.getProductName());
-            preparedStatement.setString(2, entity.getUnit());
-            preparedStatement.setDouble(3, entity.getPricePerUnit());
-            preparedStatement.setString(4, entity.getImgUrl());
-            preparedStatement.setDouble(5, entity.getVat());
-            preparedStatement.setString(6, entity.getDescription());
-            preparedStatement.setInt(7, entity.getStock());
-            preparedStatement.setInt(8, entity.getCategory().getIdCategory());
+        try (PreparedStatement pstUpdateProduct = conn.prepareStatement(sqlQueryUpdateProduct);
+             PreparedStatement pstDeleteProductMonths = conn.prepareStatement(sqlQueryDeleteProductMonths);
+             PreparedStatement pstInsertProductMonths = conn.prepareStatement(sqlQueryInsertProductMonths);) {
 
-            int row = preparedStatement.executeUpdate();
+            conn.setAutoCommit(false); // To avoid updating Product table if any errors are raised when deleting/inserting Months
+
+            // UPDATE PRODUCT
+            pstUpdateProduct.setString(1, product.getProductName());
+            pstUpdateProduct.setString(2, product.getUnit());
+            pstUpdateProduct.setDouble(3, product.getPricePerUnit());
+            pstUpdateProduct.setString(4, product.getImgUrl());
+            pstUpdateProduct.setDouble(5, product.getVat());
+            pstUpdateProduct.setString(6, product.getDescription());
+            pstUpdateProduct.setInt(7, product.getStock());
+            pstUpdateProduct.setInt(8, product.getCategory().getIdCategory());
+            pstUpdateProduct.setInt(9, product.getIdProduct());
+
+            pstUpdateProduct.executeUpdate();
+
+            // DELETE PRODUCT_MONTHS
+            pstDeleteProductMonths.setInt(1, product.getIdProduct());
+            pstDeleteProductMonths.executeUpdate();
+
+            for (Month month : product.getSeasonalMonths()) {
+
+                pstInsertProductMonths.setInt(1, product.getIdProduct());
+                pstInsertProductMonths.setInt(2, month.id);
+
+                pstInsertProductMonths.executeUpdate();
+            }
+
+            conn.commit();
 
         } catch (SQLException e) {
+            if (conn != null) {
+                try {
+                    conn.rollback();
+                    System.err.print("Transaction is being rolled back");
+                } catch (SQLException ex) {
+                    throw new RuntimeException("Error updating Product", ex);
+                }
+            }
             throw new RuntimeException("Error updating Product", e);
         }
 
-        sqlQuery = "UPDATE product_months SET" +
-                " idMonth = ?";
-        // TODO: Update the Product_Months Table in db
+        // return true;
+
 
     }
+
     @Override
     public void delete(Product product) {
 
@@ -152,7 +184,7 @@ public class ProductDao implements IntProductDao{
             ps.setInt(1, product.getIdProduct());
             ps.executeUpdate();
 
-            // TODO : Delete from Products Months
+            // Delete from Products Months -> automated from DB connection!
 
         } catch (SQLException e) {
             throw new RuntimeException("Error deleting Product", e);

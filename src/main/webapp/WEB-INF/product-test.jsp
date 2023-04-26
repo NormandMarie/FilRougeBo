@@ -21,5 +21,9 @@
   </c:forEach>
 </c:if>
 
+<a class="btn btn-primary" href="/update-product" role="button">update</a>
+
+<a class="btn btn-primary" href="/delete-product" role="button">delete</a>
+
 </body>
 </html>

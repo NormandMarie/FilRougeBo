@@ -6,6 +6,8 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+// TODO : Rename to ProductMonthsDAO ?
+
 public class MonthDAO implements IntMonthDAO {
 
     private Month mapToMonth(ResultSet resultSet) throws SQLException {

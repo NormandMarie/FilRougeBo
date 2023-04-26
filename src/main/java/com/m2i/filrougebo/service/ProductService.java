@@ -11,4 +11,14 @@ public class ProductService {
 
     public List<Product> findAll() { return productDao.findAll();}
 
+    public void updateProduct(Product product) {
+        System.out.println("Updating");
+        productDao.update(product);
+        System.out.println("Updated");
+    }
+
+    public void deleteProduct(Product product) {
+        productDao.delete(product);
+    }
+
 }
