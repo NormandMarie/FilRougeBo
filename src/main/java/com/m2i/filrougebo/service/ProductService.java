@@ -11,10 +11,12 @@ public class ProductService {
 
     public List<Product> findAll() { return productDao.findAll();}
 
+    public void createProduct(Product product) {
+        productDao.create(product);
+    }
+
     public void updateProduct(Product product) {
-        System.out.println("Updating");
         productDao.update(product);
-        System.out.println("Updated");
     }
 
     public void deleteProduct(Product product) {

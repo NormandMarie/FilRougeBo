@@ -12,7 +12,7 @@ public class MonthDAO implements IntMonthDAO {
 
     private Month mapToMonth(ResultSet resultSet) throws SQLException {
         int id = resultSet.getInt("id");
-        return Month.values()[id];
+        return Month.values()[id - 1];
     }
 
     @Override

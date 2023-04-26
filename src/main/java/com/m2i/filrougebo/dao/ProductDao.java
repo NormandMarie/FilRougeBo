@@ -4,10 +4,7 @@ import com.m2i.filrougebo.entity.Category;
 import com.m2i.filrougebo.entity.Product;
 import com.m2i.filrougebo.enums.Month;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,29 +38,57 @@ public class ProductDao implements IntProductDao{
     }
 
     @Override
-    public void create(Product entity) {
+    public void create(Product product) {
 
-        String sqlQuery =
+        String sqlQueryCreateProduct =
                 "INSERT INTO Products(name, unit, pricePerUnit, imgUrl, vat, description, stock, idCategory)" +
                         " VALUES (?,?,?,?,?,?,?,?)";
+        String sqlQueryCreateProductMonths = "INSERT INTO product_months(idProduct, idMonth) VALUES (?, ?)";
 
-        try (PreparedStatement ps = conn.prepareStatement(sqlQuery))
-        {
+        try (PreparedStatement pstCreateProduct = conn.prepareStatement(sqlQueryCreateProduct, PreparedStatement.RETURN_GENERATED_KEYS);
+             PreparedStatement pstCreateProductMonths = conn.prepareStatement(sqlQueryCreateProductMonths)) {
 
-            ps.setString(1, entity.getProductName());
-            ps.setString(2, entity.getUnit());
-            ps.setDouble(3, entity.getPricePerUnit());
-            ps.setString(4, entity.getImgUrl());
-            ps.setDouble(5, entity.getVat());
-            ps.setString(6, entity.getDescription());
-            ps.setInt(7, entity.getStock());
-            ps.setInt(8, entity.getCategory().getIdCategory());
 
-            ps.executeUpdate();
+            pstCreateProduct.setString(1, product.getProductName());
+            pstCreateProduct.setString(2, product.getUnit());
+            pstCreateProduct.setDouble(3, product.getPricePerUnit());
+            pstCreateProduct.setString(4, product.getImgUrl());
+            pstCreateProduct.setDouble(5, product.getVat());
+            pstCreateProduct.setString(6, product.getDescription());
+            pstCreateProduct.setInt(7, product.getStock());
+            pstCreateProduct.setInt(8, product.getCategory().getIdCategory());
+
+            int row = pstCreateProduct.executeUpdate();
+
+            if (row == 1) {
+                ResultSet generatedKeys = pstCreateProduct.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    int id = generatedKeys. getInt(1);
+                    product.setIdProduct(id);
+                }
+            }
+
+//            conn.commit();
+
+            for (Month month : product.getSeasonalMonths()) {
+                pstCreateProductMonths.setInt(1, product.getIdProduct());
+                pstCreateProductMonths.setInt(2, month.id);
+                pstCreateProductMonths.executeUpdate();
+//                conn.commit();
+            }
+
+//            conn.commit();
 
         } catch (SQLException e) {
             throw new RuntimeException("Error creating Product", e);
         }
+//        } finally {
+//            try {
+//                conn.rollback(save);
+//            } catch (SQLException e) {
+//                throw new RuntimeException("Could not rollback, integrity of DB may be compromised!", e);
+//            }
+//        }
     }
 
     @Override
@@ -147,6 +172,7 @@ public class ProductDao implements IntProductDao{
             pstDeleteProductMonths.setInt(1, product.getIdProduct());
             pstDeleteProductMonths.executeUpdate();
 
+            // INSERT PRODUCT_MONTHS
             for (Month month : product.getSeasonalMonths()) {
 
                 pstInsertProductMonths.setInt(1, product.getIdProduct());
@@ -168,7 +194,7 @@ public class ProductDao implements IntProductDao{
             }
             throw new RuntimeException("Error updating Product", e);
         }
-
+        // TODO: conn.setAutoCommit(true); ?
         // return true;
 
 
@@ -184,7 +210,7 @@ public class ProductDao implements IntProductDao{
             ps.setInt(1, product.getIdProduct());
             ps.executeUpdate();
 
-            // Delete from Products Months -> automated from DB connection!
+            // Delete from Products Months -> automated in the DB !
 
         } catch (SQLException e) {
             throw new RuntimeException("Error deleting Product", e);

@@ -10,10 +10,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d4353ece-acbb-4de6-9c25-035f0568f55b" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/508b16b4-3e7b-4bc0-915e-7bf7f8b6f010.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/508b16b4-3e7b-4bc0-915e-7bf7f8b6f010.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/m2i/filrougebo/Servlet/ProductTestServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/m2i/filrougebo/Servlet/ProductListServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/m2i/filrougebo/dao/MonthDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/m2i/filrougebo/dao/MonthDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/m2i/filrougebo/Servlet/ProductDeleteServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/m2i/filrougebo/Servlet/Product/ProductDeleteServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/m2i/filrougebo/Servlet/ProductListServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/m2i/filrougebo/Servlet/Product/ProductListServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/m2i/filrougebo/Servlet/ProductUpdateServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/m2i/filrougebo/Servlet/Product/ProductUpdateServlet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/m2i/filrougebo/dao/ProductDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/m2i/filrougebo/dao/ProductDao.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/m2i/filrougebo/service/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/m2i/filrougebo/service/ProductService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/product-test.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/product-test.jsp" afterDir="false" />
@@ -244,9 +244,24 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/m2i/filrougebo/Servlet/ProductUpdateServlet.java</url>
-          <line>27</line>
-          <option name="timeStamp" value="23" />
+          <url>file://$PROJECT_DIR$/src/main/java/com/m2i/filrougebo/Servlet/Product/ProductListServlet.java</url>
+          <line>22</line>
+          <option name="timeStamp" value="27" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/m2i/filrougebo/dao/MonthDAO.java</url>
+          <line>13</line>
+          <option name="timeStamp" value="29" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/m2i/filrougebo/dao/MonthDAO.java</url>
+          <line>25</line>
+          <option name="timeStamp" value="30" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/m2i/filrougebo/dao/MonthDAO.java</url>
+          <line>74</line>
+          <option name="timeStamp" value="31" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

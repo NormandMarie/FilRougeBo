@@ -1,4 +1,4 @@
-package com.m2i.filrougebo.Servlet;
+package com.m2i.filrougebo.Servlet.Product;
 
 
 import com.m2i.filrougebo.dao.CategoryDao;
