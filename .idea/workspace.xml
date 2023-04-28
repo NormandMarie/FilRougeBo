@@ -10,20 +10,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d4353ece-acbb-4de6-9c25-035f0568f55b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/m2i/filrougebo/Dto/UserDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/m2i/filrougebo/service/Authentication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/m2i/filrougebo/service/loginService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/m2i/filrougebo/servlet/LoginServlet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/m2i/filrougebo/servlet/LogoutServlet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/m2i/filrougebo/servlet/authenticationFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/HelloServlet.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/login.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/index.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/m2i/filrougebo/servlet/ListAdminServlet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/m2i/filrougebo/servlet/SuperAdminFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/ListAdmin.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/m2i/filrougebo/HelloServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/m2i/filrougebo/HelloServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/m2i/filrougebo/dao/ConnectionManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/m2i/filrougebo/dao/ConnectionManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/m2i/filrougebo/Dto/UserDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/m2i/filrougebo/Dto/AdminDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/m2i/filrougebo/service/AdminService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/m2i/filrougebo/service/AdminService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/m2i/filrougebo/service/loginService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/m2i/filrougebo/servlet/authenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/m2i/filrougebo/servlet/AuthenticationFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/HelloServlet.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/HelloServlet.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/login.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/login.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/index.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,8 +30,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Jsp File" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -209,7 +206,7 @@
       <workItem from="1682527686122" duration="416000" />
       <workItem from="1682528117916" duration="5741000" />
       <workItem from="1682579361989" duration="82000" />
-      <workItem from="1682672250875" duration="3878000" />
+      <workItem from="1682672250875" duration="13736000" />
     </task>
     <servers />
   </component>

@@ -12,6 +12,7 @@ target/
 *.iml
 *.ipr
 .idea
+.idea/workspace.xml
 src/main/java/com/m2i/filrougebo/dao/ConnectionManager.java
 ### Eclipse ###
 .apt_generated
