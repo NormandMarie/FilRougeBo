@@ -8,7 +8,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-public abstract class DataBase {
+public final class DataBase {
 
 //    private static final String URL_DATABASE = "jdbc:mysql://localhost:3306/filrouge_bdd";
 //    private static final String USER = "root";
