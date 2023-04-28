@@ -39,3 +39,8 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+### DB CONNECTION ###
+src/main/resources/app.properties
+
+
