@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AdminDao implements IntAdminDao{
-    Connection conn = ConnectionManager.getInstance();
+    Connection conn = DataBase.getInstance();
 
     @Override
     public void create(Admin entity) {

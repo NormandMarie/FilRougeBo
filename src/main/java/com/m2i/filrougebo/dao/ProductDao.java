@@ -11,7 +11,7 @@ import java.util.List;
 
 public class ProductDao implements IntProductDao{
 
-    Connection conn = ConnectionManager.getInstance();
+    Connection conn = DataBase.getInstance();
 
     private Product mapToProduct(ResultSet resultSet) throws SQLException {
 

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryDao implements IntCategoryDao{
-    Connection conn = ConnectionManager.getInstance();
+    Connection conn = DataBase.getInstance();
     @Override
     public void create(Category entity) {
         try{

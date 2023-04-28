@@ -9,7 +9,7 @@ import java.util.List;
 // TODO : Rename to ProductMonthsDAO ?
 
 public class ProductMonthsDao {
-    Connection conn = ConnectionManager.getInstance();
+    Connection conn = DataBase.getInstance();
 
     private Month mapToMonth(ResultSet resultSet) throws SQLException {
         int id = resultSet.getInt("id");
