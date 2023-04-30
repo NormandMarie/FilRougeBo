@@ -31,7 +31,7 @@ public class ConnectionManager {
                         properties.getProperty("bdd_url"),
                         properties.getProperty("bdd_user"),
                         properties.getProperty("bdd_password"));
-                
+
             } catch (SQLException | ClassNotFoundException | IOException e) {
                 throw new RuntimeException(e);
             }
