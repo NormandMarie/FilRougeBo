@@ -3,81 +3,117 @@ package com.m2i.filrougebo.dao;
 import com.m2i.filrougebo.entity.Admin;
 import com.m2i.filrougebo.entity.Category;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryDao implements IntCategoryDao{
     Connection conn = ConnectionManager.getInstance();
+
+    private Category mapToCategory(ResultSet resultSet) throws SQLException {
+
+        int id = resultSet.getInt("id");
+        String name = resultSet.getString("name");
+        return new Category(id,name);
+    }
     @Override
-    public void create(Category entity) {
-        try{
-            PreparedStatement ps=conn.prepareStatement("INSERT INTO categories (name) VALUES (?)");
+    public Category create(Category entity) {
+
+        String query = "INSERT INTO categories (name) VALUES (?)";
+
+        try(PreparedStatement ps=conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)){
+
             ps.setString(1,entity.getName());
-            ps.executeUpdate();
+            int row = ps.executeUpdate();
+            if(row == 1){
+                ResultSet generatedKeys = ps.getGeneratedKeys();
+                if(generatedKeys.next()){
+                    entity.setIdCategory(generatedKeys.getInt(1));
+                    return entity;
+                }
+            }
+            throw new RuntimeException("Could not create Category entity !");
         }catch (SQLException e){
             throw new RuntimeException(e);
         }
     }
     @Override
     public List<Category> findAll() {
+
         List<Category> categories = new ArrayList<>();
-        try {
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM categories");
+        String query = "SELECT * FROM categories";
+
+        try (PreparedStatement ps = conn.prepareStatement(query)) {
+
             ResultSet rs = ps.executeQuery();
             while (rs.next()){
-                Category category = new Category(rs.getInt("id"),rs.getString("name"));
+                Category category = mapToCategory(rs);
                 categories.add(category);
             }
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
         return categories;
     }
 
     @Override
     public Category findById(Integer integer) {
-        Category category=null;
-        try{
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM categories WHERE id = ? ");
+
+        String query = "SELECT * FROM categories WHERE id = ? ";
+
+        try(PreparedStatement ps = conn.prepareStatement(query)){
+
             ps.setInt(1,integer);
             ResultSet rs = ps.executeQuery();
+
             if(rs.next()){
-                category = new Category(rs.getInt("id"),rs.getString("name"));
-            }else{
-                System.out.println("no category found");
-                // Ajout d'une exception "product not found" ?
+                Category category = mapToCategory(rs);
+                return category;
             }
+            throw new RuntimeException("No Category found for id = "+integer);
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return category;
     }
 
     @Override
-    public void update(Category entity) {
-        try {
-            PreparedStatement preparedStatement = conn.prepareStatement("UPDATE categories SET name=? WHERE id=?");
+    public boolean update(Category entity) {
+
+        String query = "UPDATE categories SET name=? WHERE id=?";
+        try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
+
             preparedStatement.setString(1, entity.getName());
             preparedStatement.setInt(2, entity.getIdCategory());
-            preparedStatement.executeUpdate();
+            int row = preparedStatement.executeUpdate();
+
+            if(row == 1){
+                return true;
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return false;
     }
 
     @Override
-    public void delete(Category entity) {
-        try{
-            PreparedStatement ps = conn.prepareStatement("DELETE FROM categories WHERE id = ?");
+    public boolean delete(Category entity) {
+
+        String query = "DELETE FROM categories WHERE id = ?";
+
+        try(PreparedStatement ps = conn.prepareStatement(query)){
+
             ps.setInt(1,entity.getIdCategory());
-            ps.executeUpdate();
+            int row = ps.executeUpdate();
+            if(row == 1){
+                return true;
+            }
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        return false;
     }
 }
