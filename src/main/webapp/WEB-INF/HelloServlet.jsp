@@ -16,12 +16,13 @@
 
 <c:if test="${sessionScope.isSuperAdmin}">
 <a href="${pageContext.request.contextPath}/secured/logout">Déconnexion</a>
+    <a href="${pageContext.request.contextPath}/secured/ListAdmin">List Admins</a>
 <% } else { %>
 <a href="${pageContext.request.contextPath}/login">connexion</a>
 <% } %>
-<c:if test="${sessionScope.isSuperAdmin}">
-    <button>Mon bouton superAdmin</button>
-</c:if>
+<%--<c:if test="${sessionScope.isSuperAdmin}">--%>
+<%--    <a href="${pageContext.request.contextPath}/secured/ListAdmin">List Admins</a>--%>
+<%--</c:if>--%>
 
 </body>
 </html>
