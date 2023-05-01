@@ -2,127 +2,208 @@ package com.m2i.filrougebo.dao;
 
 import com.m2i.filrougebo.entity.Category;
 import com.m2i.filrougebo.entity.Product;
-import com.m2i.filrougebo.enums.SeasonalMonths;
+import com.m2i.filrougebo.enums.Month;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
 
 public class ProductDao implements IntProductDao{
+
     Connection conn = DataBase.getInstance();
 
+    private Product mapToProduct(ResultSet resultSet) throws SQLException {
+
+        int id = resultSet.getInt("id");
+        String name = resultSet.getString("name");
+        String unit = resultSet.getString("unit");
+        double pricePerUnit = resultSet.getDouble("pricePerUnit");
+        String imgUrl = resultSet.getString("imgUrl");
+        double vat = resultSet.getDouble("vat");
+        String description = resultSet.getString("description");
+        int stock = resultSet.getInt("stock");
+
+        int idCategory = resultSet.getInt("idCategory");
+
+        CategoryDao categoryDAO = new CategoryDao();
+        Category category = categoryDAO.findById(idCategory);
+
+        List<Month> seasonalMonths = new ArrayList<>();
+        ProductMonthsDao productMonthsDao = new ProductMonthsDao();
+        seasonalMonths = productMonthsDao.findAllMonthsPerProduct(id);
+
+        return new Product(id, name, unit, pricePerUnit, imgUrl, vat, description, stock, category, seasonalMonths);
+
+    }
+
     @Override
-    public void create(Product entity) {
-        try{
-            PreparedStatement ps=conn.prepareStatement("INSERT INTO product (name,unit,pricePerUnit,imgUrl,vat,description,stock,idCategory) VALUES (?,?,?,?,?,?,?,?)");
-            ps.setString(1,entity.getProductName());
-            ps.setString(2,entity.getUnit());
-            ps.setDouble(3,entity.getPricePerUnit());
-            ps.setString(4,entity.getImgUrl());
-            ps.setDouble(5,entity.getVat());
-            ps.setString(6,entity.getDescription());
-            ps.setInt(7,entity.getStock());
-            ps.setInt(8,entity.getIdCategory());
-            ps.executeUpdate();
-        }catch (SQLException e){
-            throw new RuntimeException(e);
+    public void create(Product product) {
+
+        String sqlQueryCreateProduct =
+                "INSERT INTO Products(name, unit, pricePerUnit, imgUrl, vat, description, stock, idCategory)" +
+                        " VALUES (?,?,?,?,?,?,?,?)";
+        String sqlQueryCreateProductMonths = "INSERT INTO product_months(idProduct, idMonth) VALUES (?, ?)";
+
+        try (PreparedStatement pstCreateProduct = conn.prepareStatement(sqlQueryCreateProduct, PreparedStatement.RETURN_GENERATED_KEYS);
+             PreparedStatement pstCreateProductMonths = conn.prepareStatement(sqlQueryCreateProductMonths)) {
+
+
+            pstCreateProduct.setString(1, product.getProductName());
+            pstCreateProduct.setString(2, product.getUnit());
+            pstCreateProduct.setDouble(3, product.getPricePerUnit());
+            pstCreateProduct.setString(4, product.getImgUrl());
+            pstCreateProduct.setDouble(5, product.getVat());
+            pstCreateProduct.setString(6, product.getDescription());
+            pstCreateProduct.setInt(7, product.getStock());
+            pstCreateProduct.setInt(8, product.getCategory().getIdCategory());
+
+            int row = pstCreateProduct.executeUpdate();
+
+            if (row == 1) {
+                ResultSet generatedKeys = pstCreateProduct.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    int id = generatedKeys. getInt(1);
+                    product.setIdProduct(id);
+                }
+            }
+
+            for (Month month : product.getSeasonalMonths()) {
+                pstCreateProductMonths.setInt(1, product.getIdProduct());
+                pstCreateProductMonths.setInt(2, month.id);
+                pstCreateProductMonths.executeUpdate();
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error creating Product", e);
         }
+
     }
 
     @Override
     public List<Product> findAll() {
-        List<Product> products = new ArrayList<>();
 
-        try {
-            PreparedStatement ps2 = conn.prepareStatement("SELECT *,ps.seasonName FROM product p" +
-                    "INNER JOIN product_seasons ps" +
-                    "ON p.id = ps.idProduct " +
-                    "INNER JOIN seasonal_months sm" +
-                    "ON sm.id = ps.idSeasonalMonth");
+        List<Product> productList = new ArrayList<>();
+        String sqlQuery = "SELECT id, name, unit, pricePerUnit, imgUrl, vat, description, stock, idCategory FROM Products";
 
-            Map<Integer, Product> productMap = new HashMap<>(); // MAP temporaire
-            ResultSet rs = ps2.executeQuery();
-            while (rs.next()){
-                int productId = rs.getInt("id");
-                Product product = productMap.get("id");
-                if(product==null){ // first time passing by this product_id in result set
-                    product = new Product();
-                    product.setIdProduct(productId);
-                    product.setProductName(rs.getString("name"));
-                    product.setUnit(rs.getString("unit"));
-                    product.setPricePerUnit(rs.getDouble("pricePerUnit"));
-                    product.setImgUrl(rs.getString("imgUrl"));
-                    product.setVat(rs.getDouble("vat"));
-                    product.setDescription(rs.getString("description"));
-                    product.setStock(rs.getInt("stock"));
-                    product.setSeasonalMonths(new ArrayList<>());
-                    productMap.put(productId,product); // storing the product in the map
-                    products.add(product);
+        try (PreparedStatement pst = conn.prepareStatement(sqlQuery);
+             ResultSet rs = pst.executeQuery()) {
+
+            while (rs.next()) {
+                Product product = mapToProduct(rs);
+                productList.add(product);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error fetching Products", e);
+        }
+        return productList;
+    }
+
+    @Override
+    public Product findById(Integer productId) {
+
+        Product productFound = null;
+        String sqlQuery = "SELECT * FROM Products WHERE id = ?";
+
+        try (PreparedStatement ps = conn.prepareStatement(sqlQuery)) {
+
+            ps.setInt(1, productId);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    productFound = mapToProduct(rs);
                 }
-                SeasonalMonths seasonalMonth = SeasonalMonths.valueOf(rs.getString("seasonName"));
-                product.getSeasonalMonths().add(seasonalMonth);
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Error fetching Product", e);
         }
-        return products;
+        return productFound;
     }
 
     @Override
-    public Product findById(Integer integer) {
-        Product product=new Product();
-        try{
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM product WHERE id = ? ");
-            ps.setInt(1,integer);
-            ResultSet rs = ps.executeQuery();
-            while(rs.next()){
-                product.setIdProduct(rs.getInt("id"));
-                product.setProductName(rs.getString("name"));
-                product.setUnit(rs.getString("unit"));
-                product.setPricePerUnit(rs.getDouble("pricePerUnit"));
-                product.setImgUrl(rs.getString("imgUrl"));
-                product.setVat(rs.getDouble("vat"));
-                product.setDescription(rs.getString("description"));
-                product.setStock(rs.getInt("stock"));
-                //product.setSeasonalMonths(new ArrayList<>());
-                SeasonalMonths seasonalMonth = SeasonalMonths.valueOf(rs.getString("seasonName"));
-                product.getSeasonalMonths().add(seasonalMonth);
+    public void update(Product product) {
+
+        String sqlQueryUpdateProduct = "UPDATE Products SET" +
+                " name = ?" +
+                ", unit = ?" +
+                ", pricePerUnit = ?" +
+                ", imgUrl = ?" +
+                ", vat = ?" +
+                ", description = ?" +
+                ", stock = ?" +
+                ", idCategory = ?" +
+                " WHERE id = ?";
+
+        String sqlQueryDeleteProductMonths = "DELETE FROM product_months WHERE idProduct = ?";
+        String sqlQueryInsertProductMonths = "INSERT INTO product_months(idProduct, idMonth) VALUES (?, ?)";
+
+        try (PreparedStatement pstUpdateProduct = conn.prepareStatement(sqlQueryUpdateProduct);
+             PreparedStatement pstDeleteProductMonths = conn.prepareStatement(sqlQueryDeleteProductMonths);
+             PreparedStatement pstInsertProductMonths = conn.prepareStatement(sqlQueryInsertProductMonths);) {
+
+            conn.setAutoCommit(false); // To avoid updating Product table if any errors are raised when deleting/inserting Months
+
+            // UPDATE PRODUCT
+            pstUpdateProduct.setString(1, product.getProductName());
+            pstUpdateProduct.setString(2, product.getUnit());
+            pstUpdateProduct.setDouble(3, product.getPricePerUnit());
+            pstUpdateProduct.setString(4, product.getImgUrl());
+            pstUpdateProduct.setDouble(5, product.getVat());
+            pstUpdateProduct.setString(6, product.getDescription());
+            pstUpdateProduct.setInt(7, product.getStock());
+            pstUpdateProduct.setInt(8, product.getCategory().getIdCategory());
+            pstUpdateProduct.setInt(9, product.getIdProduct());
+
+            pstUpdateProduct.executeUpdate();
+
+            // DELETE PRODUCT_MONTHS
+            pstDeleteProductMonths.setInt(1, product.getIdProduct());
+            pstDeleteProductMonths.executeUpdate();
+
+            // INSERT PRODUCT_MONTHS
+            for (Month month : product.getSeasonalMonths()) {
+
+                pstInsertProductMonths.setInt(1, product.getIdProduct());
+                pstInsertProductMonths.setInt(2, month.id);
+
+                pstInsertProductMonths.executeUpdate();
             }
+
+            conn.commit();
+
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            if (conn != null) {
+                try {
+                    conn.rollback();
+                    System.err.print("Transaction is being rolled back");
+                } catch (SQLException ex) {
+                    throw new RuntimeException("Error updating Product", ex);
+                }
+            }
+            throw new RuntimeException("Error updating Product", e);
         }
-        return product;
+        // TODO: conn.setAutoCommit(true); ?
+        // return true;
+
+
     }
 
     @Override
-    public void update(Product entity) {
-        try {
-            PreparedStatement preparedStatement = conn.prepareStatement("UPDATE product SET name=?,unit=?,pricePerUnit=?,imgUrl=?,vat=?,description=?,stock=?,idCategory=? WHERE id=?");
-            preparedStatement.setString(1, entity.getProductName());
-            preparedStatement.setString(2, entity.getUnit());
-            preparedStatement.setDouble(3, entity.getPricePerUnit());
-            preparedStatement.setString(4, entity.getImgUrl());
-            preparedStatement.setDouble(5, entity.getVat());
-            preparedStatement.setString(6, entity.getDescription());
-            preparedStatement.setInt(7, entity.getStock());
-            preparedStatement.setInt(8, entity.getIdCategory());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-    @Override
-    public void delete(Product entity) {
-        try{
-            PreparedStatement ps = conn.prepareStatement("DELETE FROM product WHERE id = ?");
-            ps.setInt(1,entity.getIdProduct());
+    public void delete(Product product) {
+
+        String sqlQuery = "DELETE FROM Products WHERE id = ?";
+
+        try (PreparedStatement ps = conn.prepareStatement(sqlQuery)) {
+
+            ps.setInt(1, product.getIdProduct());
             ps.executeUpdate();
+
+            // Delete from Products Months -> automated in the DB !
+
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Error deleting Product", e);
         }
     }
+
 }
