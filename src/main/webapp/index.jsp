@@ -1,4 +1,4 @@
-<%@ page import="com.m2i.filrougebo.service.Authentication" %><%--
+<%@ page import="com.m2i.filrougebo.service.AuthenticationService" %><%--
   Created by IntelliJ IDEA.
   User: warie
   Date: 26/04/2023
@@ -16,39 +16,14 @@
 <body>
 <h1>Holà!</h1>
 <% if(request.getSession().getAttribute("username") != null) { %>
-<% if (Authentication.isSuperAdmin((String) session.getAttribute("username"))) { %>
-<button>Accéder à la page spéciale</button>
+<% if (AuthenticationService.isSuperAdmin((String) session.getAttribute("username"))) { %>
+<a href="${pageContext.request.contextPath}/SuperAdmin/ListAdmin">List Admins</a>
+<a href="${pageContext.request.contextPath}/SuperAdmin/add-admin">add Admins</a>
 <% } %>
 <a href="${pageContext.request.contextPath}/secured/logout">Déconnexion</a>
 <% } else { %>
 <a href="${pageContext.request.contextPath}/login">connexion</a>
 <% } %>
 
-
-<%--<% if(request.getSession().getAttribute("username") != null) { %>--%>
-<%--<a href="${pageContext.request.contextPath}/secured/logout">Déconnexion</a>--%>
-<%--<% } else { %>--%>
-<%--<a href="${pageContext.request.contextPath}/login">connexion</a>--%>
-<%--<%--%>
-<%--    if (session != null) {--%>
-<%--        String username = (String) session.getAttribute("username");--%>
-<%--        if (Authentication.isSuperAdmin(username)) {--%>
-<%--%>--%>
-<%--<button>Accéder à la page spéciale</button>--%>
-<%--<%--%>
-<%--        }--%>
-<%--    }--%>
-<%--%>--%>
-<%--<% } %>--%>
-<%--<%--%>
-<%--    if (session != null) {--%>
-<%--        String username = (String) session.getAttribute("username");--%>
-<%--        if (Authentication.isSuperAdmin(username)) {--%>
-<%--%>--%>
-<%--<button>Accéder à la page spéciale</button>--%>
-<%--<%--%>
-<%--        }--%>
-<%--    }--%>
-<%--%>--%>
 </body>
 </html>
