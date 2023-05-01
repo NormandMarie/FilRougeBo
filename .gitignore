@@ -12,13 +12,22 @@ target/
 >>>>>>> connectionManager
 .idea/modules.xml
 .idea/jarRepositories.xml
+.idea/workspace.xml
+.idea/workspace.xml
 .idea/compiler.xml
 .idea/libraries/
+.idea/artifacts/
+.idea/dataSources.local.xml
+.idea/dataSources.xml
+.idea/dataSources/
+.idea/shelf/
+.idea/uiDesigner.xml
 *.iws
 *.iml
 *.ipr
 .idea
-src/main/java/com/m2i/filrougebo/dao/ConnectionManager.java
+.idea/workspace.xml
+
 ### Eclipse ###
 .apt_generated
 .classpath
@@ -49,5 +58,3 @@ build/
 ### DB CONNECTION ###
 src/main/resources/app.properties
 
-
->>>>>>> connectionManager

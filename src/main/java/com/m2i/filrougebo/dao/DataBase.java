@@ -10,11 +10,6 @@ import java.util.Properties;
 
 public final class DataBase {
 
-//    private static final String URL_DATABASE = "jdbc:mysql://localhost:3306/filrouge_bdd";
-//    private static final String USER = "root";
-//    private static final String PASSWORD = "Marie121";
-//    private static final String PASSWORD = "abdallah";
-
     private static Connection INSTANCE;
 
     private DataBase() {
