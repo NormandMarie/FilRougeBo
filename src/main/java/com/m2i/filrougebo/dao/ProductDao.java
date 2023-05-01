@@ -38,7 +38,7 @@ public class ProductDao implements IntProductDao{
     }
 
     @Override
-    public void create(Product product) {
+    public Product create(Product product) {
 
         String sqlQueryCreateProduct =
                 "INSERT INTO Products(name, unit, pricePerUnit, imgUrl, vat, description, stock, idCategory)" +
@@ -77,6 +77,8 @@ public class ProductDao implements IntProductDao{
         } catch (SQLException e) {
             throw new RuntimeException("Error creating Product", e);
         }
+
+        return product;
 
     }
 
@@ -122,7 +124,7 @@ public class ProductDao implements IntProductDao{
     }
 
     @Override
-    public void update(Product product) {
+    public boolean update(Product product) {
 
         String sqlQueryUpdateProduct = "UPDATE Products SET" +
                 " name = ?" +
@@ -184,13 +186,11 @@ public class ProductDao implements IntProductDao{
             throw new RuntimeException("Error updating Product", e);
         }
         // TODO: conn.setAutoCommit(true); ?
-        // return true;
-
-
+        return true;
     }
 
     @Override
-    public void delete(Product product) {
+    public boolean delete(Product product) {
 
         String sqlQuery = "DELETE FROM Products WHERE id = ?";
 
@@ -204,6 +204,8 @@ public class ProductDao implements IntProductDao{
         } catch (SQLException e) {
             throw new RuntimeException("Error deleting Product", e);
         }
+
+        return true;
     }
 
 }
