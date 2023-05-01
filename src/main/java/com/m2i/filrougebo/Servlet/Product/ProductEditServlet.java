@@ -14,14 +14,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet(urlPatterns = ProductCreateServlet.URL)
-public class ProductCreateServlet extends HttpServlet {
+@WebServlet(urlPatterns = ProductEditServlet.URL)
+public class ProductEditServlet extends HttpServlet {
 
-    public static final String URL = "/create-product";
+    public static final String URL = "/edit-product";
     private static final String JSP = "/WEB-INF/product/product-form.jsp";
 
     ProductService productService = new ProductService();
@@ -34,18 +33,33 @@ public class ProductCreateServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        List<Category> categoryList = categoryDao.findAll();
+        int id = Integer.parseInt(req.getParameter("id"));
+        Product product = productService.findById(id);
+
+        List<Category> categoryAll = categoryDao.findAll();
+        
+        // TODO: move to Category Service
+        List<Category> categoryList = new ArrayList<>();
+        for (Category category: categoryAll) {
+            if (category.getIdCategory() != product.getCategory().getIdCategory()) {
+                categoryList.add(category);
+            }
+        }
+        
         List<Month> monthList = monthService.findAll();
 
+        req.setAttribute("product", product);
         req.setAttribute("categoryList", categoryList);
         req.setAttribute("monthList", monthList);
 
-        req.getRequestDispatcher(ProductCreateServlet.JSP).forward(req, resp);
+        req.getRequestDispatcher(ProductEditServlet.JSP).forward(req, resp);
 
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        int id = Integer.parseInt(req.getParameter("id"));
 
         String name = req.getParameter("name");
         String unit = req.getParameter("unit");
@@ -66,14 +80,14 @@ public class ProductCreateServlet extends HttpServlet {
 
         //TODO: check arguments
         if ( name.isBlank() ) {
-            req.setAttribute("createError", "Empty name is not allowed");
+            req.setAttribute("editError", "Empty name is not allowed");
         }
 
-        Product product = productService.createProduct(
-                name, unit, pricePerUnit, imgUrl, vat, description, stock, category, seasonalMonths);
+        boolean success = productService.updateProduct(
+                id, name, unit, pricePerUnit, imgUrl, vat, description, stock, category, seasonalMonths);
 
-        if (product == null) {
-            req.setAttribute("createError", "Error while creating product.");
+        if (!success) {
+            req.setAttribute("editError", "Error while editing product.");
         }
 
         resp.sendRedirect(ProductListServlet.URL);

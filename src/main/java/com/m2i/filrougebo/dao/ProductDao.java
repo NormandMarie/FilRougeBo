@@ -49,13 +49,13 @@ public class ProductDao implements IntProductDao{
              PreparedStatement pstCreateProductMonths = conn.prepareStatement(sqlQueryCreateProductMonths)) {
 
 
-            pstCreateProduct.setString(1, product.getProductName());
+            pstCreateProduct.setString(1, product.getName());
             pstCreateProduct.setString(2, product.getUnit());
             pstCreateProduct.setDouble(3, product.getPricePerUnit());
             pstCreateProduct.setString(4, product.getImgUrl());
             pstCreateProduct.setDouble(5, product.getVat());
             pstCreateProduct.setString(6, product.getDescription());
-            pstCreateProduct.setInt(7, product.getStock());
+            pstCreateProduct.setDouble(7, product.getStock());
             pstCreateProduct.setInt(8, product.getCategory().getIdCategory());
 
             int row = pstCreateProduct.executeUpdate();
@@ -64,12 +64,12 @@ public class ProductDao implements IntProductDao{
                 ResultSet generatedKeys = pstCreateProduct.getGeneratedKeys();
                 if (generatedKeys.next()) {
                     int id = generatedKeys. getInt(1);
-                    product.setIdProduct(id);
+                    product.setId(id);
                 }
             }
 
             for (Month month : product.getSeasonalMonths()) {
-                pstCreateProductMonths.setInt(1, product.getIdProduct());
+                pstCreateProductMonths.setInt(1, product.getId());
                 pstCreateProductMonths.setInt(2, month.id);
                 pstCreateProductMonths.executeUpdate();
             }
@@ -147,26 +147,26 @@ public class ProductDao implements IntProductDao{
             conn.setAutoCommit(false); // To avoid updating Product table if any errors are raised when deleting/inserting Months
 
             // UPDATE PRODUCT
-            pstUpdateProduct.setString(1, product.getProductName());
+            pstUpdateProduct.setString(1, product.getName());
             pstUpdateProduct.setString(2, product.getUnit());
             pstUpdateProduct.setDouble(3, product.getPricePerUnit());
             pstUpdateProduct.setString(4, product.getImgUrl());
             pstUpdateProduct.setDouble(5, product.getVat());
             pstUpdateProduct.setString(6, product.getDescription());
-            pstUpdateProduct.setInt(7, product.getStock());
+            pstUpdateProduct.setDouble(7, product.getStock());
             pstUpdateProduct.setInt(8, product.getCategory().getIdCategory());
-            pstUpdateProduct.setInt(9, product.getIdProduct());
+            pstUpdateProduct.setInt(9, product.getId());
 
             pstUpdateProduct.executeUpdate();
 
             // DELETE PRODUCT_MONTHS
-            pstDeleteProductMonths.setInt(1, product.getIdProduct());
+            pstDeleteProductMonths.setInt(1, product.getId());
             pstDeleteProductMonths.executeUpdate();
 
             // INSERT PRODUCT_MONTHS
             for (Month month : product.getSeasonalMonths()) {
 
-                pstInsertProductMonths.setInt(1, product.getIdProduct());
+                pstInsertProductMonths.setInt(1, product.getId());
                 pstInsertProductMonths.setInt(2, month.id);
 
                 pstInsertProductMonths.executeUpdate();
@@ -196,7 +196,7 @@ public class ProductDao implements IntProductDao{
 
         try (PreparedStatement ps = conn.prepareStatement(sqlQuery)) {
 
-            ps.setInt(1, product.getIdProduct());
+            ps.setInt(1, product.getId());
             ps.executeUpdate();
 
             // Delete from Products Months -> automated in the DB !

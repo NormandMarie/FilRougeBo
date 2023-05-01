@@ -33,7 +33,7 @@ public class LoginServlet extends HttpServlet {
             session.setAttribute("username", user.getUsername());
             session.setAttribute("password", user.getPassword());
             session.setAttribute("isSuperAdmin", user.getIsSuperAdmin());
-            resp.sendRedirect(req.getContextPath());
+            resp.sendRedirect(req.getContextPath() + "/");
         } else {
             // Si les informations de connexion sont incorrectes, on renvoie l'utilisateur vers la page de connexion avec un message d'erreur
             req.setAttribute("isError", true);
