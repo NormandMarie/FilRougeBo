@@ -1,6 +1,5 @@
-package com.m2i.filrougebo.servlet;
+package com.m2i.filrougebo.servlet.Filter;
 
-import com.m2i.filrougebo.service.Authentication;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
@@ -12,8 +11,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 
 @WebFilter(urlPatterns = "/secured/*")
 public class AuthenticationFilter extends HttpFilter {

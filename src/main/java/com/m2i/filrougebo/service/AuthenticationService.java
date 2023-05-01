@@ -2,11 +2,10 @@ package com.m2i.filrougebo.service;
 
 import com.m2i.filrougebo.dao.ConnectionManager;
 import com.m2i.filrougebo.entity.Admin;
-import jakarta.servlet.http.HttpSession;
 
 import java.sql.*;
 
-public class Authentication {
+public class AuthenticationService {
     public static boolean authenticate(String username, String password) {
         boolean isAuthenticated = false;
         Connection connection = ConnectionManager.getInstance();
