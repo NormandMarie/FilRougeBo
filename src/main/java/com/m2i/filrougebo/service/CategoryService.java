@@ -12,6 +12,10 @@ public class CategoryService {
     public Category create(Category category){
         return categoryDao.create(category);
     }
+    public Category create(String name){
+        Category cat = new Category(name);
+        return categoryDao.create(cat);
+    }
 
     public List<Category> findAll(){
         return categoryDao.findAll();
