@@ -21,5 +21,8 @@ public class AdminService {
 
         return adminDTOs;
     }
+    public  void create(Admin entity){
+        adminDao.create(entity);
+    }
 
 }

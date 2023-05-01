@@ -1,6 +1,6 @@
-package com.m2i.filrougebo.servlet;
+package com.m2i.filrougebo.servlet.Filter;
 
-import com.m2i.filrougebo.service.Authentication;
+import com.m2i.filrougebo.service.AuthenticationService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
@@ -17,7 +17,8 @@ import java.util.List;
 
 @WebFilter(urlPatterns = "/SuperAdmin/*")
 public class SuperAdminFilter extends HttpFilter {
-    private static final List<String> ALLOWED_URLS = Arrays.asList( "/secured/logout");
+    AuthenticationService authenticationService = new AuthenticationService();
+
     @Override
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException, ServletException {
         HttpServletResponse response = (HttpServletResponse) resp;
@@ -25,10 +26,16 @@ public class SuperAdminFilter extends HttpFilter {
         HttpSession session = request.getSession();
         String requestUri = request.getRequestURI().substring(request.getContextPath().length());
 
-        if (session.getAttribute("username") != null || ALLOWED_URLS.contains(requestUri)) {
+
+        boolean isSuperAdmin = session.getAttribute("isSuperAdmin") != null && (boolean) session.getAttribute("isSuperAdmin");
+        System.out.println(session.getAttribute("isSuperAdmin"));
+        if (isSuperAdmin) {
+            // L'utilisateur est un super-admin
             chain.doFilter(req, resp);
         } else {
-            response.sendRedirect(request.getContextPath() + "/login");
+            // L'utilisateur n'est pas un super-admin
+            response.sendRedirect(request.getContextPath() + "/error");
         }
+
     }
 }

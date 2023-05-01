@@ -1,4 +1,4 @@
-package com.m2i.filrougebo.servlet;
+package com.m2i.filrougebo.servlet.Admin;
 
 import com.m2i.filrougebo.Dto.AdminDto;
 import com.m2i.filrougebo.service.AdminService;
