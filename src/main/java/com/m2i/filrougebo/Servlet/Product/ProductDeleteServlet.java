@@ -1,4 +1,4 @@
-package com.m2i.filrougebo.Servlet.Product;
+package com.m2i.filrougebo.servlet.Product;
 
 
 import com.m2i.filrougebo.dao.CategoryDao;
@@ -23,19 +23,13 @@ public class ProductDeleteServlet extends HttpServlet {
     public static final String URL = "/delete-product";
     private static final String JSP = "";
 
+    ProductService productService = new ProductService();
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        ProductService productService = new ProductService();
-        IntCategoryDao categoryDao = new CategoryDao();
-        Category category = categoryDao.findById(10);
-        List<Month> months = new ArrayList<>();
-
-        months.add(Month.APRIL);
-        months.add(Month.MAY);
-        months.add(Month.JUNE);
-
-        Product product = new Product(18, "Tomatoes", "kg", 1.0D, "imgURL", 5, "description", 1, category, months);
+        int id = Integer.parseInt(req.getParameter("id"));
+        Product product = productService.findById(id);
 
         productService.deleteProduct(product);
 
