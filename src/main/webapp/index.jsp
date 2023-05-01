@@ -18,6 +18,7 @@
 <% if(request.getSession().getAttribute("username") != null) { %>
 <% if (AuthenticationService.isSuperAdmin((String) session.getAttribute("username"))) { %>
 <a href="${pageContext.request.contextPath}/SuperAdmin/ListAdmin">List Admins</a>
+<a href="${pageContext.request.contextPath}/SuperAdmin/add-admin">add Admins</a>
 <% } %>
 <a href="${pageContext.request.contextPath}/secured/logout">Déconnexion</a>
 <% } else { %>

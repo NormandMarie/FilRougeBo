@@ -24,5 +24,10 @@ public class AdminService {
     public  void create(Admin entity){
         adminDao.create(entity);
     }
-
+    public Admin findById(Integer integer){
+        return adminDao.findById(integer);
+    }
+    public void delete(Admin entity){
+        adminDao.delete(entity);
+    }
 }
