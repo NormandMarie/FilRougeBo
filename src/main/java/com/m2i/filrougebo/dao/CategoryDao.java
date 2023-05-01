@@ -8,7 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryDao implements IntCategoryDao{
-    Connection conn = ConnectionManager.getInstance();
+
+    Connection conn = DataBase.getInstance();
 
     private Category mapToCategory(ResultSet resultSet) throws SQLException {
 
@@ -16,6 +17,7 @@ public class CategoryDao implements IntCategoryDao{
         String name = resultSet.getString("name");
         return new Category(id,name);
     }
+
     @Override
     public Category create(Category entity) {
 

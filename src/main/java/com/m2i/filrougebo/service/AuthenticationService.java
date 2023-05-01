@@ -1,6 +1,6 @@
 package com.m2i.filrougebo.service;
 
-import com.m2i.filrougebo.dao.ConnectionManager;
+import com.m2i.filrougebo.dao.DataBase;
 import com.m2i.filrougebo.entity.Admin;
 
 import java.sql.*;
@@ -8,7 +8,7 @@ import java.sql.*;
 public class AuthenticationService {
     public static boolean authenticate(String username, String password) {
         boolean isAuthenticated = false;
-        Connection connection = ConnectionManager.getInstance();
+        Connection connection = DataBase.getInstance();
         String query = "SELECT * FROM admins WHERE username = ? AND password = ?";
         PreparedStatement statement = null;
         ResultSet resultSet = null;
@@ -29,7 +29,7 @@ public class AuthenticationService {
     }
 
     public static boolean isSuperAdmin(String username) {
-        Connection connection = ConnectionManager.getInstance();
+        Connection connection = DataBase.getInstance();
         String query = "SELECT * FROM admins WHERE username = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, username);
@@ -48,7 +48,7 @@ public class AuthenticationService {
         return false;
     }
     public static Admin authenticatewithSuper(String username, String password) {
-        Connection connection = ConnectionManager.getInstance();
+        Connection connection = DataBase.getInstance();
         String query = "SELECT * FROM admins WHERE username = ? AND password = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, username);

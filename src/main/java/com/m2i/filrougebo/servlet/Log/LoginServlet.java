@@ -16,8 +16,8 @@ public class LoginServlet extends HttpServlet {
  AuthenticationService authentication = new AuthenticationService();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HttpSession session = req.getSession();
-        session.invalidate();
+//        HttpSession session = req.getSession();
+//        session.invalidate();
         req.getRequestDispatcher("/WEB-INF/login.jsp").forward(req, resp);
 
     }

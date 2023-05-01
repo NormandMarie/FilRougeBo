@@ -51,3 +51,4 @@ build/
 
 ### DB CONNECTION ###
 src/main/resources/app.properties
+

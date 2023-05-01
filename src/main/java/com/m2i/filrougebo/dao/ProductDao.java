@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 public class ProductDao implements IntProductDao{
-    Connection conn = ConnectionManager.getInstance();
+    Connection conn = DataBase.getInstance();
 
     @Override
     public void create(Product entity) {
