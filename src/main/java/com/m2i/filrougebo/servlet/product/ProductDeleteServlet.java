@@ -1,11 +1,7 @@
-package com.m2i.filrougebo.servlet.Product;
+package com.m2i.filrougebo.servlet.product;
 
 
-import com.m2i.filrougebo.dao.CategoryDao;
-import com.m2i.filrougebo.dao.IntCategoryDao;
-import com.m2i.filrougebo.entity.Category;
 import com.m2i.filrougebo.entity.Product;
-import com.m2i.filrougebo.enums.Month;
 import com.m2i.filrougebo.service.ProductService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -14,8 +10,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 @WebServlet(urlPatterns = ProductDeleteServlet.URL)
 public class ProductDeleteServlet extends HttpServlet {

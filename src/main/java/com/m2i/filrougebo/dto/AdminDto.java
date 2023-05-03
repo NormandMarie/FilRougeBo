@@ -1,4 +1,4 @@
-package com.m2i.filrougebo.Dto;
+package com.m2i.filrougebo.dto;
 
 import com.m2i.filrougebo.entity.Admin;
 

@@ -1,6 +1,6 @@
 package com.m2i.filrougebo.service;
 
-import com.m2i.filrougebo.Dto.AdminDto;
+import com.m2i.filrougebo.dto.AdminDto;
 import com.m2i.filrougebo.dao.AdminDao;
 import com.m2i.filrougebo.dao.IntAdminDao;
 import com.m2i.filrougebo.entity.Admin;

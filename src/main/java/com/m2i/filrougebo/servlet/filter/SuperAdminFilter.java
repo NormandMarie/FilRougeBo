@@ -1,4 +1,4 @@
-package com.m2i.filrougebo.servlet.Filter;
+package com.m2i.filrougebo.servlet.filter;
 
 import com.m2i.filrougebo.service.AuthenticationService;
 import jakarta.servlet.FilterChain;
@@ -12,8 +12,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 
 @WebFilter(urlPatterns = "/SuperAdmin/*")
 public class SuperAdminFilter extends HttpFilter {

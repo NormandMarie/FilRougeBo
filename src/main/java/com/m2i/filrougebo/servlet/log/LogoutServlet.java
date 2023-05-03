@@ -1,4 +1,4 @@
-package com.m2i.filrougebo.servlet.Log;
+package com.m2i.filrougebo.servlet.log;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;

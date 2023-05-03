@@ -1,4 +1,4 @@
-package com.m2i.filrougebo.servlet.Filter;
+package com.m2i.filrougebo.servlet.filter;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

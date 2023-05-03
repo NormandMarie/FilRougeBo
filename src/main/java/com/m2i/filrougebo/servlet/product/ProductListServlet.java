@@ -1,4 +1,4 @@
-package com.m2i.filrougebo.servlet.Product;
+package com.m2i.filrougebo.servlet.product;
 
 import com.m2i.filrougebo.entity.Product;
 import com.m2i.filrougebo.service.ProductService;

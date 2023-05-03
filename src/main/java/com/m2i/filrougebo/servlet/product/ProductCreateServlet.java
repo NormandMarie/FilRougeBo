@@ -1,4 +1,4 @@
-package com.m2i.filrougebo.servlet.Product;
+package com.m2i.filrougebo.servlet.product;
 
 import com.m2i.filrougebo.dao.CategoryDao;
 import com.m2i.filrougebo.dao.IntCategoryDao;
@@ -14,7 +14,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
