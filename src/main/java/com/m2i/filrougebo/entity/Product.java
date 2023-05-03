@@ -1,74 +1,82 @@
 package com.m2i.filrougebo.entity;
 
-import com.m2i.filrougebo.enums.SeasonalMonths;
+import com.m2i.filrougebo.enums.Month;
 
 import java.util.List;
 
 public class Product {
-    private int idProduct;
-    private String productName;
+    private int id;
+    private String name;
     private String unit;
     private double pricePerUnit;
     private String imgUrl;
     private double vat;
     private String description;
-    private int stock;
-    private int idCategory;
-    private List<SeasonalMonths> seasonalMonths;
+    private double stock;
+    private Category category;
+    //TODO: Change to EnumSet?
+    private List<Month> seasonalMonths;
 
     public Product() {
     }
 
-    public Product(String productName, String unit, double pricePerUnit, String imgUrl, double vat, String description, int stock, int idCategory, List<SeasonalMonths> seasonalMonths) {
-        this.productName = productName;
+    public Product(String name, String unit, double pricePerUnit, String imgUrl, double vat,
+                   String description, double stock, Category category, List<Month> seasonalMonths) {
+        this.name = name;
         this.unit = unit;
         this.pricePerUnit = pricePerUnit;
         this.imgUrl = imgUrl;
         this.vat = vat;
         this.description = description;
         this.stock = stock;
-        this.idCategory = idCategory;
-        this.seasonalMonths = seasonalMonths;
-    }
-    // constructeur sans liste seasonal, pour la méthode create. la donnée seasonal month est à préciser directement dans la table products_months!
-    public Product(String productName, String unit, double pricePerUnit, String imgUrl, double vat, String description,int stock, int idCategory) {
-        this.productName = productName;
-        this.unit = unit;
-        this.pricePerUnit = pricePerUnit;
-        this.imgUrl = imgUrl;
-        this.vat = vat;
-        this.description = description;
-        this.stock = stock;
-        this.idCategory = idCategory;
-    }
-
-    public Product(int idProduct, String productName, String unit, double pricePerUnit, String imgUrl, double vat, String description,int stock, int idCategory, List<SeasonalMonths> seasonalMonths) {
-        this.idProduct = idProduct;
-        this.productName = productName;
-        this.unit = unit;
-        this.pricePerUnit = pricePerUnit;
-        this.imgUrl = imgUrl;
-        this.vat = vat;
-        this.description = description;
-        this.stock = stock;
-        this.idCategory = idCategory;
+        this.category = category;
         this.seasonalMonths = seasonalMonths;
     }
 
-    public int getIdProduct() {
-        return idProduct;
+    public Product(int id, String name, String unit, double pricePerUnit, String imgUrl, double vat,
+                   String description, double stock, Category category, List<Month> seasonalMonths) {
+        this.id = id;
+        this.name = name;
+        this.unit = unit;
+        this.pricePerUnit = pricePerUnit;
+        this.imgUrl = imgUrl;
+        this.vat = vat;
+        this.description = description;
+        this.stock = stock;
+        this.category = category;
+        this.seasonalMonths = seasonalMonths;
     }
 
-    public void setIdProduct(int idProduct) {
-        this.idProduct = idProduct;
+    @Override
+    public String toString() {
+        return "Product{" +
+                "idProduct=" + id +
+                ", productName='" + name + '\'' +
+                ", unit='" + unit + '\'' +
+                ", pricePerUnit=" + pricePerUnit +
+                ", imgUrl='" + imgUrl + '\'' +
+                ", vat=" + vat +
+                ", description='" + description + '\'' +
+                ", stock=" + stock +
+                ", category=" + category +
+                ", seasonalMonths=" + seasonalMonths +
+                '}';
     }
 
-    public String getProductName() {
-        return productName;
+    public int getId() {
+        return id;
     }
 
-    public void setProductName(String productName) {
-        this.productName = productName;
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getUnit() {
@@ -111,27 +119,27 @@ public class Product {
         this.description = description;
     }
 
-    public int getStock() {
+    public double getStock() {
         return stock;
     }
 
-    public void setStock(int stock) {
+    public void setStock(double stock) {
         this.stock = stock;
     }
 
-    public int getIdCategory() {
-        return idCategory;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setIdCategory(int idCategory) {
-        this.idCategory = idCategory;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
-    public List<SeasonalMonths> getSeasonalMonths() {
+    public List<Month> getSeasonalMonths() {
         return seasonalMonths;
     }
 
-    public void setSeasonalMonths(List<SeasonalMonths> seasonalMonths) {
+    public void setSeasonalMonths(List<Month> seasonalMonths) {
         this.seasonalMonths = seasonalMonths;
     }
 }
