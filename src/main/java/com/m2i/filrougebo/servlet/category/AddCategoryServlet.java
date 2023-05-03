@@ -1,4 +1,4 @@
-package com.m2i.filrougebo.servlets.category;
+package com.m2i.filrougebo.servlet.category;
 
 import com.m2i.filrougebo.service.CategoryService;
 import jakarta.servlet.ServletException;
