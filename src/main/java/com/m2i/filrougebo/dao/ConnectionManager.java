@@ -16,7 +16,6 @@ public class ConnectionManager {
     private ConnectionManager() {
         // avoid instantiation
     }
-
     public static Connection getInstance() {
 
         if (INSTANCE == null) {
@@ -38,7 +37,6 @@ public class ConnectionManager {
         }
         return INSTANCE;
     }
-
     public static void closeConnection() {
         if (INSTANCE != null) {
             try {
