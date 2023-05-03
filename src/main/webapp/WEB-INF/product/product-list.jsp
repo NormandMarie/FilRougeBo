@@ -21,13 +21,10 @@
 
       <p>${product}</p>
 
-      <a class="btn btn-secondary"
-         href="${pageContext.request.contextPath}/details-product?id=${product.id}"
-         role="button">details id=${product.id}</a>
       <a class="btn btn-primary"
          href="${pageContext.request.contextPath}/edit-product?id=${product.id}"
          role="button">update id=${product.id}</a>
-      <a class="btn btn-danger"
+      <a class="btn btn-primary"
          href="${pageContext.request.contextPath}/delete-product?id=${product.id}" role="button">delete id=${product.id}</a>
 
 
