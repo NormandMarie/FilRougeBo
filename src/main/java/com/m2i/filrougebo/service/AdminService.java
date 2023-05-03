@@ -9,7 +9,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AdminService {
-    private IntAdminDao adminDao = new AdminDao();
+    private static IntAdminDao adminDao = new AdminDao();
+
+    public Admin create(Admin admin){
+        return adminDao.create(admin);
+    }
+    public List<Admin> findAll(){
+        return adminDao.findAll();
+    }
+
     public List<AdminDto> getAllAdmins() {
         List<Admin> admins = adminDao.findAll();
         List<AdminDto> adminDTOs = new ArrayList<>();
@@ -21,13 +29,15 @@ public class AdminService {
 
         return adminDTOs;
     }
-    public  void create(Admin entity){
-        adminDao.create(entity);
+
+    public Admin findById(int id){
+        return adminDao.findById(id);
     }
-    public Admin findById(Integer integer){
-        return adminDao.findById(integer);
+    public boolean update(Admin admin){
+        return adminDao.update(admin);
     }
-    public void delete(Admin entity){
-        adminDao.delete(entity);
+    public boolean delete(Admin admin){
+        return adminDao.delete(admin);
     }
+
 }
