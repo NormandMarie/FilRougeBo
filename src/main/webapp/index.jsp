@@ -1,3 +1,7 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+
 <%@ page import="com.m2i.filrougebo.service.AuthenticationService" %><%--
   Created by IntelliJ IDEA.
   User: warie
@@ -6,15 +10,20 @@
   To change this template use File | Settings | File Templates.
 --%>
 
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%--<%@ page contentType="text/html;charset=UTF-8" language="java" %>--%>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-    <title>JSP - Hello World</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>FilRougeBO</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 </head>
 <body>
+
+<jsp:include page="/WEB-INF/navbar.jsp"></jsp:include>
+
 <h1>Holà!</h1>
+
 <% if(request.getSession().getAttribute("username") != null) { %>
 <% if (AuthenticationService.isSuperAdmin((String) session.getAttribute("username"))) { %>
 <a href="${pageContext.request.contextPath}/SuperAdmin/ListAdmin">List Admins</a>
