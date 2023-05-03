@@ -5,14 +5,7 @@ target/
 
 ### IntelliJ IDEA ###
 .idea
-<<<<<<< HEAD
 .idea/workspace.xml
-=======
-<<<<<<< HEAD
-=======
-.idea/workspace.xml
->>>>>>> Dev
->>>>>>> Dev
 .idea/modules.xml
 .idea/jarRepositories.xml
 .idea/compiler.xml
@@ -20,8 +13,6 @@ target/
 *.iws
 *.iml
 *.ipr
-.idea
-.idea/workspace.xml
 
 ### Eclipse ###
 .apt_generated
@@ -47,13 +38,6 @@ build/
 
 ### Mac OS ###
 .DS_Store
-<<<<<<< HEAD
-=======
 
 ### DB CONNECTION ###
 src/main/resources/app.properties
-<<<<<<< HEAD
-=======
-
->>>>>>> Dev
->>>>>>> Dev
