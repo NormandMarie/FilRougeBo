@@ -5,7 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AdminDao implements IntAdminDao{
-    private Connection conn = ConnectionManager.getInstance();
+
+    Connection conn = DataBase.getInstance();
 
     private Admin mapToAdmin(ResultSet resultSet) throws SQLException {
         int id = resultSet.getInt("id");

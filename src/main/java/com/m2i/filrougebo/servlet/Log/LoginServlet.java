@@ -16,8 +16,7 @@ public class LoginServlet extends HttpServlet {
  AuthenticationService authentication = new AuthenticationService();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HttpSession session = req.getSession();
-        session.invalidate();
+
         req.getRequestDispatcher("/WEB-INF/login.jsp").forward(req, resp);
 
     }
@@ -33,7 +32,9 @@ public class LoginServlet extends HttpServlet {
             session.setAttribute("username", user.getUsername());
             session.setAttribute("password", user.getPassword());
             session.setAttribute("isSuperAdmin", user.getIsSuperAdmin());
-            resp.sendRedirect(req.getContextPath());
+
+            resp.sendRedirect(req.getContextPath() + "/");
+
         } else {
             // Si les informations de connexion sont incorrectes, on renvoie l'utilisateur vers la page de connexion avec un message d'erreur
             req.setAttribute("isError", true);
