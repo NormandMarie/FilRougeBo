@@ -20,7 +20,7 @@ public class ListAdminServlet  extends HttpServlet {
         List<AdminDto> AdminDtos = adminService.getAllAdmins();
         System.out.println(AdminDtos);
         req.setAttribute("AdminDtos", AdminDtos);
-        req.getRequestDispatcher("/WEB-INF/ListAdmin.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/admin/ListAdmin.jsp").forward(req, resp);
 
     }
 }

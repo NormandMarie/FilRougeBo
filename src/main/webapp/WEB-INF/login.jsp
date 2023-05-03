@@ -12,7 +12,7 @@
     <title>Login</title>
 </head>
 <body>
-
+<img src="https://source.unsplash.com/random/900×700/?vegetables" style="max-height: 400px;max-width: 400px;">
 <form action="${pageContext.request.contextPath}/login" method="post">
     <input type="text" name="username" placeholder="username">
     <input type="password" name="password" placeholder="password">
