@@ -1,18 +1,15 @@
 package com.m2i.filrougebo.servlet.Admin;
 
-import com.m2i.filrougebo.Dto.AdminDto;
-import com.m2i.filrougebo.dao.AdminDao;
 import com.m2i.filrougebo.entity.Admin;
 import com.m2i.filrougebo.service.AdminService;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
-import java.util.List;
 
 @WebServlet(urlPatterns = "/SuperAdmin/add-admin")
 public class AddAdminServlet extends HttpServlet {
@@ -38,3 +35,4 @@ public class AddAdminServlet extends HttpServlet {
         resp.sendRedirect(req.getContextPath() + "/SuperAdmin/ListAdmin");
     }
 }
+
