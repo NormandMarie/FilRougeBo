@@ -19,7 +19,7 @@ public class DeleteCategoryServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         // get the id from the value of the button clicked (list-categories.jsp)
-        int id = Integer.parseInt(req.getParameter("deletBtn"));
+        int id = Integer.parseInt(req.getParameter("deleteBtn"));
         //then find the categ by Id
         Category categoryToDelete = categoryService.findById(id);
         //then delete it

@@ -16,10 +16,10 @@
       <div class="card" style="width: 18rem;">
           <p style="margin-bottom: 0.5em;"><strong>${category.name} </strong></p>
           <p>${category.idCategory}</p>
-          <form action="secured/delete-category" method="post">
+          <form action="${pageContext.request.contextPath}/secured/delete-category" method="post">
               <button name="deleteBtn" value="${category.idCategory}">delete</button>
           </form>
-          <form action="secured/edit-category" method="post">
+          <form action="${pageContext.request.contextPath}/secured/edit-category">
               <button name="editBtn" value="${category.idCategory}">edit</button>
           </form>
       </div>

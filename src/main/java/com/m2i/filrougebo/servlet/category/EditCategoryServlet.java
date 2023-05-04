@@ -21,8 +21,10 @@ public class EditCategoryServlet extends HttpServlet {
 
         //get the id from value of button clicked in list-category.jsp
         int id = Integer.parseInt(req.getParameter("editBtn"));
+        System.out.println(id);
         //find the category by id
         Category toUpdateCategory = categoryService.findById(id);
+        System.out.println(toUpdateCategory.getName());
         // set the category as attribute in the request
         req.setAttribute("toUpdateCategory",toUpdateCategory);
         //forward
