@@ -21,7 +21,7 @@ import java.util.List;
 @WebServlet(urlPatterns = ProductEditServlet.URL)
 public class ProductEditServlet extends HttpServlet {
 
-    public static final String URL = "/edit-product";
+    public static final String URL = "/secured/edit-product";
     private static final String JSP = "/WEB-INF/product/product-form.jsp";
 
     ProductService productService = new ProductService();

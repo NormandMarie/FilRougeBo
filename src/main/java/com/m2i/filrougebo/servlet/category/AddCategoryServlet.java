@@ -9,23 +9,22 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet(urlPatterns = AddCategoryServlet.url)
+@WebServlet(urlPatterns = AddCategoryServlet.URL)
 public class AddCategoryServlet extends HttpServlet {
 
     private static CategoryService categoryService = new CategoryService();
-    static final String url =  "/secured/add-category";
-    private static final String jspPath = "WEB-INF/category/add-category.jsp";
+    public static final String URL =  "/secured/add-category";
+    private static final String JSP = "/WEB-INF/category/add-category.jsp";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher(jspPath).forward(req,resp);
+        req.getRequestDispatcher(JSP).forward(req,resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String categoryName = req.getParameter("name");
         categoryService.create(categoryName);
-        // send redirect to the list of categories
-
+        resp.sendRedirect(ListCategoryServlet.URL);
     }
 }

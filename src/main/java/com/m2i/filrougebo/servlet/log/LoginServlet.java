@@ -11,9 +11,12 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
-@WebServlet(urlPatterns = "/login")
+@WebServlet(urlPatterns = LoginServlet.URL)
 public class LoginServlet extends HttpServlet {
- AuthenticationService authentication = new AuthenticationService();
+
+    public static final String URL = "/login";
+    private static final String JSP = "/WEB-INF/login.jsp";
+    AuthenticationService authentication = new AuthenticationService();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -28,6 +31,7 @@ public class LoginServlet extends HttpServlet {
         Admin user = authentication.authenticatewithSuper(username, password);
         if (user != null) {
             // Si les informations de connexion sont correctes, on stocke les données de l'utilisateur dans la session et on redirige vers la page d'accueil
+
             HttpSession session = req.getSession();
             session.setAttribute("username", user.getUsername());
             session.setAttribute("password", user.getPassword());
@@ -38,7 +42,7 @@ public class LoginServlet extends HttpServlet {
         } else {
             // Si les informations de connexion sont incorrectes, on renvoie l'utilisateur vers la page de connexion avec un message d'erreur
             req.setAttribute("isError", true);
-            req.getRequestDispatcher("/WEB-INF/login.jsp").forward(req, resp);
+            req.getRequestDispatcher(JSP).forward(req, resp);
         }
     }
 }

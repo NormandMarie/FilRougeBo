@@ -10,10 +10,10 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet(urlPatterns = DeleteCategoryServlet.url)
+@WebServlet(urlPatterns = DeleteCategoryServlet.URL)
 public class DeleteCategoryServlet extends HttpServlet {
     private static CategoryService categoryService = new CategoryService();
-    static final String url =  "/secured/delete-category";
+    public static final String URL = "/secured/delete-category";
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -25,7 +25,7 @@ public class DeleteCategoryServlet extends HttpServlet {
         //then delete it
         categoryService.delete(categoryToDelete);
         // redirect to list-categories
-        resp.sendRedirect(req.getContextPath()+"/secured/list-categories");
+        resp.sendRedirect(ListCategoryServlet.URL);
 
     }
 }

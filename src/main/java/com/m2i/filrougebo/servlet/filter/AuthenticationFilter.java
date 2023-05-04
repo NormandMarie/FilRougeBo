@@ -1,5 +1,6 @@
 package com.m2i.filrougebo.servlet.filter;
 
+import com.m2i.filrougebo.servlet.log.LoginServlet;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
@@ -12,8 +13,10 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
-@WebFilter(urlPatterns = "/secured/*")
+@WebFilter(urlPatterns = AuthenticationFilter.URL)
 public class AuthenticationFilter extends HttpFilter {
+
+    public static final String URL = "/secured/*";
     @Override
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException, ServletException {
         HttpServletResponse response = (HttpServletResponse) resp;
@@ -24,7 +27,7 @@ public class AuthenticationFilter extends HttpFilter {
         if (session.getAttribute("username") != null) {
             chain.doFilter(req, resp);
         } else {
-            response.sendRedirect(request.getContextPath() + "/login");
+            response.sendRedirect(LoginServlet.URL);
         }
   }
 }

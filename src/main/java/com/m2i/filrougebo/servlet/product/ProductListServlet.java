@@ -14,7 +14,7 @@ import java.util.List;
 @WebServlet(urlPatterns = ProductListServlet.URL)
 public class ProductListServlet extends HttpServlet {
 
-    public static final String URL = "/list-product";
+    public static final String URL = "/secured/list-product";
     public static final String JSP = "/WEB-INF/product/product-list.jsp";
 
     @Override
