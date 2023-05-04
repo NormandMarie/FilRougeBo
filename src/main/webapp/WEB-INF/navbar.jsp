@@ -45,14 +45,14 @@
                     <ul class="dropdown-menu">
                         <li>
                             <a class="dropdown-item"
-                               href="${pageContext.request.contextPath}/secured/list-category">
+                               href="${pageContext.request.contextPath}/secured/list-product">
                                 Products list
                             </a>
                         </li>
                         <li><hr class="dropdown-divider"></li>
                         <li>
                             <a class="dropdown-item"
-                               href="${pageContext.request.contextPath}/secured/add-category">
+                               href="${pageContext.request.contextPath}/secured/add-product">
                                 Add Product
                             </a>
                         </li>
