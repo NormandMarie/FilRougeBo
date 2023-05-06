@@ -9,12 +9,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryService {
-    private static IntCategoryDao categoryDao = new CategoryDao();
+    private IntCategoryDao categoryDao;
+
+    public CategoryService() {
+        this.categoryDao = new CategoryDao();
+    }
+    public CategoryService(IntCategoryDao categoryDao) {
+        this.categoryDao = categoryDao;
+    }
 
     public Category create(Category category){
         return categoryDao.create(category);
     }
     public Category create(String name){
+        Category cat = new Category(name);
+        return categoryDao.create(cat);
+    }
+    public Category create1(String name){
         Category cat = new Category(name);
         return categoryDao.create(cat);
     }
