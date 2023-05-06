@@ -14,7 +14,7 @@ import java.io.IOException;
 @WebServlet(urlPatterns = ProductDeleteServlet.URL)
 public class ProductDeleteServlet extends HttpServlet {
 
-    public static final String URL = "/delete-product";
+    public static final String URL = "/secured/delete-product";
     private static final String JSP = "";
 
     ProductService productService = new ProductService();

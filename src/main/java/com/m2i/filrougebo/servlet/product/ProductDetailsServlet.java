@@ -13,7 +13,7 @@ import java.io.IOException;
 @WebServlet(urlPatterns = ProductDetailsServlet.URL)
 public class ProductDetailsServlet extends HttpServlet {
 
-    public static final String URL = "/details-product";
+    public static final String URL = "/secured/details-product";
     private static final String JSP = "/WEB-INF/product/product-details.jsp";
 
     ProductService productService = new ProductService();

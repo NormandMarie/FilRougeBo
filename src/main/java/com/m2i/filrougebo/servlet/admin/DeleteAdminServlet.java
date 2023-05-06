@@ -9,9 +9,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.util.List;
 
-@WebServlet(urlPatterns = "/SuperAdmin/delete-admin")
+@WebServlet(urlPatterns = DeleteAdminServlet.URL)
 public class DeleteAdminServlet extends HttpServlet {
+
+    public static final String URL = "/SuperAdmin/delete-admin";
+    private static final String JSP = "/WEB-INF/error.jsp";
     AdminService adminService = new AdminService();protected void doGet(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
         String sid = request.getParameter("id");
         int id = Integer.parseInt(sid);
@@ -25,11 +29,11 @@ public class DeleteAdminServlet extends HttpServlet {
             adminService.delete(adminToDelete);
 
             // redirection
-            response.sendRedirect(request.getContextPath() + "/SuperAdmin/ListAdmin");
+            response.sendRedirect(ListAdminServlet.URL);
         } else {
             // si l'admin n'existe pas, on affiche un message d'erreur
             request.setAttribute("errorMessage", "Admin not found");
-            request.getRequestDispatcher("/WEB-INF/error.jsp").forward(request, response);
+            request.getRequestDispatcher(JSP).forward(request, response);
         }
     }
 

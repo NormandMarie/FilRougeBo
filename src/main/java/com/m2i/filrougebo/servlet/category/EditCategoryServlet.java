@@ -10,23 +10,25 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet(urlPatterns = EditCategoryServlet.url)
+@WebServlet(urlPatterns = EditCategoryServlet.URL)
 public class EditCategoryServlet extends HttpServlet {
     private static CategoryService categoryService = new CategoryService();
-    static final String url =  "/secured/edit-category";
-    private static final String jspPath = "WEB-INF/category/edit-category.jsp";
+    public static final String URL =  "/secured/edit-category";
+    private static final String JSP = "/WEB-INF/category/edit-category.jsp";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         //get the id from value of button clicked in list-category.jsp
         int id = Integer.parseInt(req.getParameter("editBtn"));
+        System.out.println(id);
         //find the category by id
         Category toUpdateCategory = categoryService.findById(id);
+        System.out.println(toUpdateCategory.getName());
         // set the category as attribute in the request
         req.setAttribute("toUpdateCategory",toUpdateCategory);
         //forward
-        req.getRequestDispatcher(jspPath).forward(req,resp);
+        req.getRequestDispatcher(JSP).forward(req,resp);
     }
 
     @Override
@@ -42,6 +44,6 @@ public class EditCategoryServlet extends HttpServlet {
         //update
         categoryService.update(targetCategory);
         //redirect to list categories
-        resp.sendRedirect(req.getContextPath()+"/secured/list-category");
+        resp.sendRedirect(ListCategoryServlet.URL);
     }
 }

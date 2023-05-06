@@ -11,12 +11,15 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet(urlPatterns = "/SuperAdmin/add-admin")
+@WebServlet(urlPatterns = AddAdminServlet.URL)
 public class AddAdminServlet extends HttpServlet {
+
+    public static final String URL = "/SuperAdmin/add-admin";
+    private static final String JSP = "/WEB-INF/admin/AddAdmin.jsp";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/WEB-INF/admin/AddAdmin.jsp").forward(req, resp);
+        req.getRequestDispatcher(JSP).forward(req, resp);
 
     }
 
@@ -31,7 +34,7 @@ public class AddAdminServlet extends HttpServlet {
         AdminService adminService = new AdminService();
         adminService.create(newAdmin);
 
-        resp.sendRedirect(req.getContextPath() + "/SuperAdmin/ListAdmin");
+        resp.sendRedirect(ListAdminServlet.URL);
     }
 }
 

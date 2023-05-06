@@ -13,17 +13,18 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
-@WebFilter(urlPatterns = "/SuperAdmin/*")
+@WebFilter(urlPatterns = SuperAdminFilter.URL)
 public class SuperAdminFilter extends HttpFilter {
+    public static final String URL = "/SuperAdmin/*";
     AuthenticationService authenticationService = new AuthenticationService();
 
     @Override
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException, ServletException {
+
         HttpServletResponse response = (HttpServletResponse) resp;
         HttpServletRequest request = (HttpServletRequest) req;
         HttpSession session = request.getSession();
         String requestUri = request.getRequestURI().substring(request.getContextPath().length());
-
 
         boolean isSuperAdmin = session.getAttribute("isSuperAdmin") != null && (boolean) session.getAttribute("isSuperAdmin");
         System.out.println(session.getAttribute("isSuperAdmin"));
@@ -32,6 +33,7 @@ public class SuperAdminFilter extends HttpFilter {
             chain.doFilter(req, resp);
         } else {
             // L'utilisateur n'est pas un super-admin
+            // TODO: Marie Norman check here
             response.sendRedirect(request.getContextPath() + "/error");
         }
 

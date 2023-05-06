@@ -5,6 +5,7 @@ import com.m2i.filrougebo.dao.IntCategoryDao;
 import com.m2i.filrougebo.entity.Category;
 import com.m2i.filrougebo.entity.Product;
 import com.m2i.filrougebo.enums.Month;
+import com.m2i.filrougebo.service.CategoryService;
 import com.m2i.filrougebo.service.MonthService;
 import com.m2i.filrougebo.service.ProductService;
 import jakarta.servlet.ServletException;
@@ -20,20 +21,19 @@ import java.util.List;
 @WebServlet(urlPatterns = ProductCreateServlet.URL)
 public class ProductCreateServlet extends HttpServlet {
 
-    public static final String URL = "/create-product";
+    public static final String URL = "/secured/add-product";
     private static final String JSP = "/WEB-INF/product/product-form.jsp";
 
     ProductService productService = new ProductService();
 
-    //TODO: Change to Service
-    IntCategoryDao categoryDao = new CategoryDao();
+    CategoryService categoryService = new CategoryService();
 
     MonthService monthService = new MonthService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        List<Category> categoryList = categoryDao.findAll();
+        List<Category> categoryList = categoryService.findAll();
         List<Month> monthList = monthService.findAll();
 
         req.setAttribute("categoryList", categoryList);
@@ -53,7 +53,7 @@ public class ProductCreateServlet extends HttpServlet {
         double vat = Double.parseDouble(req.getParameter("vat"));
         String description = req.getParameter("description");
         double stock = Double.parseDouble(req.getParameter("stock"));
-        Category category = categoryDao.findById(Integer.valueOf(req.getParameter("category")));
+        Category category = categoryService.findById(Integer.parseInt(req.getParameter("category")));
 
         List<Month> seasonalMonths = new ArrayList<>();
         String[] months = req.getParameterValues("months");

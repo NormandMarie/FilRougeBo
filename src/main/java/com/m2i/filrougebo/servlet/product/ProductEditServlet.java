@@ -5,6 +5,7 @@ import com.m2i.filrougebo.dao.IntCategoryDao;
 import com.m2i.filrougebo.entity.Category;
 import com.m2i.filrougebo.entity.Product;
 import com.m2i.filrougebo.enums.Month;
+import com.m2i.filrougebo.service.CategoryService;
 import com.m2i.filrougebo.service.MonthService;
 import com.m2i.filrougebo.service.ProductService;
 import jakarta.servlet.ServletException;
@@ -20,14 +21,11 @@ import java.util.List;
 @WebServlet(urlPatterns = ProductEditServlet.URL)
 public class ProductEditServlet extends HttpServlet {
 
-    public static final String URL = "/edit-product";
+    public static final String URL = "/secured/edit-product";
     private static final String JSP = "/WEB-INF/product/product-form.jsp";
 
     ProductService productService = new ProductService();
-
-    //TODO: Change to Service
-    IntCategoryDao categoryDao = new CategoryDao();
-
+    CategoryService categoryService = new CategoryService();
     MonthService monthService = new MonthService();
 
     @Override
@@ -36,16 +34,7 @@ public class ProductEditServlet extends HttpServlet {
         int id = Integer.parseInt(req.getParameter("id"));
         Product product = productService.findById(id);
 
-        List<Category> categoryAll = categoryDao.findAll();
-        
-        // TODO: move to Category Service
-        List<Category> categoryList = new ArrayList<>();
-        for (Category category: categoryAll) {
-            if (category.getIdCategory() != product.getCategory().getIdCategory()) {
-                categoryList.add(category);
-            }
-        }
-        
+        List<Category> categoryList = categoryService.findAllCategoriesExceptProductCategory(product);
         List<Month> monthList = monthService.findAll();
 
         req.setAttribute("product", product);
@@ -68,7 +57,7 @@ public class ProductEditServlet extends HttpServlet {
         double vat = Double.parseDouble(req.getParameter("vat"));
         String description = req.getParameter("description");
         double stock = Double.parseDouble(req.getParameter("stock"));
-        Category category = categoryDao.findById(Integer.valueOf(req.getParameter("category")));
+        Category category = categoryService.findById(Integer.parseInt(req.getParameter("category")));
 
         List<Month> seasonalMonths = new ArrayList<>();
         String[] months = req.getParameterValues("months");
