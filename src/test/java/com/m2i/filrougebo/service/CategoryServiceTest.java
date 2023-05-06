@@ -34,6 +34,19 @@ class CategoryServiceTest {
 
     }
     @Test
+    void ShouldCreateAndReturnCategoryGivenCategory(){
+
+        String name = "category name";
+        int id = 1;
+        Category expected = new Category(id,name);
+
+        when(categoryDaoMock.create(any(Category.class))).thenReturn(expected);
+
+        Category result = categoryService.create(expected);
+
+        assertEquals(expected, result);
+    }
+    @Test
     void ShouldCreateAndReturnCategoryGivenName(){
 
         String name = "category name";
@@ -50,19 +63,13 @@ class CategoryServiceTest {
     void ShouldFindByIdCategoryGivenInt(){
 
         int id = 1;
-        String name = "categ";
+        Category expected = new Category(id,"name");
 
-        //Category expected = new Category(id,name);
+        when(categoryDaoMock.findById(any(int.class))).thenReturn(expected);
 
-        when(categoryDaoMock.findById(any(int.class))).thenReturn(new Category(id,name));
+        Category result = categoryService.findById(id);
 
-        Category foundCategory = categoryService.findById(id);
-
-        //assertEquals(expected,foundCategory);
-
-        assertEquals(name, foundCategory.getName());
-        assertEquals(id, foundCategory.getIdCategory());
-
+        assertEquals(expected, result);
     }
     @Test
     void ShouldReturnTrueGivenCategoryToUpdate(){
@@ -85,4 +92,5 @@ class CategoryServiceTest {
 
         assertEquals(true, isDeleted);
     }
+
 }
