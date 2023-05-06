@@ -16,7 +16,7 @@ class CategoryDaoTest {
     void testCreate(){
 
         Category cat = new Category("test category");
-        categoryDao.create(cat);
+        Category created = categoryDao.create(cat);
 
         String query = "SELECT * FROM categories WHERE name = ?";
         try(PreparedStatement ps = conn.prepareStatement(query)){
@@ -25,10 +25,15 @@ class CategoryDaoTest {
             ResultSet rs = ps.executeQuery();
             assertTrue(rs.next());
             assertEquals(cat.getName(),rs.getString("name"));
+            assertEquals(3,created.getIdCategory());
 
         }catch (SQLException e){
             e.printStackTrace();
         }
+    }
+    @Test
+    void testFinAll(){
+
     }
     @AfterAll
     static void tearDown() throws SQLException {
@@ -84,7 +89,13 @@ class CategoryDaoTest {
                 "            on delete cascade,\n" +
                 "    constraint Product_seasons_seasonal_months_id_fk\n" +
                 "        foreign key (idMonth) references months (id)\n" +
-                ")";
+                ");\n" +
+                "\n" +
+                "INSERT INTO categories (name) " +
+                "VALUES ('categ1');" +
+                "INSERT INTO categories (name) " +
+                "VALUES ('categ2');";
+
 
         Statement statement = conn.createStatement();
         statement.execute(query);
