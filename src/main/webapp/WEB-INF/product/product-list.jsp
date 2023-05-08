@@ -2,23 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>FilRougeBO</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-    <%--    Bootstrap icons--%>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css">
-    <%--    Custom CSS--%>
-    <style>
-        <%@include file="/resources/css/custom.css" %>
-    </style>
-
-</head>
-<body>
-
+<jsp:include page="/WEB-INF/head.jsp"></jsp:include>
 <jsp:include page="/WEB-INF/navbar.jsp"></jsp:include>
 
 <div class="container-fluid p-4">
@@ -48,10 +32,11 @@
     <thead class="">
         <tr>
             <th>ID</th>
+            <th class="d-none d-md-table-cell">Image</th>
             <th>Name</th>
-            <th>Category</th>
-            <th>Price</th>
-            <th>Stock</th>
+            <th class="d-none d-md-table-cell">Category</th>
+            <th class="">Price</th>
+            <th class="">Stock</th>
             <th></th> <!--  buttons -->
         </tr>
     </thead>
@@ -59,9 +44,12 @@
     <tbody class="table-group-divider">
         <c:forEach var="product" items="${products}">
             <tr>
-                <td>${product.id}</td>
+                <td>&num;${product.id}</td>
+                <td class="d-none d-md-table-cell">
+                    <img src="${product.imgUrl}" class="table-img rounded border" alt="${product.name}">
+                </td>
                 <td>${product.name}</td>
-                <td>${product.category.name}</td>
+                <td class="d-none d-md-table-cell">${product.category.name}</td>
                 <td class="font-monospace">&euro;&nbsp${product.pricePerUnit}/${product.unit}</td>
                 <td class="font-monospace">${product.stock}&nbsp${product.unit}</td>
 
