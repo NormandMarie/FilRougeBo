@@ -22,7 +22,7 @@ public class ProductDao implements IntProductDao{
         String imgUrl = resultSet.getString("imgUrl");
         double vat = resultSet.getDouble("vat");
         String description = resultSet.getString("description");
-        int stock = resultSet.getInt("stock");
+        Double stock = resultSet.getDouble("stock");
 
         int idCategory = resultSet.getInt("idCategory");
 
