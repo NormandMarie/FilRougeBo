@@ -85,10 +85,18 @@
 
             </ul>
 
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
+            <div class="d-flex flex-column">
+                <c:choose>
+                    <c:when test="${empty sessionScope.username}">
+                        <a class="btn btn-outline-success btn-sm m-1" href="${pageContext.request.contextPath}/login">Login</a>
+                    </c:when>
+
+                    <c:when test="${! empty sessionScope.username}">
+                        <span> <i class="bi bi-person-fill-lock"></i> ${sessionScope.username}</span>
+                        <span> <i class="bi bi-calendar2-event"></i> <%= (new java.util.Date()).toLocaleString()%></span>
+                    </c:when>
+                </c:choose>
+            </div>
 
         </div>
     </div>

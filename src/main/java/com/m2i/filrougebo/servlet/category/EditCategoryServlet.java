@@ -14,19 +14,19 @@ import java.io.IOException;
 public class EditCategoryServlet extends HttpServlet {
     private static CategoryService categoryService = new CategoryService();
     public static final String URL =  "/secured/edit-category";
-    private static final String JSP = "/WEB-INF/category/edit-category.jsp";
+    private static final String JSP = "/WEB-INF/category/category-form.jsp";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        //get the id from value of button clicked in list-category.jsp
-        int id = Integer.parseInt(req.getParameter("editBtn"));
-        System.out.println(id);
+        //get the id from value of button clicked in category-list.jsp
+        int id = Integer.parseInt(req.getParameter("id"));
+
         //find the category by id
         Category toUpdateCategory = categoryService.findById(id);
-        System.out.println(toUpdateCategory.getName());
+
         // set the category as attribute in the request
-        req.setAttribute("toUpdateCategory",toUpdateCategory);
+        req.setAttribute("category", toUpdateCategory);
         //forward
         req.getRequestDispatcher(JSP).forward(req,resp);
     }

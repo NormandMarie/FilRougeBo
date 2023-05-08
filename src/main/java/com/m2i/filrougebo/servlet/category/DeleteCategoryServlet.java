@@ -16,10 +16,10 @@ public class DeleteCategoryServlet extends HttpServlet {
     public static final String URL = "/secured/delete-category";
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         // get the id from the value of the button clicked (list-categories.jsp)
-        int id = Integer.parseInt(req.getParameter("deleteBtn"));
+        int id = Integer.parseInt(req.getParameter("id"));
         //then find the categ by Id
         Category categoryToDelete = categoryService.findById(id);
         //then delete it
