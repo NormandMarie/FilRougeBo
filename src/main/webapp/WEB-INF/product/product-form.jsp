@@ -94,7 +94,7 @@
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="checkbox" ${product.seasonalMonths.contains(month) ? 'checked' : '' }
                        name="months" id="${month}" value="${month}">
-                <label class="form-check-label" for="${month}"> ${month} </label>
+                <label class="form-check-label" for="${month}"> ${month.label}</label>
             </div>
 
         </c:forEach>

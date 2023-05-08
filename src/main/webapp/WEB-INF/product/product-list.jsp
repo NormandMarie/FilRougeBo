@@ -62,8 +62,8 @@
                 <td>${product.id}</td>
                 <td>${product.name}</td>
                 <td>${product.category.name}</td>
-                <td class="font-monospace">&euro; ${product.pricePerUnit} / ${product.unit}</td>
-                <td class="font-monospace">${product.stock} ${product.unit}</td>
+                <td class="font-monospace">&euro;&nbsp${product.pricePerUnit}/${product.unit}</td>
+                <td class="font-monospace">${product.stock}&nbsp${product.unit}</td>
 
                 <td class="row-cols-1 row-cols-xs-3">
                     <a class="btn btn-outline-secondary btn-sm m-1 col-9 col-md-3"
