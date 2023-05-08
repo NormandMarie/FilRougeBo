@@ -25,8 +25,11 @@
 
     <div class="row row-cols-1 row-cols-sm-2 p-3 m-3">
 
-            <form class="d-flex col-12 col-sm-7 my-2" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <form class="d-flex col-12 col-sm-7 my-2"
+                  role="search" method="post"
+                  action="${pageContext.request.contextPath}/secured/search-product">
+                <input class="form-control me-2" type="search" placeholder="Search a product" aria-label="Search"
+                    value="${!empty searchQuery ? searchQuery : ''}"  name="search">
                 <button class="btn btn-outline-success" type="submit">Search</button>
             </form>
 
@@ -37,11 +40,10 @@
 
     </div>
 
+<c:choose>
+    <c:when test="${!empty products}">
 
-
-<c:if test="${!empty products}">
-
-<table class="table table-responsive table-striped table-hover p-3 align-middle">
+        <table class="table table-responsive table-striped table-hover p-3 align-middle">
 
     <thead class="">
         <tr>
@@ -92,8 +94,16 @@
 
 </table>
 
+    </c:when>
 
-</c:if>
+    <c:when test="${empty products && empty searchQuery}">
+        <p>No products to display</p>
+    </c:when>
+
+    <c:when test="${empty products && !empty searchQuery}">
+        <p>No products found for : "${searchQuery}"</p>
+    </c:when>
+</c:choose>
 
 </div>
 

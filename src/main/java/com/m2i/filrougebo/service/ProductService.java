@@ -40,4 +40,8 @@ public class ProductService {
         productDao.delete(product);
     }
 
+    public List<Product> searchProductPerNameOrDescriptionOrCategoryName(String search) {
+        return productDao.searchProductPerNameOrDescriptionOrCategoryName(search);
+    }
+
 }
