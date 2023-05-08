@@ -208,4 +208,33 @@ public class ProductDao implements IntProductDao{
         return true;
     }
 
+    public List<Product> searchProductPerNameOrDescriptionOrCategoryName(String search) {
+
+        List<Product> productList = new ArrayList<>();
+        String sqlQuery =
+                "SELECT DISTINCT p.* FROM Categories c " +
+                "LEFT JOIN Products p ON c.id = p.idCategory " +
+                "WHERE c.name LIKE ? OR p.name LIKE ? OR p.description LIKE ?";
+
+        try (PreparedStatement pst = conn.prepareStatement(sqlQuery)) {
+
+            String searchTerm = "%" + search + "%";
+
+            pst.setString(1, searchTerm);
+            pst.setString(2, searchTerm);
+            pst.setString(3, searchTerm);
+
+            try (ResultSet rs = pst.executeQuery()) {
+                while (rs.next()) {
+                    Product product = mapToProduct(rs);
+                    productList.add(product);
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return productList;
+    }
+
 }

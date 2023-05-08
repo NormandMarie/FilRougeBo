@@ -1,0 +1,10 @@
+html, body, * {margin:0; padding:0;}
+
+body {
+    font-family: "Fira Mono", "Helvetica Neue";
+    font-weight: 400;
+}
+
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+    background-color: rgba(245, 163, 66, 0.2);
+}
