@@ -27,7 +27,7 @@ INSERT INTO Categories(id, name) VALUES
 INSERT INTO Products(id, name, unit, priceperunit, vat, description, stock, idcategory, imgUrl) VALUES
     (1, 'Carottes', 'kg', 1.89, 0.2,
      'Un légume plein de bêta-carotènes.',
-     12.00, 1, '/resources/img/carrots.jpg');
+     12.00, 3, '/resources/img/carrots.jpg');
 INSERT INTO Product_months(idProduct, idMonth) VALUES
     (1, 7),
     (1, 8),
@@ -47,7 +47,7 @@ INSERT INTO Product_months(idProduct, idMonth) VALUES
 INSERT INTO Products(id, name, unit, priceperunit, vat, description, stock, idcategory, imgUrl) VALUES
     (3, 'Avocats Hass', 'piece', 1.80, 0.2,
      'Un fruit cultivé dans des régions chaudes.',
-     15.550, 5, '/resources/img/avocadoes.jpg');
+     30, 5, '/resources/img/avocadoes.jpg');
 INSERT INTO Product_months(idProduct, idMonth) VALUES
    (3, 1),
    (3, 2),
@@ -56,9 +56,9 @@ INSERT INTO Product_months(idProduct, idMonth) VALUES
    (3, 5);
 
 INSERT INTO Products(id, name, unit, priceperunit, vat, description, stock, idcategory, imgUrl) VALUES
-    (4, 'Epinards', 'piece', 2.56, 0.2,
+    (4, 'Epinards', 'kg', 2.56, 0.2,
      'Riche en fer d\'après la culture populaire',
-     15.550, 5, '/resources/img/spinash.jpg');
+     15.550, 1, '/resources/img/spinash.jpg');
 INSERT INTO Product_months(idProduct, idMonth) VALUES
    (4, 12),
    (4, 1),
