@@ -34,7 +34,9 @@ public class SuperAdminFilter extends HttpFilter {
         } else {
             // L'utilisateur n'est pas un super-admin
             // TODO: Marie Norman check here
-            response.sendRedirect(request.getContextPath() + "/error");
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.setContentType("text/plain");
+            response.getWriter().write("401 Unauthorized");
         }
 
     }
