@@ -14,7 +14,7 @@ public class AddCategoryServlet extends HttpServlet {
 
     private static CategoryService categoryService = new CategoryService();
     public static final String URL =  "/secured/add-category";
-    private static final String JSP = "/WEB-INF/category/add-category.jsp";
+    private static final String JSP = "/WEB-INF/category/category-form.jsp";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
