@@ -53,4 +53,8 @@ public class CategoryService {
         return categoryList;
     }
 
+    public List<Category> searchByName(String search) {
+        return categoryDao.searchByName(search);
+    }
+
 }
