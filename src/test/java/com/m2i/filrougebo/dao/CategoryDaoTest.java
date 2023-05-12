@@ -2,6 +2,8 @@ package com.m2i.filrougebo.dao;
 import com.m2i.filrougebo.entity.Category;
 import org.junit.jupiter.api.*;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CategoryDaoTest {
@@ -32,13 +34,56 @@ class CategoryDaoTest {
         }
     }
     @Test
-    void testFinAll(){
+    void testFindAll(){
 
+        List<Category> categories = new ArrayList<>();
+        categories.add(new Category(1,"categ1"));
+        categories.add(new Category(2,"categ2"));
+
+        String query = "SELECT * FROM categories";
+        int i = 0;
+
+        try (PreparedStatement ps = conn.prepareStatement(query)) {
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                assertEquals(categories.get(i).getName(),rs.getString("name"));
+                assertEquals(categories.get(i).getIdCategory(),rs.getInt("id"));
+                i++;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
+
+
     @AfterAll
     static void tearDown() throws SQLException {
         conn.close();
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     private static void createSchema() throws SQLException {
         String query = "create table admins\n" +
                 "(\n" +
