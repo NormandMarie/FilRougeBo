@@ -105,7 +105,23 @@ class CategoryDaoTest {
         }
     }
     @Test
-    void
+    void testSearchByName(){
+        String search = "test";
+        String query =
+                "SELECT DISTINCT c.* FROM categories c " +
+                        "WHERE c.name LIKE ?";
+
+        try (PreparedStatement pst = conn.prepareStatement(query)) {
+
+            String searchTerm = "%" + search + "%";
+            pst.setString(1, searchTerm);
+            ResultSet rs = pst.executeQuery();
+            assertTrue(!rs.next());
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
 
     @AfterAll
