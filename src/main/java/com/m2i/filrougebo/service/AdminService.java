@@ -9,7 +9,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AdminService {
-    private static IntAdminDao adminDao = new AdminDao();
+    private IntAdminDao adminDao;
+
+    public AdminService() {
+        adminDao = new AdminDao();
+    }
+    public AdminService(IntAdminDao adminDao) {
+        this.adminDao = adminDao;
+    }
 
     public Admin create(Admin admin){
         return adminDao.create(admin);

@@ -10,7 +10,15 @@ import java.util.stream.Collectors;
 
 public class MonthService {
 
-    private ProductMonthsDao productMonthsDao = new ProductMonthsDao();
+    private ProductMonthsDao productMonthsDao;
+
+    public MonthService() {
+        productMonthsDao = new ProductMonthsDao();
+    }
+
+    public MonthService(ProductMonthsDao productMonthsDao) {
+        this.productMonthsDao = productMonthsDao;
+    }
 
     public List<Month> findAll() {
         return productMonthsDao.findAll();
