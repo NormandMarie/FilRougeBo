@@ -1,3 +1,4 @@
+<%@ page import="com.m2i.filrougebo.service.AuthenticationService" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
@@ -60,40 +61,32 @@
                 </li>
 
                 <%-- ADMINS --%>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle"
+                    <% if (AuthenticationService.isSuperAdmin((String) session.getAttribute("username"))) { %>
+                <li class="nav-item">
+                    <a class="nav-link"
                        href="${pageContext.request.contextPath}/SuperAdmin/ListAdmin"
-                       role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                       role="button"  aria-expanded="false">
                         Admins
                     </a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a class="dropdown-item"
-                               href="${pageContext.request.contextPath}/SuperAdmin/ListAdmin">
-                                Admins list
-                            </a>
-                        </li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li>
-                            <a class="dropdown-item"
-                               href="${pageContext.request.contextPath}/SuperAdmin/add-admin">
-                                Add Admin
-                            </a>
-                        </li>
-                    </ul>
-                </li>
 
+                </li>
+            <% }%>
             </ul>
 
             <div class="d-flex flex-column">
                 <c:choose>
                     <c:when test="${empty sessionScope.username}">
-                        <a class="btn btn-outline-success btn-sm m-1" href="${pageContext.request.contextPath}/login">Login</a>
+                        <a class="btn btn-outline-success btn-sm m-1"  href="${pageContext.request.contextPath}/login">Login</a>
                     </c:when>
 
                     <c:when test="${! empty sessionScope.username}">
-                        <span> <i class="bi bi-person-fill-lock"></i> ${sessionScope.username}</span>
-                        <span> <i class="bi bi-calendar2-event"></i> <%= (new java.util.Date()).toLocaleString()%></span>
+                        <div class="d-flex">
+                             <a class="btn btn-outline-danger btn-sm m-1 my-2 mx-2 " href="${pageContext.request.contextPath}/secured/logout">Logout</a>
+                            <div class="d-flex flex-column">
+                              <span> <i class="bi bi-person-fill-lock"></i> ${sessionScope.username}</span>
+                              <span style="white-space: nowrap;"> <i class="bi bi-calendar2-event"></i> <%= (new java.util.Date()).toLocaleString()%></span>
+                            </div>
+                        </div>
                     </c:when>
                 </c:choose>
             </div>
