@@ -16,7 +16,10 @@ public class DeleteAdminServlet extends HttpServlet {
 
     public static final String URL = "/SuperAdmin/delete-admin";
     private static final String JSP = "/WEB-INF/error.jsp";
-    AdminService adminService = new AdminService();protected void doGet(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+    private AdminService adminService = new AdminService();
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+
         String sid = request.getParameter("id");
         int id = Integer.parseInt(sid);
 

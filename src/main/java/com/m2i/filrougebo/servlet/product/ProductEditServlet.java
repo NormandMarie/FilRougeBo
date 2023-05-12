@@ -35,7 +35,7 @@ public class ProductEditServlet extends HttpServlet {
         Product product = productService.findById(id);
 
         List<Category> categoryList = categoryService.findAllCategoriesExceptProductCategory(product);
-        List<Month> monthList = monthService.findAll();
+        List<Month> monthList = monthService.findAllAndSort();
 
         req.setAttribute("product", product);
         req.setAttribute("categoryList", categoryList);
@@ -63,7 +63,6 @@ public class ProductEditServlet extends HttpServlet {
         String[] months = req.getParameterValues("months");
         for(String s :months) {
             seasonalMonths.add(Month.valueOf(s.toUpperCase()));
-            System.out.println(Month.valueOf(s.toUpperCase()));
         }
 
 

@@ -11,17 +11,22 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(urlPatterns = ListCategoryServlet.URL)
-public class ListCategoryServlet extends HttpServlet {
+@WebServlet(urlPatterns = SearchCategoryServlet.URL)
+public class SearchCategoryServlet extends HttpServlet {
     private static CategoryService categoryService = new CategoryService();
-    public static final String URL =  "/secured/list-category";
+    public static final String URL =  "/secured/search-category";
     private static final String JSP = "/WEB-INF/category/category-list.jsp";
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        List<Category> categories = categoryService.findAll();
-        req.setAttribute("categories",categories);
+        String searchQuery = req.getParameter("search");
+
+        List<Category> categories = categoryService.searchByName(searchQuery);
+
+        req.setAttribute("categories", categories);
+        req.setAttribute("searchQuery", searchQuery);
+
         req.getRequestDispatcher(JSP).forward(req,resp);
 
     }

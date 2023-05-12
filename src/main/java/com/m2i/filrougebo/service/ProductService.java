@@ -9,7 +9,15 @@ import com.m2i.filrougebo.enums.Month;
 import java.util.List;
 
 public class ProductService {
-    private IntProductDao productDao = new ProductDao();
+    private IntProductDao productDao;
+
+    public ProductService() {
+        productDao = new ProductDao();
+    }
+
+    public ProductService(IntProductDao productDao) {
+        this.productDao = productDao;
+    }
 
     public Product findById(int id) {
         return productDao.findById(id);
@@ -38,6 +46,10 @@ public class ProductService {
 
     public void deleteProduct(Product product) {
         productDao.delete(product);
+    }
+
+    public List<Product> searchProductPerNameOrDescriptionOrCategoryName(String search) {
+        return productDao.searchProductPerNameOrDescriptionOrCategoryName(search);
     }
 
 }

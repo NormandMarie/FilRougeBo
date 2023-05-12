@@ -34,7 +34,7 @@ public class ProductCreateServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         List<Category> categoryList = categoryService.findAll();
-        List<Month> monthList = monthService.findAll();
+        List<Month> monthList = monthService.findAllAndSort();
 
         req.setAttribute("categoryList", categoryList);
         req.setAttribute("monthList", monthList);

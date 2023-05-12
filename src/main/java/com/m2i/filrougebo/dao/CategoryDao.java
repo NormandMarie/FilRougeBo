@@ -1,13 +1,12 @@
 package com.m2i.filrougebo.dao;
 
-import com.m2i.filrougebo.entity.Admin;
 import com.m2i.filrougebo.entity.Category;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoryDao implements IntCategoryDao{
+public class CategoryDao implements IntCategoryDao {
 
     Connection conn = DataBase.getInstance();
 
@@ -118,4 +117,32 @@ public class CategoryDao implements IntCategoryDao{
         }
         return false;
     }
+
+    public List<Category> searchByName(String search) {
+
+        List<Category> categoryList = new ArrayList<>();
+
+        String query =
+                "SELECT DISTINCT c.* FROM Categories c " +
+                "WHERE c.name LIKE ?";
+
+        try (PreparedStatement pst = conn.prepareStatement(query)) {
+
+            String searchTerm = "%" + search + "%";
+
+            pst.setString(1, searchTerm);
+
+            try (ResultSet rs = pst.executeQuery()) {
+                while (rs.next()) {
+                    Category category = mapToCategory(rs);
+                    categoryList.add(category);
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return categoryList;
+    }
+
 }
