@@ -74,6 +74,38 @@ class CategoryDaoTest {
             throw new RuntimeException(e);
         }
     }
+    @Test
+    void testUpdate(){
+
+        String name = "categ1 updated";
+        int id = 1;
+        String query = "UPDATE categories SET name=? WHERE id=?";
+        try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
+
+            preparedStatement.setString(1, name);
+            preparedStatement.setInt(2, id);
+            int row = preparedStatement.executeUpdate();
+            assertTrue(row==1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    @Test
+    void testDelete(){
+
+        int id = 1;
+        String query = "DELETE FROM categories WHERE id = ?";
+
+        try(PreparedStatement ps = conn.prepareStatement(query)){
+            ps.setInt(1,id);
+            int row = ps.executeUpdate();
+            assertTrue(row==1);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    @Test
+    void
 
 
     @AfterAll
