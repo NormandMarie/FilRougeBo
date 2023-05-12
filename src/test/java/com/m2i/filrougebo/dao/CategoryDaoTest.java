@@ -56,6 +56,25 @@ class CategoryDaoTest {
         }
     }
 
+    @Test
+    void testFindById(){
+
+        int id = 1;
+        Category cat = new Category(1,"categ1");
+        String query = "SELECT * FROM categories WHERE id = ? ";
+
+        try(PreparedStatement ps = conn.prepareStatement(query)){
+
+            ps.setInt(1,id);
+            ResultSet rs = ps.executeQuery();
+            assertTrue(rs.next());
+            assertEquals(cat.getName(),rs.getString("name"));
+            assertEquals(cat.getIdCategory(),rs.getInt("id"));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     @AfterAll
     static void tearDown() throws SQLException {
