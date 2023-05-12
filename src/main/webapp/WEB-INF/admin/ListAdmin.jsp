@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
-
+<jsp:include page="/WEB-INF/head.jsp"></jsp:include>
 <!doctype html>
 <html lang="en">
 <head>
@@ -13,8 +13,7 @@
 <body>
 
 <jsp:include page="/WEB-INF/navbar.jsp"></jsp:include>
-<%--<a href="${pageContext.request.contextPath}/">home</a>--%>
-    <form  class="d-flex justify-content-around align-items-center my-3 p-3"  style="background-color: rgb(242,242,242);" action="${pageContext.request.contextPath}/SuperAdmin/add-admin" method="post">
+    <form  class="d-flex justify-content-around align-items-center my-3 p-3 background-add-Admin" action="${pageContext.request.contextPath}/SuperAdmin/add-admin" method="post">
         <h3>Add new admin</h3>
         <div class="d-flex">
             <input  class="form-control mx-2"type="text" name="username" placeholder="username">
@@ -26,39 +25,43 @@
     </form>
 </div>
 <h1 class="d-flex justify-content-around align-items-center  my-5 "><strong>List of Admins</strong></h1>
-<table class="table table-striped">
-    <c:forEach items="${AdminDtos}" var="AdminDto">
+<div class="container-fluid p-4">
+    <c:choose>
+        <c:when test="${!empty AdminDtos}">
 
-        <tr>
-            <td ><h3 style="margin-inline:4rem; ">Admin</h3></td>
-            <td>
-                <div class="d-flex"  style="margin-inline:4rem; ">
-                    <p class="mx-5">Username: </p>
-                    <p><strong>${AdminDto.username} </strong></p>
-                </div>
-            </td>
-            <td>
-                <a href="${pageContext.request.contextPath}/SuperAdmin/delete-admin?id=${AdminDto.idAdmin}" class="btn btn-danger px-3 mb-2"  style="margin-inline:4rem; ">delete admin</a>
-            </td>
-        </tr>
-    </c:forEach>
-</table>
+            <table class="table table-responsive table-striped table-hover p-3 align-middle ">
+                <thead >
+                <tr  >
+                    <th></th>
+                    <th  class="ml-5" >ID</th>
+                    <th>Name</th>
+                    <th >Buttons</th>
+                </tr>
+                </thead>
+                <tbody class="table-group-divider">
+                <c:forEach items="${AdminDtos}" var="AdminDto">
 
-<%--<c:forEach items="${AdminDtos}" var="AdminDto">--%>
-<%--    <div class="d-flex justify-content-around align-items-center my-3 p-3 table-striped">--%>
-<%--    <h3>Admin</h3>--%>
-<%--    <div class="d-flex mx-3">--%>
-<%--                <p class="mx-3">Username: </p>--%>
+                    <tr >
+                        <td><h5>Admin:</h5></td>
+                        <td>&num;${AdminDto.idAdmin}</td>
+                        <td >${AdminDto.username}</td>
+                        <td>
+                            <a class="btn btn-danger btn-sm m-1 col-9 col-md-3"
+                               href="${pageContext.request.contextPath}/SuperAdmin/delete-admin?id=${AdminDto.idAdmin}"
+                               role="button">
+                                <i class="bi bi-trash3-fill"></i>
+                                <span class="d-none d-sm-inline-block">Delete</span>
+                            </a>
+                        </td>
+                    </tr>
 
-<%--                <p style="margin-bottom: 0.5em;"><strong>${AdminDto.username} </strong></p>--%>
-<%--    </div>--%>
+                </c:forEach>
+                </tbody>
+            </table>
 
-<%--        <a href="${pageContext.request.contextPath}/SuperAdmin/delete-admin?id=${AdminDto.idAdmin}" class="btn btn-danger  px-3 mb-2">delete admin</a>--%>
-
-<%--            </div>--%>
-<%--        </div>--%>
-<%--    </div>--%>
-<%--</c:forEach>--%>
+        </c:when>
+    </c:choose>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 
