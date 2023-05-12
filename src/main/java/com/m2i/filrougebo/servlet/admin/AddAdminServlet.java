@@ -16,6 +16,7 @@ public class AddAdminServlet extends HttpServlet {
 
     public static final String URL = "/SuperAdmin/add-admin";
     private static final String JSP = "/WEB-INF/admin/AddAdmin.jsp";
+    private AdminService adminService = new AdminService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -31,7 +32,7 @@ public class AddAdminServlet extends HttpServlet {
 
         Admin newAdmin = new Admin(username, superAdmin, password);
 
-        AdminService adminService = new AdminService();
+
         adminService.create(newAdmin);
 
         resp.sendRedirect(ListAdminServlet.URL);
