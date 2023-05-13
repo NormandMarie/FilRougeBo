@@ -79,7 +79,7 @@ class AdminServiceTest {
         assertEquals(true, isModified);
     }
     @Test
-    void ShouldReturnTrueGivenCategoryToDelete(){
+    void ShouldReturnTrueGivenAdminToDelete(){
 
         int id = 1;
         Admin admin = new Admin();
