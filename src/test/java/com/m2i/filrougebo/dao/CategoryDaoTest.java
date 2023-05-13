@@ -7,7 +7,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CategoryDaoTest {
-    private CategoryDao categoryDao = new CategoryDao();
+    private IntCategoryDao categoryDao = new CategoryDao();
     private static Connection conn;
     @BeforeAll
     static void setUp() throws SQLException {
@@ -122,34 +122,10 @@ class CategoryDaoTest {
             e.printStackTrace();
         }
     }
-
-
     @AfterAll
     static void tearDown() throws SQLException {
         conn.close();
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     private static void createSchema() throws SQLException {
         String query = "create table admins\n" +
