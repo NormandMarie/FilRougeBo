@@ -1,14 +1,18 @@
 package com.m2i.filrougebo.dao;
+import com.m2i.filrougebo.entity.Admin;
 import com.m2i.filrougebo.entity.Category;
 import org.junit.jupiter.api.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import static org.junit.jupiter.api.Assertions.*;
 
-class CategoryDaoTest {
-    private IntCategoryDao categoryDao = new CategoryDao();
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+class AdminDaoTest {
+    private IntAdminDao adminDao = new AdminDao();
     private static Connection conn;
+
     @BeforeAll
     static void setUp() throws SQLException {
         conn = DataBase.getInstance();
@@ -17,18 +21,18 @@ class CategoryDaoTest {
     @Test
     void testCreate(){
 
-        Category cat = new Category("test category");
-        Category created = categoryDao.create(cat);
+        Admin admin = new Admin();
+        admin.setUsername("new admin");
+        Admin created = adminDao.create(admin);
 
-        String query = "SELECT * FROM categories WHERE name = ?";
+        String query = "SELECT * FROM admins WHERE username = ?";
         try(PreparedStatement ps = conn.prepareStatement(query)){
 
-            ps.setString(1, cat.getName());
+            ps.setString(1, admin.getUsername());
             ResultSet rs = ps.executeQuery();
             assertTrue(rs.next());
-            assertEquals(cat.getName(),rs.getString("name"));
-            assertEquals(3,created.getIdCategory());
-
+            assertEquals(admin.getUsername(),rs.getString("username"));
+            assertEquals(3,created.getIdAdmin());
         }catch (SQLException e){
             e.printStackTrace();
         }
@@ -36,40 +40,46 @@ class CategoryDaoTest {
     @Test
     void testFindAll(){
 
-        List<Category> categories = new ArrayList<>();
-        categories.add(new Category(1,"categ1"));
-        categories.add(new Category(2,"categ2"));
+        List<Admin> admins = new ArrayList<>();
+        Admin admin1 = new Admin("admin1","password1");
+        admin1.setIdAmin(1);
+        Admin admin2 = new Admin("admin2","password2");
+        admin2.setIdAmin(2);
+        admins.add(admin1);
+        admins.add(admin2);
 
-        String query = "SELECT * FROM categories";
+        String query = "SELECT * FROM admins";
         int i = 0;
 
         try (PreparedStatement ps = conn.prepareStatement(query)) {
 
             ResultSet rs = ps.executeQuery();
             while (rs.next()){
-                assertEquals(categories.get(i).getName(),rs.getString("name"));
-                assertEquals(categories.get(i).getIdCategory(),rs.getInt("id"));
+                assertEquals(admins.get(i).getUsername(),rs.getString("username"));
+                assertEquals(admins.get(i).getIdAdmin(),rs.getInt("id"));
+                assertEquals(admins.get(i).getPassword(),rs.getString("password"));
                 i++;
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
-
     @Test
     void testFindById(){
 
         int id = 1;
-        Category cat = new Category(1,"categ1");
-        String query = "SELECT * FROM categories WHERE id = ? ";
+        Admin admin = new Admin("admin1","password1");
+        admin.setIdAmin(1);
+        String query = "SELECT * FROM admins WHERE id = ? ";
 
         try(PreparedStatement ps = conn.prepareStatement(query)){
 
             ps.setInt(1,id);
             ResultSet rs = ps.executeQuery();
             assertTrue(rs.next());
-            assertEquals(cat.getName(),rs.getString("name"));
-            assertEquals(cat.getIdCategory(),rs.getInt("id"));
+            assertEquals(admin.getUsername(),rs.getString("username"));
+            assertEquals(admin.getIdAdmin(),rs.getInt("id"));
+            assertEquals(admin.getPassword(),rs.getString("password"));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -77,12 +87,12 @@ class CategoryDaoTest {
     @Test
     void testUpdate(){
 
-        String name = "categ1 updated";
+        String username = "admin1 updated";
         int id = 1;
-        String query = "UPDATE categories SET name=? WHERE id=?";
+        String query = "UPDATE admins SET username=? WHERE id=?";
         try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
 
-            preparedStatement.setString(1, name);
+            preparedStatement.setString(1, username);
             preparedStatement.setInt(2, id);
             int row = preparedStatement.executeUpdate();
             assertTrue(row==1);
@@ -94,7 +104,7 @@ class CategoryDaoTest {
     void testDelete(){
 
         int id = 1;
-        String query = "DELETE FROM categories WHERE id = ?";
+        String query = "DELETE FROM admins WHERE id = ?";
 
         try(PreparedStatement ps = conn.prepareStatement(query)){
             ps.setInt(1,id);
@@ -104,29 +114,12 @@ class CategoryDaoTest {
             throw new RuntimeException(e);
         }
     }
-    @Test
-    void testSearchByName(){
-        String search = "test";
-        String query =
-                "SELECT DISTINCT c.* FROM categories c " +
-                        "WHERE c.name LIKE ?";
 
-        try (PreparedStatement pst = conn.prepareStatement(query)) {
 
-            String searchTerm = "%" + search + "%";
-            pst.setString(1, searchTerm);
-            ResultSet rs = pst.executeQuery();
-            assertTrue(!rs.next());
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
     @AfterAll
     static void tearDown() throws SQLException {
         conn.close();
     }
-
     private static void createSchema() throws SQLException {
         String query = "create table admins\n" +
                 "(\n" +
@@ -179,15 +172,14 @@ class CategoryDaoTest {
                 "        foreign key (idMonth) references months (id)\n" +
                 ");\n" +
                 "\n" +
-                "INSERT INTO categories (name) " +
-                "VALUES ('categ1');" +
-                "INSERT INTO categories (name) " +
-                "VALUES ('categ2');";
+                "INSERT INTO admins (username, issuperadmin, password) " +
+                "VALUES ('admin1',0,'password1');" +
+                "INSERT INTO admins (username, issuperadmin, password) " +
+                "VALUES ('admin2',0,'password2');";
 
 
         Statement statement = conn.createStatement();
         statement.execute(query);
         statement.close();
-
     }
 }
