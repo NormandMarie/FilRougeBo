@@ -1,6 +1,7 @@
 package com.m2i.filrougebo.service;
 import com.m2i.filrougebo.dao.IntCategoryDao;
 import com.m2i.filrougebo.entity.Category;
+import com.m2i.filrougebo.entity.Product;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -91,6 +92,37 @@ class CategoryServiceTest {
         boolean isDeleted = categoryService.delete(new Category(id,"updated name"));
 
         assertEquals(true, isDeleted);
+    }
+    @Test
+    void ShouldReturnListOfCategoriesExceptGivenProductCategory(){
+
+        Category cat1 = new Category(1,"categ1");
+        Category cat2 = new Category(2,"categ2");
+        Product p = new Product();
+        p.setCategory(new Category(1,"categ1"));
+
+        List<Category> categories = List.of(cat1, cat2);
+        List<Category> expected = List.of(cat2);
+
+        when(categoryDaoMock.findAll()).thenReturn(categories);
+        List<Category> result = categoryService.findAllCategoriesExceptProductCategory(p);
+
+        assertEquals(expected.get(0),result.get(0));
+    }
+    @Test
+    void ShouldReturnListOfCategoriesGivenAKeywordSearchByName(){
+
+        String search = "cat";
+        Category cat1 = new Category(1,"categ1");
+        Category cat2 = new Category(2,"categ2");
+        Category cat3 = new Category(3,"else");
+        List<Category> expected = List.of(cat1,cat2);
+
+        when(categoryDaoMock.searchByName(any(String.class))).thenReturn(expected);
+        List<Category> result = categoryService.searchByName(search);
+
+        assertEquals(expected.get(0),result.get(0));
+        assertEquals(expected.get(1),result.get(1));
     }
 
 }

@@ -2,6 +2,8 @@ package com.m2i.filrougebo.dao;
 import com.m2i.filrougebo.entity.Category;
 import org.junit.jupiter.api.*;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CategoryDaoTest {
@@ -16,7 +18,7 @@ class CategoryDaoTest {
     void testCreate(){
 
         Category cat = new Category("test category");
-        categoryDao.create(cat);
+        Category created = categoryDao.create(cat);
 
         String query = "SELECT * FROM categories WHERE name = ?";
         try(PreparedStatement ps = conn.prepareStatement(query)){
@@ -25,15 +27,130 @@ class CategoryDaoTest {
             ResultSet rs = ps.executeQuery();
             assertTrue(rs.next());
             assertEquals(cat.getName(),rs.getString("name"));
+            assertEquals(3,created.getIdCategory());
 
         }catch (SQLException e){
             e.printStackTrace();
         }
     }
+    @Test
+    void testFindAll(){
+
+        List<Category> categories = new ArrayList<>();
+        categories.add(new Category(1,"categ1"));
+        categories.add(new Category(2,"categ2"));
+
+        String query = "SELECT * FROM categories";
+        int i = 0;
+
+        try (PreparedStatement ps = conn.prepareStatement(query)) {
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                assertEquals(categories.get(i).getName(),rs.getString("name"));
+                assertEquals(categories.get(i).getIdCategory(),rs.getInt("id"));
+                i++;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Test
+    void testFindById(){
+
+        int id = 1;
+        Category cat = new Category(1,"categ1");
+        String query = "SELECT * FROM categories WHERE id = ? ";
+
+        try(PreparedStatement ps = conn.prepareStatement(query)){
+
+            ps.setInt(1,id);
+            ResultSet rs = ps.executeQuery();
+            assertTrue(rs.next());
+            assertEquals(cat.getName(),rs.getString("name"));
+            assertEquals(cat.getIdCategory(),rs.getInt("id"));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    @Test
+    void testUpdate(){
+
+        String name = "categ1 updated";
+        int id = 1;
+        String query = "UPDATE categories SET name=? WHERE id=?";
+        try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
+
+            preparedStatement.setString(1, name);
+            preparedStatement.setInt(2, id);
+            int row = preparedStatement.executeUpdate();
+            assertTrue(row==1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    @Test
+    void testDelete(){
+
+        int id = 1;
+        String query = "DELETE FROM categories WHERE id = ?";
+
+        try(PreparedStatement ps = conn.prepareStatement(query)){
+            ps.setInt(1,id);
+            int row = ps.executeUpdate();
+            assertTrue(row==1);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    @Test
+    void testSearchByName(){
+        String search = "test";
+        String query =
+                "SELECT DISTINCT c.* FROM categories c " +
+                        "WHERE c.name LIKE ?";
+
+        try (PreparedStatement pst = conn.prepareStatement(query)) {
+
+            String searchTerm = "%" + search + "%";
+            pst.setString(1, searchTerm);
+            ResultSet rs = pst.executeQuery();
+            assertTrue(!rs.next());
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     @AfterAll
     static void tearDown() throws SQLException {
         conn.close();
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     private static void createSchema() throws SQLException {
         String query = "create table admins\n" +
                 "(\n" +
@@ -84,7 +201,13 @@ class CategoryDaoTest {
                 "            on delete cascade,\n" +
                 "    constraint Product_seasons_seasonal_months_id_fk\n" +
                 "        foreign key (idMonth) references months (id)\n" +
-                ")";
+                ");\n" +
+                "\n" +
+                "INSERT INTO categories (name) " +
+                "VALUES ('categ1');" +
+                "INSERT INTO categories (name) " +
+                "VALUES ('categ2');";
+
 
         Statement statement = conn.createStatement();
         statement.execute(query);
