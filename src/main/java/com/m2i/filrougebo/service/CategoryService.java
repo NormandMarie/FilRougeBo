@@ -25,10 +25,6 @@ public class CategoryService {
         Category cat = new Category(name);
         return categoryDao.create(cat);
     }
-    public Category create1(String name){
-        Category cat = new Category(name);
-        return categoryDao.create(cat);
-    }
 
     public List<Category> findAll(){
         return categoryDao.findAll();
