@@ -78,7 +78,7 @@ class CategoryDaoTest {
     void testUpdate(){
 
         String name = "categ1 updated";
-        int id = 1;
+        int id = 2;
         String query = "UPDATE categories SET name=? WHERE id=?";
         try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
 

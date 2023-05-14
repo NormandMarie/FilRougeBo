@@ -54,6 +54,8 @@ class AdminDaoTest {
         try (PreparedStatement ps = conn.prepareStatement(query)) {
 
             ResultSet rs = ps.executeQuery();
+            assertTrue(rs.last());
+            assertEquals(2,rs.getRow());
             while (rs.next()){
                 assertEquals(admins.get(i).getUsername(),rs.getString("username"));
                 assertEquals(admins.get(i).getIdAdmin(),rs.getInt("id"));
@@ -88,7 +90,7 @@ class AdminDaoTest {
     void testUpdate(){
 
         String username = "admin1 updated";
-        int id = 1;
+        int id = 2;
         String query = "UPDATE admins SET username=? WHERE id=?";
         try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
 
