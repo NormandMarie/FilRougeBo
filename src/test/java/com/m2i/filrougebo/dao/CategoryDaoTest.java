@@ -18,7 +18,7 @@ class CategoryDaoTest {
     }
 
     @Test
-    void testCreate(){
+    void ShouldCreateACategoryAndReturnIt(){
 
         Category cat = new Category("test category");
         Category created = categoryDao.create(cat);
@@ -34,7 +34,7 @@ class CategoryDaoTest {
         assertTrue(categories.size()!=0);
     }
     @Test
-    void testFindById(){
+    void ShouldReturnACategoryGivenAnId(){
 
         Category cat = categoryDao.findById(2);
         assertTrue(cat.getIdCategory()==2);
