@@ -3,8 +3,8 @@ import com.m2i.filrougebo.entity.Admin;
 import com.m2i.filrougebo.entity.Category;
 import org.junit.jupiter.api.*;
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
+
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -24,97 +24,67 @@ class AdminDaoTest {
         Admin admin = new Admin();
         admin.setUsername("new admin");
         Admin created = adminDao.create(admin);
+        assertEquals(3,created.getIdAdmin());
+        assertEquals(admin.getUsername(),created.getUsername());
 
-        String query = "SELECT * FROM admins WHERE username = ?";
-        try(PreparedStatement ps = conn.prepareStatement(query)){
-
-            ps.setString(1, admin.getUsername());
-            ResultSet rs = ps.executeQuery();
-            assertTrue(rs.next());
-            assertEquals(admin.getUsername(),rs.getString("username"));
-            assertEquals(3,created.getIdAdmin());
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
     }
     @Test
-    void testFindAll(){
+    void ShouldReturnAllAdmins(){
 
-        List<Admin> admins = new ArrayList<>();
-        Admin admin1 = new Admin("admin1","password1");
-        admin1.setIdAmin(1);
-        Admin admin2 = new Admin("admin2","password2");
-        admin2.setIdAmin(2);
-        admins.add(admin1);
-        admins.add(admin2);
+        List<Admin> admins = adminDao.findAll();
 
-        String query = "SELECT * FROM admins";
-        int i = 0;
-
-        try (PreparedStatement ps = conn.prepareStatement(query)) {
-
-            ResultSet rs = ps.executeQuery();
-            assertTrue(rs.last());
-            assertEquals(2,rs.getRow());
-            while (rs.next()){
-                assertEquals(admins.get(i).getUsername(),rs.getString("username"));
-                assertEquals(admins.get(i).getIdAdmin(),rs.getInt("id"));
-                assertEquals(admins.get(i).getPassword(),rs.getString("password"));
-                i++;
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        assertTrue(admins.size()!=0);
     }
     @Test
-    void testFindById(){
+    void ShouldReturnAnAdminGivenAnId(){
 
-        int id = 1;
-        Admin admin = new Admin("admin1","password1");
-        admin.setIdAmin(1);
-        String query = "SELECT * FROM admins WHERE id = ? ";
-
-        try(PreparedStatement ps = conn.prepareStatement(query)){
-
-            ps.setInt(1,id);
-            ResultSet rs = ps.executeQuery();
-            assertTrue(rs.next());
-            assertEquals(admin.getUsername(),rs.getString("username"));
-            assertEquals(admin.getIdAdmin(),rs.getInt("id"));
-            assertEquals(admin.getPassword(),rs.getString("password"));
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        Admin admin = adminDao.findById(2);
+        assertTrue(admin.getIdAdmin()==2);
+        assertEquals("password2",admin.getPassword());
     }
     @Test
-    void testUpdate(){
+    void ShouldReturnTrueWhenUpdated(){
 
-        String username = "admin1 updated";
+        String name = "admin1 updated";
         int id = 2;
-        String query = "UPDATE admins SET username=? WHERE id=?";
-        try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
+        Admin admin = new Admin();
+        admin.setIdAmin(id);
+        admin.setUsername(name);
 
-            preparedStatement.setString(1, username);
-            preparedStatement.setInt(2, id);
-            int row = preparedStatement.executeUpdate();
-            assertTrue(row==1);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        boolean isUpdated = adminDao.update(admin);
+        assertTrue(isUpdated==true);
     }
     @Test
-    void testDelete(){
+    void ShouldReturnFalseWhenUpdated(){
+
+        String name = "admin1 updated";
+        int id = 5;
+        Admin admin = new Admin();
+        admin.setIdAmin(id);
+        admin.setUsername(name);
+
+        boolean isUpdated = adminDao.update(admin);
+        assertTrue(isUpdated==false);
+    }
+    @Test
+    void ShouldReturnTrueWhenDeleted(){
 
         int id = 1;
-        String query = "DELETE FROM admins WHERE id = ?";
+        Admin admin = new Admin();
+        admin.setIdAmin(id);
 
-        try(PreparedStatement ps = conn.prepareStatement(query)){
-            ps.setInt(1,id);
-            int row = ps.executeUpdate();
-            assertTrue(row==1);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        boolean isDeleted = adminDao.delete(admin);
+        assertTrue(isDeleted==true);
+    }
+    @Test
+    void ShouldReturnFalseWhenDeleted(){
+
+        int id = 4;
+        Admin admin = new Admin();
+        admin.setIdAmin(id);
+
+        boolean isDeleted = adminDao.delete(admin);
+        assertTrue(isDeleted==false);
     }
 
 

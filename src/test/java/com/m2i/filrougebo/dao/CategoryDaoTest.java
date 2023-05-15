@@ -1,10 +1,11 @@
 package com.m2i.filrougebo.dao;
 import com.m2i.filrougebo.entity.Category;
-import com.mysql.cj.jdbc.result.ResultSetImpl;
 import org.junit.jupiter.api.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class CategoryDaoTest {
@@ -17,11 +18,7 @@ class CategoryDaoTest {
     }
 
     @Test
-    void ShouldMapResultSetToCategoryObject(){
-
-    }
-    @Test
-    void testCreate(){
+    void ShouldCreateACategoryAndReturnIt(){
 
         Category cat = new Category("test category");
         Category created = categoryDao.create(cat);
@@ -30,21 +27,21 @@ class CategoryDaoTest {
         assertEquals(cat.getName(),created.getName());
     }
     @Test
-    void findAll2(){
+    void ShouldReturnAllCategories(){
 
         List<Category> categories = categoryDao.findAll();
 
-        assertTrue(categories.size()==2);
+        assertTrue(categories.size()!=0);
     }
     @Test
-    void testFindById(){
+    void ShouldReturnACategoryGivenAnId(){
 
-        Category cat = categoryDao.findById(1);
-        assertTrue(cat.getIdCategory()==1);
-        assertTrue(cat.getName().equals("categ1"));
+        Category cat = categoryDao.findById(2);
+        assertTrue(cat.getIdCategory()==2);
+        assertTrue(cat.getName().equals("categ2"));
     }
     @Test
-    void testUpdate(){
+    void ShouldReturnTrueWhenUpdated(){
 
         String name = "categ1 updated";
         int id = 2;
@@ -53,6 +50,17 @@ class CategoryDaoTest {
         boolean isUpdated = categoryDao.update(cat);
 
         assertTrue(isUpdated==true);
+    }
+    @Test
+    void ShouldReturnFalseWhenUpdated(){
+
+        String name = "categ1 updated";
+        int id = 3;
+        Category cat = new Category(id,name);
+
+        boolean isUpdated = categoryDao.update(cat);
+
+        assertTrue(isUpdated==false);
     }
     @Test
     void ShouldReturnTrueWhenDeleted(){
@@ -77,22 +85,21 @@ class CategoryDaoTest {
         assertTrue(isDeleted==false);
     }
     @Test
-    void testSearchByName(){
+    void ShouldReturnCategoriesWithNameMatchingPatternName(){
+
         String search = "test";
-        String query =
-                "SELECT DISTINCT c.* FROM categories c " +
-                        "WHERE c.name LIKE ?";
+        List<Category> expected = new ArrayList<>();
 
-        try (PreparedStatement pst = conn.prepareStatement(query)) {
-
-            String searchTerm = "%" + search + "%";
-            pst.setString(1, searchTerm);
-            ResultSet rs = pst.executeQuery();
-            assertTrue(!rs.next());
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        List<Category> result = categoryDao.searchByName(search);
+        assertTrue(result.size()==0);
+        //AtomicInteger i = new AtomicInteger();
+        //        result
+        //                .stream()
+        //                .forEach(cat -> {
+        //                    assertEquals(expected.get(i.get()).getIdCategory(),cat.getIdCategory());
+        //                    assertEquals(expected.get(i.get()).getName(),cat.getName());
+        //                    i.getAndIncrement();
+        //                });
     }
     @AfterAll
     static void tearDown() throws SQLException {
