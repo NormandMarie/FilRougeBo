@@ -1,5 +1,6 @@
 package com.m2i.filrougebo.dao;
 import com.m2i.filrougebo.entity.Category;
+import com.mysql.cj.jdbc.result.ResultSetImpl;
 import org.junit.jupiter.api.*;
 import java.sql.*;
 import java.util.ArrayList;
@@ -14,95 +15,66 @@ class CategoryDaoTest {
         conn = DataBase.getInstance();
         createSchema();
     }
+
+    @Test
+    void ShouldMapResultSetToCategoryObject(){
+
+    }
     @Test
     void testCreate(){
 
         Category cat = new Category("test category");
         Category created = categoryDao.create(cat);
 
-        String query = "SELECT * FROM categories WHERE name = ?";
-        try(PreparedStatement ps = conn.prepareStatement(query)){
-
-            ps.setString(1, cat.getName());
-            ResultSet rs = ps.executeQuery();
-            assertTrue(rs.next());
-            assertEquals(cat.getName(),rs.getString("name"));
-            assertEquals(3,created.getIdCategory());
-
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
+        assertEquals(3,created.getIdCategory());
+        assertEquals(cat.getName(),created.getName());
     }
     @Test
-    void testFindAll(){
+    void findAll2(){
 
-        List<Category> categories = new ArrayList<>();
-        categories.add(new Category(1,"categ1"));
-        categories.add(new Category(2,"categ2"));
+        List<Category> categories = categoryDao.findAll();
 
-        String query = "SELECT * FROM categories";
-        int i = 0;
-
-        try (PreparedStatement ps = conn.prepareStatement(query)) {
-
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()){
-                assertEquals(categories.get(i).getName(),rs.getString("name"));
-                assertEquals(categories.get(i).getIdCategory(),rs.getInt("id"));
-                i++;
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        assertTrue(categories.size()==2);
     }
-
     @Test
     void testFindById(){
 
-        int id = 1;
-        Category cat = new Category(1,"categ1");
-        String query = "SELECT * FROM categories WHERE id = ? ";
-
-        try(PreparedStatement ps = conn.prepareStatement(query)){
-
-            ps.setInt(1,id);
-            ResultSet rs = ps.executeQuery();
-            assertTrue(rs.next());
-            assertEquals(cat.getName(),rs.getString("name"));
-            assertEquals(cat.getIdCategory(),rs.getInt("id"));
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        Category cat = categoryDao.findById(1);
+        assertTrue(cat.getIdCategory()==1);
+        assertTrue(cat.getName().equals("categ1"));
     }
     @Test
     void testUpdate(){
 
         String name = "categ1 updated";
         int id = 2;
-        String query = "UPDATE categories SET name=? WHERE id=?";
-        try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
+        Category cat = new Category(id,name);
 
-            preparedStatement.setString(1, name);
-            preparedStatement.setInt(2, id);
-            int row = preparedStatement.executeUpdate();
-            assertTrue(row==1);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        boolean isUpdated = categoryDao.update(cat);
+
+        assertTrue(isUpdated==true);
     }
     @Test
-    void testDelete(){
+    void ShouldReturnTrueWhenDeleted(){
 
+        String name = "";
         int id = 1;
-        String query = "DELETE FROM categories WHERE id = ?";
+        Category cat = new Category(id,name);
 
-        try(PreparedStatement ps = conn.prepareStatement(query)){
-            ps.setInt(1,id);
-            int row = ps.executeUpdate();
-            assertTrue(row==1);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        boolean isDeleted = categoryDao.delete(cat);
+
+        assertTrue(isDeleted==true);
+    }
+    @Test
+    void ShouldReturnFalseWhenDeleted(){
+
+        String name = "";
+        int id = 3;
+        Category cat = new Category(id,name);
+
+        boolean isDeleted = categoryDao.delete(cat);
+
+        assertTrue(isDeleted==false);
     }
     @Test
     void testSearchByName(){
