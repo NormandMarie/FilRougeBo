@@ -47,4 +47,12 @@ public class AdminService {
         return adminDao.delete(admin);
     }
 
+    public AdminDto getAdminDtoById(int id) {
+        Admin admin = adminDao.findById(id);
+        if (admin == null) {
+            return null;
+        }
+        return new AdminDto(admin.getIdAdmin(), admin.getUsername(), admin.getIsSuperAdmin());
+    }
+
 }
