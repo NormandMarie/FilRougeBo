@@ -30,21 +30,27 @@
         <c:when test="${!empty AdminDtos}">
 
             <table class="table table-responsive table-striped table-hover p-3 align-middle ">
-                <thead >
-                <tr  >
+                <thead>
+                <tr>
                     <th></th>
                     <th  class="ml-5" >ID</th>
+                    <th>Username</th>
                     <th>Name</th>
-                    <th >Buttons</th>
+                    <th>Email</th>
+                    <th>Buttons</th>
                 </tr>
                 </thead>
+
                 <tbody class="table-group-divider">
+
                 <c:forEach items="${AdminDtos}" var="AdminDto">
 
-                    <tr >
+                    <tr>
                         <td><h5>Admin:</h5></td>
                         <td>&num;${AdminDto.idAdmin}</td>
                         <td >${AdminDto.username}</td>
+                        <td >${AdminDto.firstName} ${AdminDto.lastName}</td>
+                        <td >${AdminDto.email}</td>
                         <td>
                             <a class="btn btn-danger btn-sm m-1 col-9 col-md-3"
                                href="${pageContext.request.contextPath}/SuperAdmin/delete-admin?id=${AdminDto.idAdmin}"

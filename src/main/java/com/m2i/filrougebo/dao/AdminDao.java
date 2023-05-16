@@ -13,19 +13,29 @@ public class AdminDao implements IntAdminDao{
         String username = resultSet.getString("username");
         boolean isSuperAdmin = resultSet.getBoolean("isSuperAdmin");
         String password = resultSet.getString("password");
-        return new Admin(id,username,isSuperAdmin,password);
+        String firstName = resultSet.getString("firstName");
+        String lastName = resultSet.getString("lastName");
+        String email = resultSet.getString("email");
+
+        return new Admin(id, username, isSuperAdmin, password, firstName, lastName, email);
     }
 
     @Override
     public Admin create(Admin entity) {
 
-        String query ="INSERT INTO admins (username, isSuperAdmin, password) VALUES (?,?,?)";
+        String query ="INSERT INTO admins (username, isSuperAdmin, password, firstname, lastName, email) VALUES (?,?,?,?,?,?)";
         try ( PreparedStatement ps=conn.prepareStatement(query,Statement.RETURN_GENERATED_KEYS)){
+
             ps.setString(1,entity.getUsername());
             ps.setBoolean(2, entity.getIsSuperAdmin());
             ps.setString(3,entity.getPassword());
+            ps.setString(4,entity.getFirstName());
+            ps.setString(5,entity.getLastName());
+            ps.setString(6,entity.getEmail());
+
             int row = ps.executeUpdate();
-            if(row==1){
+
+            if (row == 1) {
                 ResultSet generatedKeys = ps.getGeneratedKeys();
                 if(generatedKeys.next()){
                     entity.setIdAmin(generatedKeys.getInt(1));
@@ -81,7 +91,9 @@ public class AdminDao implements IntAdminDao{
 
             preparedStatement.setString(1, entity.getPassword());
             preparedStatement.setInt(2, entity.getIdAdmin());
+
             int row = preparedStatement.executeUpdate();
+
             if (row == 1){
                 return true;
             }

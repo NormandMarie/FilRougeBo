@@ -28,10 +28,13 @@ public class AddAdminServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
+        String firstName = req.getParameter("firstName");
+        String lastName = req.getParameter("lastName");
+        String email    = req.getParameter("email");
+
         boolean superAdmin  = Boolean.parseBoolean(req.getParameter("superAdmin"));
 
-        Admin newAdmin = new Admin(username, superAdmin, password);
-
+        Admin newAdmin = new Admin(username, superAdmin, password, firstName, lastName, email);
 
         adminService.create(newAdmin);
 

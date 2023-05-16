@@ -25,9 +25,9 @@ class AdminServiceTest {
     void ShouldReturnAllAdmins(){
 
         List<Admin> admins = new ArrayList<>();
-        Admin admin1 = new Admin("admin1","password1");
+        Admin admin1 = new Admin("admin1", "password1", "firstName1",  "lastName1", "email1");
         admin1.setIdAmin(1);
-        Admin admin2 = new Admin("admin2","password2");
+        Admin admin2 = new Admin("admin2", "password2", "firstName2",  "lastName2", "email2");
         admin2.setIdAmin(2);
 
         admins.add(admin1);
@@ -94,9 +94,9 @@ class AdminServiceTest {
     void ShouldReturnListOfAdminDto(){
 
         List<Admin> admins = new ArrayList<>();
-        Admin admin1 = new Admin("admin1","password1");
+        Admin admin1 = new Admin();
         admin1.setIdAmin(1);
-        Admin admin2 = new Admin("admin2","password2");
+        Admin admin2 = new Admin();
         admin2.setIdAmin(2);
 
         when(adminDaoMock.findAll()).thenReturn(admins);
