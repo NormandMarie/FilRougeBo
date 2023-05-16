@@ -23,7 +23,7 @@ public class AdminDao implements IntAdminDao{
     @Override
     public Admin create(Admin entity) {
 
-        String query ="INSERT INTO admins (username, isSuperAdmin, password, firstname, lastName, email) VALUES (?,?,?,?,?,?)";
+        String query ="INSERT INTO admins (username, isSuperAdmin, password, firstName, lastName, email) VALUES (?,?,?,?,?,?)";
         try ( PreparedStatement ps=conn.prepareStatement(query,Statement.RETURN_GENERATED_KEYS)){
 
             ps.setString(1,entity.getUsername());
@@ -118,5 +118,71 @@ public class AdminDao implements IntAdminDao{
             throw new RuntimeException(e);
         }
         return false;
+    }
+    public Admin authenticate(String username, String password) {
+        String query = "SELECT * FROM admins WHERE username = ? AND password = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, username);
+            stmt.setString(2, password);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                boolean isSuperAdmin = rs.getBoolean("isSuperAdmin");
+                int id = rs.getInt("id");
+                String firstName = rs.getString("firstname");
+                String lastName = rs.getString("lastname");
+                String email = rs.getString("email");
+                return new Admin(id, username, isSuperAdmin, password, firstName, lastName, email);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+
+    public Admin findByUsername(String username) {
+        String query = "SELECT * FROM admins WHERE username = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, username);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                boolean isSuperAdmin = rs.getBoolean("isSuperAdmin");
+                int id = rs.getInt("id");
+                String password = rs.getString("password");
+                String firstName = rs.getString("firstname");
+                String lastName = rs.getString("lastname");
+                String email = rs.getString("email");
+                return new Admin(id, username, isSuperAdmin, password, firstName, lastName, email);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public Admin authenticatewithSuper(String username, String password) {
+        String query = "SELECT * FROM admins WHERE username = ? AND password = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, username);
+            stmt.setString(2, password);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                boolean isSuperAdmin = rs.getBoolean("isSuperAdmin");
+                int id = rs.getInt("id");
+                String firstName = rs.getString("firstname");
+                String lastName = rs.getString("lastname");
+                String email = rs.getString("email");
+                return new Admin(id, username, isSuperAdmin, password, firstName, lastName, email);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 }
