@@ -30,7 +30,13 @@ public class AdminService {
         List<AdminDto> adminDTOs = new ArrayList<>();
 
         for (Admin admin : admins) {
-            AdminDto adminDTO = new AdminDto(admin.getIdAdmin(), admin.getUsername(), admin.getIsSuperAdmin());
+            AdminDto adminDTO = new AdminDto(
+                    admin.getIdAdmin(),
+                    admin.getUsername(),
+                    admin.getIsSuperAdmin(),
+                    admin.getFirstName(),
+                    admin.getLastName(),
+                    admin.getEmail());
             adminDTOs.add(adminDTO);
         }
 
@@ -52,7 +58,13 @@ public class AdminService {
         if (admin == null) {
             return null;
         }
-        return new AdminDto(admin.getIdAdmin(), admin.getUsername(), admin.getIsSuperAdmin());
+        return new AdminDto(
+                admin.getIdAdmin(),
+                admin.getUsername(),
+                admin.getIsSuperAdmin(),
+                admin.getFirstName(),
+                admin.getLastName(),
+                admin.getEmail());
     }
 
 }

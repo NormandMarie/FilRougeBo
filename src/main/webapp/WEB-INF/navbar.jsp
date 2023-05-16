@@ -61,16 +61,21 @@
                 </li>
 
                 <%-- ADMINS --%>
-                    <% if (AuthenticationService.isSuperAdmin((String) session.getAttribute("username"))) { %>
-                <li class="nav-item">
-                    <a class="nav-link"
-                       href="${pageContext.request.contextPath}/SuperAdmin/ListAdmin"
-                       role="button"  aria-expanded="false">
-                        Admins
-                    </a>
-
-                </li>
-            <% }%>
+                    <%
+                        AuthenticationService authService = new AuthenticationService();
+                        String username = (String) session.getAttribute("username");
+                        if (authService.isSuperAdmin(username)) {
+                    %>
+                    <li class="nav-item">
+                        <a class="nav-link"
+                           href="${pageContext.request.contextPath}/SuperAdmin/ListAdmin"
+                           role="button"  aria-expanded="false">
+                            Admins
+                        </a>
+                    </li>
+                    <%
+                        }
+                    %>
             </ul>
 
             <div class="d-flex flex-column">
