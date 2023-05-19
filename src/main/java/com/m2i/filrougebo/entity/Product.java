@@ -142,4 +142,5 @@ public class Product {
     public void setSeasonalMonths(List<Month> seasonalMonths) {
         this.seasonalMonths = seasonalMonths;
     }
+
 }

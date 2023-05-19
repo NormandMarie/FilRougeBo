@@ -45,9 +45,12 @@
         <c:forEach var="product" items="${products}">
             <tr>
                 <td>&num;${product.id}</td>
+
                 <td class="d-none d-md-table-cell">
-                    <img src="${product.imgUrl}" class="table-img rounded border" alt="${product.name}">
+                    <img src="data:image/jpeg;base64,${product.imgUrl}" alt="Product Image"
+                         class="table-img rounded border">
                 </td>
+
                 <td>${product.name}</td>
                 <td class="d-none d-md-table-cell">${product.category.name}</td>
                 <td class="font-monospace">&euro;&nbsp${product.pricePerUnit}/${product.unit}</td>

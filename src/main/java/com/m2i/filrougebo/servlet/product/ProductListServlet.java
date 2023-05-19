@@ -1,6 +1,7 @@
 package com.m2i.filrougebo.servlet.product;
 
 import com.m2i.filrougebo.entity.Product;
+import com.m2i.filrougebo.service.ImageService;
 import com.m2i.filrougebo.service.ProductService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -16,12 +17,18 @@ public class ProductListServlet extends HttpServlet {
 
     public static final String URL = "/secured/list-product";
     public static final String JSP = "/WEB-INF/product/product-list.jsp";
+    private static final ImageService imageService = new ImageService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         ProductService productService = new ProductService();
         List<Product> listOfAllProducts = productService.findAll();
+
+        for (Product product : listOfAllProducts) {
+            String base64Image = imageService.getImageAsBase64(product.getImgUrl());
+            product.setImgUrl(base64Image);
+        }
 
         req.setAttribute("products", listOfAllProducts);
 
