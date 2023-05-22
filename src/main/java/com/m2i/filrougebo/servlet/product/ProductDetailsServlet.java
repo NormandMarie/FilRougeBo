@@ -42,8 +42,9 @@ public class ProductDetailsServlet extends HttpServlet {
         req.setAttribute("monthList", monthList);
 
         // Read the image file and convert it to Base64
-        String imagePath = product.getImgUrl();
-        product.setImgUrl(imageService.getImageAsBase64(imagePath));
+        String imgPath = "/img/product/";
+        imgPath += product.getId() + "_" + product.getName().replaceAll(" ", "-");
+        product.setImgUrl(imageService.getImageAsBase64(imgPath));
 
         req.getRequestDispatcher(ProductDetailsServlet.JSP).forward(req, resp);
 
