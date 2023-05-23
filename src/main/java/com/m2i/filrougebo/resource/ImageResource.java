@@ -27,12 +27,10 @@ public class ImageResource {
 
         String imageBase64 = null;
         Product product = productService.findById(id);
-        String imgPath = "/img/product/";
-        imgPath += product.getId() + "_" + product.getName().replaceAll(" ", "-");
 
         try {
 //            imageBase64 = imageService.getImageAsBase64(product.getImgUrl());
-            imageBase64 = imageService.getImageAsBase64(imgPath);
+            imageBase64 = imageService.getImageAsBase64FromProduct(product);
 
         } catch (IOException e) {
             return Response

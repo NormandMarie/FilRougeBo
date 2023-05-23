@@ -42,7 +42,8 @@ public class ProductDetailsServlet extends HttpServlet {
         req.setAttribute("monthList", monthList);
 
         // Read the image file and convert it to Base64
-        product.setImgUrl(imageService.getImageAsBase64(product.getImgUrl()));
+        // TODO: should use DTO object instead
+        product.setImgUrl(imageService.getImageAsBase64FromProduct(product));
 
         req.getRequestDispatcher(ProductDetailsServlet.JSP).forward(req, resp);
 

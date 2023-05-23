@@ -25,8 +25,9 @@ public class ProductListServlet extends HttpServlet {
         ProductService productService = new ProductService();
         List<Product> listOfAllProducts = productService.findAll();
 
+        // TODO : should use DTO
         for (Product product : listOfAllProducts) {
-            String base64Image = imageService.getImageAsBase64(product.getImgUrl());
+            String base64Image = imageService.getImageAsBase64FromProduct(product);
             product.setImgUrl(base64Image);
         }
 
