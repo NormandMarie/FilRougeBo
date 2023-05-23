@@ -8,8 +8,10 @@ import java.util.StringJoiner;
 
 public class ImageService {
 
-    // Get full path of the project source
-    public String getPath(String imagePath) throws UnsupportedEncodingException {
+    private static final String FALLBACK_PRODUCT_IMAGE_PATH = "media/img/product/placeholder.jpg";
+
+    // Get full path of the project source, this allows to fake a ftp server
+    public String getPathToSource(String imagePath) throws UnsupportedEncodingException {
         String path = this.getClass().getClassLoader().getResource("").getPath();
         String fullPath = URLDecoder.decode(path, "UTF-8");
         String fullPathArr[] = fullPath.split("/");
@@ -35,11 +37,10 @@ public class ImageService {
         return responsePath;
     }
 
-    private static final String FALLBACK_IMAGE_PATH = "/img/product/placeholder-image.jpg";
 
     public String getImageAsBase64(String imagePath) throws IOException {
 
-        try (FileInputStream inputStream = new FileInputStream(getPath(imagePath))) {
+        try (FileInputStream inputStream = new FileInputStream(getPathToSource(imagePath))) {
 
             byte[] fileContent = inputStream.readAllBytes();
             return Base64.getEncoder().encodeToString(fileContent);
@@ -51,9 +52,11 @@ public class ImageService {
     }
 
     private String getFallbackImageAsBase64() throws IOException {
-        try (InputStream fallbackStream = getClass().getResourceAsStream(FALLBACK_IMAGE_PATH)) {
+
+        try (FileInputStream fallbackStream = new FileInputStream(
+                getPathToSource(FALLBACK_PRODUCT_IMAGE_PATH))) {
             if (fallbackStream == null) {
-                throw new FileNotFoundException("Fallback image not found: " + FALLBACK_IMAGE_PATH);
+                throw new FileNotFoundException("Fallback image not found");
             }
 
             byte[] fileContent = fallbackStream.readAllBytes();
