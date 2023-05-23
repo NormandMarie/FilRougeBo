@@ -17,7 +17,7 @@
     </c:choose>
 
 
-    <form action="${pageContext.request.contextPath}/create-product" method="post"
+    <form action="${pageContext.request.contextPath}/secured/add-product" method="post" enctype="multipart/form-data"
       class="m-3 bg-light rounded p-2">
 
     <div class="mb-3">
@@ -48,12 +48,23 @@
 
             </select>
         </div>
+
         <div class="col mb-3">
-            <label for="imgUrl" class="form-label">Img URL</label>
-            <input type="text" class="form-control"
-                   id="imgUrl" name="imgUrl"
-                   value="${empty product.imgUrl ? '' : product.imgUrl }">
+<%--            <label for="imgUrl" class="form-label">Img URL</label>--%>
+<%--            <input type="text" class="form-control"--%>
+<%--                   id="imgUrl" name="imgUrl"--%>
+<%--                   value="${empty product.imgUrl ? '' : product.imgUrl }">--%>
+            <c:if test="${!empty product.id}">
+                <img src="data:image/jpeg;base64,${product.imgUrl}" alt="Product Image"
+                     class="table-img rounded border">
+            </c:if>
+                <input type="file" name="imageFile">
+
+
         </div>
+
+
+
     </div>
 
 

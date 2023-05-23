@@ -27,22 +27,22 @@ INSERT INTO Categories(id, name) VALUES
 INSERT INTO Products(id, name, unit, priceperunit, vat, description, stock, idcategory, imgUrl) VALUES
     (1, 'Carottes', 'kg', 1.89, 0.2,
      'Un légume plein de bêta-carotènes.',
-     12.00, 3, '/resources/img/carrots.jpg');
+     12.00, 3, '1_carrots.jpg');
 INSERT INTO Product_months(idProduct, idMonth) VALUES
-                                                   (1, 7),
-                                                   (1, 8),
-                                                   (1, 9),
-                                                   (1, 10);
+   (1, 7),
+   (1, 8),
+   (1, 9),
+   (1, 10);
 
 INSERT INTO Products(id, name, unit, priceperunit, vat, description, stock, idcategory, imgUrl) VALUES
     (2, 'Tomates Cerises', 'kg', 4.55, 0.2,
      'Les tomates sont un en réalité un fruit.\nLes tomates cerises sont de toutes petites tomates',
      15.550, 5, '/resources/img/cherry-tomatoes.jpg');
 INSERT INTO Product_months(idProduct, idMonth) VALUES
-                                                   (2, 6),
-                                                   (2, 7),
-                                                   (2, 8),
-                                                   (2, 9);
+   (2, 6),
+   (2, 7),
+   (2, 8),
+   (2, 9);
 
 INSERT INTO Products(id, name, unit, priceperunit, vat, description, stock, idcategory, imgUrl) VALUES
     (3, 'Avocats Hass', 'piece', 1.80, 0.2,

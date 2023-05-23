@@ -13,9 +13,12 @@
 <%--            IMAGE   --%>
             <div class="col-4 col-sm-3">
                 <div class="product-img-container">
-                    <img src="${product.imgUrl}" class="rounded" style="object-fit: cover;">
+<%--                    <img src="${product.imgUrl}" class="rounded" style="object-fit: cover;">--%>
+                        <img src="data:image/jpeg;base64,${product.imgUrl}" alt="Product Image"
+                             class="rounded" style="object-fit: cover;">
                 </div>
             </div>
+
 
             <div class="col-8 col-sm-9 p-3">
 

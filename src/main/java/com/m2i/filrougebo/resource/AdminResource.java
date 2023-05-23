@@ -35,3 +35,4 @@ public class AdminResource {
         return Response.ok(admin).build();
     }
 }
+

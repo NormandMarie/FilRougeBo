@@ -6,19 +6,23 @@ import com.m2i.filrougebo.entity.Category;
 import com.m2i.filrougebo.entity.Product;
 import com.m2i.filrougebo.enums.Month;
 import com.m2i.filrougebo.service.CategoryService;
+import com.m2i.filrougebo.service.ImageService;
 import com.m2i.filrougebo.service.MonthService;
 import com.m2i.filrougebo.service.ProductService;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(urlPatterns = ProductEditServlet.URL)
+@MultipartConfig
 public class ProductEditServlet extends HttpServlet {
 
     public static final String URL = "/secured/edit-product";
@@ -27,6 +31,7 @@ public class ProductEditServlet extends HttpServlet {
     ProductService productService = new ProductService();
     CategoryService categoryService = new CategoryService();
     MonthService monthService = new MonthService();
+    ImageService imageService = new ImageService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -36,6 +41,8 @@ public class ProductEditServlet extends HttpServlet {
 
         List<Category> categoryList = categoryService.findAllCategoriesExceptProductCategory(product);
         List<Month> monthList = monthService.findAllAndSort();
+        // TODO: should use DTO object instead
+        product.setImgUrl(imageService.getImageAsBase64FromProduct(product));
 
         req.setAttribute("product", product);
         req.setAttribute("categoryList", categoryList);
@@ -53,7 +60,8 @@ public class ProductEditServlet extends HttpServlet {
         String name = req.getParameter("name");
         String unit = req.getParameter("unit");
         double pricePerUnit = Double.parseDouble(req.getParameter("pricePerUnit"));
-        String imgUrl = req.getParameter("imgUrl");
+        //String imgUrl = req.getParameter("imgUrl");
+        String imgUrl = "";
         double vat = Double.parseDouble(req.getParameter("vat"));
         String description = req.getParameter("description");
         double stock = Double.parseDouble(req.getParameter("stock"));
@@ -73,6 +81,9 @@ public class ProductEditServlet extends HttpServlet {
 
         boolean success = productService.updateProduct(
                 id, name, unit, pricePerUnit, imgUrl, vat, description, stock, category, seasonalMonths);
+
+        Part filePart = req.getPart("imageFile");
+        imageService.saveProductImage(filePart, productService.findById(id));
 
         if (!success) {
             req.setAttribute("editError", "Error while editing product.");
