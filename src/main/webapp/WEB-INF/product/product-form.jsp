@@ -54,7 +54,10 @@
 <%--            <input type="text" class="form-control"--%>
 <%--                   id="imgUrl" name="imgUrl"--%>
 <%--                   value="${empty product.imgUrl ? '' : product.imgUrl }">--%>
-
+            <c:if test="${!empty product.id}">
+                <img src="data:image/jpeg;base64,${product.imgUrl}" alt="Product Image"
+                     class="table-img rounded border">
+            </c:if>
                 <input type="file" name="imageFile">
 
 
