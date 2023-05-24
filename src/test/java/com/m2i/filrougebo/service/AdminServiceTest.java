@@ -101,15 +101,13 @@ class AdminServiceTest {
 
         when(adminDaoMock.findAll()).thenReturn(admins);
         List<AdminDto> adminDtos = adminService.getAllAdmins();
-        int i = 0;
 
-        admins
-                .stream()
-                .forEach(admin -> {
-                    assertEquals(admin.getIdAdmin(),adminDtos.get(i).getIdAdmin());
-                    assertEquals(admin.getUsername(),adminDtos.get(i).getUsername());
-                    assertEquals(admin.getIsSuperAdmin(),adminDtos.get(i).getIsSuperAdmin());
-                    });
+        for (int i = 0; i < adminDtos.size(); i++) {
+            assertEquals(admins.get(i).getIdAdmin(),adminDtos.get(i).getIdAdmin());
+            assertEquals(admins.get(i),adminDtos.get(i));
+        }
+
+
     }
 
 }
