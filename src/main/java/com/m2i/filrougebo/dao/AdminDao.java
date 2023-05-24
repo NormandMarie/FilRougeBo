@@ -119,6 +119,7 @@ public class AdminDao implements IntAdminDao{
         }
         return false;
     }
+    @Override
     public Admin authenticate(String username, String password) {
         String query = "SELECT * FROM admins WHERE username = ? AND password = ?";
         try (PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -140,8 +141,7 @@ public class AdminDao implements IntAdminDao{
 
         return null;
     }
-
-
+    @Override
     public Admin findByUsername(String username) {
         String query = "SELECT * FROM admins WHERE username = ?";
         try (PreparedStatement stmt = conn.prepareStatement(query)) {
