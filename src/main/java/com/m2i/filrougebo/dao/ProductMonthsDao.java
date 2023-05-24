@@ -58,7 +58,7 @@ public class ProductMonthsDao {
     public List<Month> findAllMonthsPerProduct(int productId) {
 
         List<Month> monthList = new ArrayList<>();
-        String sqlQuery = "SELECT pm.idProduct, pm.idMonth as 'id' FROM Product_Months pm WHERE pm.idProduct = ?;";
+        String sqlQuery = "SELECT pm.idProduct, pm.idMonth as id FROM Product_Months pm WHERE pm.idProduct = ?;";
 
         try (PreparedStatement pst = conn.prepareStatement(sqlQuery)) {
 

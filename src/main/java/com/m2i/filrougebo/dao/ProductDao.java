@@ -34,7 +34,6 @@ public class ProductDao implements IntProductDao{
         seasonalMonths = productMonthsDao.findAllMonthsPerProduct(id);
 
         return new Product(id, name, unit, pricePerUnit, imgUrl, vat, description, stock, category, seasonalMonths);
-
     }
 
     @Override
@@ -89,7 +88,7 @@ public class ProductDao implements IntProductDao{
         String sqlQuery = "SELECT id, name, unit, pricePerUnit, imgUrl, vat, description, stock, idCategory FROM Products";
 
         try (PreparedStatement pst = conn.prepareStatement(sqlQuery);
-             ResultSet rs = pst.executeQuery()) {
+            ResultSet rs = pst.executeQuery()) {
 
             while (rs.next()) {
                 Product product = mapToProduct(rs);
