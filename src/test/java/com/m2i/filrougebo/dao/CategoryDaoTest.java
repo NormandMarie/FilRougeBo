@@ -92,14 +92,7 @@ class CategoryDaoTest {
 
         List<Category> result = categoryDao.searchByName(search);
         assertTrue(result.size()==0);
-        //AtomicInteger i = new AtomicInteger();
-        //        result
-        //                .stream()
-        //                .forEach(cat -> {
-        //                    assertEquals(expected.get(i.get()).getIdCategory(),cat.getIdCategory());
-        //                    assertEquals(expected.get(i.get()).getName(),cat.getName());
-        //                    i.getAndIncrement();
-        //                });
+
     }
     @AfterEach
     void tearDown() throws SQLException {

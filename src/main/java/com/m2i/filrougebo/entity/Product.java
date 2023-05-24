@@ -2,6 +2,7 @@ package com.m2i.filrougebo.entity;
 
 import com.m2i.filrougebo.enums.Month;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Product {
@@ -18,6 +19,7 @@ public class Product {
     private List<Month> seasonalMonths;
 
     public Product() {
+        this.seasonalMonths=new ArrayList<>();
     }
 
     public Product(String name, String unit, double pricePerUnit, String imgUrl, double vat,
