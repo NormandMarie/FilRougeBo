@@ -9,10 +9,10 @@
 
     <c:choose>
         <c:when test="${! empty product}">
-            <h1>Edit product</h1>
+            <h1>Éditer un produit</h1>
         </c:when>
         <c:otherwise>
-            <h1>Add product to the database</h1>
+            <h1>Ajouter un produit à la base de données</h1>
         </c:otherwise>
     </c:choose>
 
@@ -21,7 +21,7 @@
       class="m-3 bg-light rounded p-2">
 
     <div class="mb-3">
-        <label for="name" class="form-label">Name</label>
+        <label for="name" class="form-label">Nom</label>
         <input type="text" class="form-control"
                id="name" name="name"
                value="${empty product.name ? '' : product.name }">
@@ -29,7 +29,7 @@
 
     <div class="row row-cols-2">
         <div class="col mb-3">
-            <label for="category" class="form-label">Category</label>
+            <label for="category" class="form-label">Categories</label>
 
             <select class="form-select" id="category" name="category">
 
@@ -38,7 +38,7 @@
                         <option value="${product.category.idCategory}" selected>${product.category.name}</option>
                     </c:when>
                     <c:otherwise>
-                        <option selected>Please select a Category:</option>
+                        <option selected>Veuillez sélectionner une catégorie:</option>
                     </c:otherwise>
                 </c:choose>
 
@@ -71,21 +71,21 @@
     <div class="row row-cols-4">
 
             <div class="col mb-3">
-                <label for="unit" class="form-label">Unit</label>
+                <label for="unit" class="form-label">Unité</label>
                 <input type="text" class="form-control"
                        id="unit" name="unit"
                        value="${empty product.unit ? '' : product.unit }">
             </div>
 
             <div class="col mb-3">
-                <label for="pricePerUnit" class="form-label">Price</label>
+                <label for="pricePerUnit" class="form-label">Prix</label>
                 <input type="text" class="form-control"
                        id="pricePerUnit" name="pricePerUnit"
                        value="${empty product.pricePerUnit ? '' : product.pricePerUnit }">
             </div>
 
             <div class="col mb-3">
-                <label for="vat" class="form-label">V.A.T.</label>
+                <label for="vat" class="form-label">T.V.A</label>
                 <input type="text" class="form-control"
                        id="vat" name="vat"
                        value="${empty product.vat ? '' : product.vat }">
@@ -128,13 +128,13 @@
                         name="id" value="${product.id}"
                         formaction="${pageContext.request.contextPath}/secured/edit-product?id=${product.id}">
                     <i class="bi bi-pencil-square d-inline"></i>
-                    <span class="d-none d-sm-inline-block">Edit</span>
+                    <span class="d-none d-sm-inline-block">Éditer</span>
                 </button>
 
                 <a role="button" class="btn btn-danger mx-1"
                    href="${pageContext.request.contextPath}/secured/delete-product?id=${product.id}">
                     <i class="bi bi-trash3-fill"></i>
-                    <span class="d-none d-sm-inline-block">Delete</span>
+                    <span class="d-none d-sm-inline-block">Supprimer</span>
                 </a>
             </c:when>
             <c:otherwise>

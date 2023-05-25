@@ -38,7 +38,7 @@ body {
 
 .login-img-div{
    width: 33%;
-    height: 100%;
+    height: 99%;
 }
 .login-champ{
     justify-content:space-around;
@@ -52,4 +52,8 @@ body {
 }
 .bg-light-custome{
     background-color: rgba(199, 199, 199, 0.19);
+}
+.img-navBar{
+    height: 30px;
+    margin-right: 20px;
 }
