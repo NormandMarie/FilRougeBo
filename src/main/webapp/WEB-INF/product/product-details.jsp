@@ -34,35 +34,35 @@
                         <a role="button" class="btn btn-primary mx-1"
                            href="${pageContext.request.contextPath}/secured/edit-product?id=${product.id}">
                             <i class="bi bi-pencil-square d-inline"></i>
-                            <span class="d-none d-sm-inline-block">Edit</span>
+                            <span class="d-none d-sm-inline-block">Éditer</span>
                         </a>
 
                         <a role="button" class="btn btn-danger mx-1"
                            href="${pageContext.request.contextPath}/secured/delete-product?id=${product.id}">
                             <i class="bi bi-trash3-fill"></i>
-                            <span class="d-none d-sm-inline-block">Delete</span>
+                            <span class="d-none d-sm-inline-block">Supprimer</span>
                         </a>
 
                     </div>
                 </div>
 
             <dl class="row">
-                <dt class="col-sm-3">Category</dt>
+                <dt class="col-sm-3">Categorie</dt>
                 <dd class="col-sm-9">${product.category.name}</dd>
 
                 <dt class="col-sm-3">Stock</dt>
                 <dd class="col-sm-9">${product.stock} ${product.unit}</dd>
 
-                <dt class="col-sm-3">Price</dt>
+                <dt class="col-sm-3">Prix</dt>
                 <dd class="col-sm-9">&euro;&nbsp${product.pricePerUnit}&nbsp/&nbsp${product.unit}</dd>
 
-                <dt class="col-sm-3">V.A.T.</dt>
+                <dt class="col-sm-3">T.V.A</dt>
                 <dd class="col-sm-9">${product.vat * 100} %</dd>
 
                 <dt class="col-sm-3">Description</dt>
                 <dd class="col-sm-9">${product.description}</dd>
 
-                <dt class="col-sm-3">Seasonal months:</dt>
+                <dt class="col-sm-3">Mois de consommation </dt>
                 <dd class="col-sm-9">
                     <div class="container text-center row row-cols-1 row-cols-sm-4 row-cols-md-5 row-cols-xl-7">
                         <c:forEach items="${monthList}" var="month">

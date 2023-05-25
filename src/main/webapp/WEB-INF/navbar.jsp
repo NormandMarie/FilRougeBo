@@ -5,7 +5,8 @@
 
 <nav class="navbar navbar-expand-lg bg-light">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">Navbar</a>
+        <a class="navbar-brand" href="#">Panier Primeur </a>
+        <img src="https://cdn.discordapp.com/attachments/1099647573217771521/1111304265827360928/image.png" class="img-navBar mr-3" >
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -23,14 +24,14 @@
                         <li>
                             <a class="dropdown-item"
                                href="${pageContext.request.contextPath}/secured/list-category">
-                                Categories List
+                                Liste des catégories
                             </a>
                         </li>
                         <li><hr class="dropdown-divider"></li>
                         <li>
                             <a class="dropdown-item"
                                href="${pageContext.request.contextPath}/secured/add-category">
-                                Add Category
+                                ajouter une catégorie
                             </a>
                         </li>
                     </ul>
@@ -41,20 +42,20 @@
                     <a class="nav-link dropdown-toggle"
                        href="${pageContext.request.contextPath}/secured/list-product"
                        role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Products
+                        produits
                     </a>
                     <ul class="dropdown-menu">
                         <li>
                             <a class="dropdown-item"
                                href="${pageContext.request.contextPath}/secured/list-product">
-                                Products list
+                                Liste de produits
                             </a>
                         </li>
                         <li><hr class="dropdown-divider"></li>
                         <li>
                             <a class="dropdown-item"
                                href="${pageContext.request.contextPath}/secured/add-product">
-                                Add Product
+                                Ajouter un produit
                             </a>
                         </li>
                     </ul>
@@ -70,7 +71,7 @@
                         <a class="nav-link"
                            href="${pageContext.request.contextPath}/SuperAdmin/ListAdmin"
                            role="button"  aria-expanded="false">
-                            Admins
+                            administrateur·rice
                         </a>
                     </li>
                     <%
@@ -86,7 +87,7 @@
 
                     <c:when test="${! empty sessionScope.username}">
                         <div class="d-flex">
-                             <a class="btn btn-outline-danger btn-sm m-1 my-2 mx-2 " href="${pageContext.request.contextPath}/secured/logout">Logout</a>
+                             <a class="btn btn-outline-danger btn-sm m-1 my-2 mx-2 " href="${pageContext.request.contextPath}/secured/logout">Déconnexion</a>
                             <div class="d-flex flex-column">
                               <span> <i class="bi bi-person-fill-lock"></i> ${sessionScope.username}</span>
                               <span style="white-space: nowrap;"> <i class="bi bi-calendar2-event"></i> <%= (new java.util.Date()).toLocaleString()%></span>

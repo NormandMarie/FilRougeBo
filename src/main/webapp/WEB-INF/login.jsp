@@ -22,30 +22,30 @@
             <img src="https://source.unsplash.com/random/900×700/?vegetables" class="img-fluid  h-100 w-100" style="object-fit: cover;" >
         </div>
 
-        <div class=" m-2 bg-light-custome p-3 " >
-            <form  class="d-flex flex-column m-1 mt-2 login-champ" action="${pageContext.request.contextPath}/login" method="post">
+        <div class="mx-2 mb-1 bg-light-custome p-3 " >
+            <form  class="  d-flex flex-column  mt-2 login-champ" action="${pageContext.request.contextPath}/login" method="post">
                 <div>
-                    <h2> Welcome to </h2>
+                    <h2> Bienvenue au </h2>
                     <h3 >Panier Primeur </h3>
-                    <h4>Log into your account </h4>
+                    <h5>veuillez-vous connecter </h5>
                 </div>
                 <div class="d-flex  flex-column ">
                     <div class="d-flex flex-column login-champ-use " >
                         <label> Username:</label>
-                        <input   type="text" name="username" placeholder="username"
+                        <input   type="text" name="username" placeholder="nom d'utilisateur"
                                  value="superadmin" >
                     </div>
                     <div class="d-flex flex-column mb-1 login-champ-pwd" >
                         <label> Password:</label>
-                        <input type="password" name="password" placeholder="password"
+                        <input type="password" name="password" placeholder="mot de passe"
                                value="superadmin">
                     </div>
                 </div>
-                <button class="btn btn-primary" type="submit">Login</button>
+                <button class="btn btn-primary" type="submit">Connexion</button>
             </form>
 
             <c:if test="${isError == true}">
-                <p>Bad credentials.</p>
+                <p>Mauvais Identifiant</p>
             </c:if>
 
         </div>

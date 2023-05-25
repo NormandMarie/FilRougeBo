@@ -12,14 +12,14 @@
             <form class="d-flex col-12 col-sm-7 my-2"
                   role="search" method="post"
                   action="${pageContext.request.contextPath}/secured/search-product">
-                <input class="form-control me-2" type="search" placeholder="Search a product" aria-label="Search"
+                <input class="form-control me-2" type="search" placeholder="chercher un produit" aria-label="Search"
                     value="${!empty searchQuery ? searchQuery : ''}"  name="search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
+                <button class="btn btn-outline-success" type="submit">Rechercher</button>
             </form>
 
             <a class="btn btn-primary col-12 col-sm-5 my-2"
                href="${pageContext.request.contextPath}/secured/add-product"
-               role="button">Create product</a>
+               role="button">Créer un produit</a>
 
 
     </div>
@@ -33,9 +33,9 @@
         <tr>
             <th>ID</th>
             <th class="d-none d-md-table-cell">Image</th>
-            <th>Name</th>
-            <th class="d-none d-md-table-cell">Category</th>
-            <th class="">Price</th>
+            <th>Nom</th>
+            <th class="d-none d-md-table-cell">Categories</th>
+            <th class="">Prix</th>
             <th class="">Stock</th>
             <th></th> <!--  buttons -->
         </tr>
@@ -61,21 +61,21 @@
                        href="${pageContext.request.contextPath}/secured/details-product?id=${product.id}"
                        role="button">
                         <i class="bi bi-card-heading"></i>
-                        <span class="d-none d-sm-inline-block">Details</span>
+                        <span class="d-none d-sm-inline-block">Détails</span>
                     </a>
 
                     <a class="btn btn-primary btn-sm m-1 col-9 col-md-3"
                        href="${pageContext.request.contextPath}/secured/edit-product?id=${product.id}"
                        role="button">
                         <i class="bi bi-pencil-square d-inline"></i>
-                        <span class="d-none d-sm-inline-block">Edit</span>
+                        <span class="d-none d-sm-inline-block">Éditer</span>
                     </a>
 
                     <a class="btn btn-danger btn-sm m-1 col-9 col-md-3"
                        href="${pageContext.request.contextPath}/secured/delete-product?id=${product.id}"
                        role="button">
                         <i class="bi bi-trash3-fill"></i>
-                        <span class="d-none d-sm-inline-block">Delete</span>
+                        <span class="d-none d-sm-inline-block">Supprimer</span>
                     </a>
                 </td>
 

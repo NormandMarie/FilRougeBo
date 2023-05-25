@@ -12,10 +12,10 @@
         <div class="row row-cols-2 d-flex align-items-end mx-auto">
 
             <div class="col-7 mb-3">
-                <label for="name" class="form-label">Name</label>
+                <label for="name" class="form-label">Nom</label>
                 <input type="text" class="form-control"
                        id="name" name="name"
-                       placeholder="Category name"
+                       placeholder="Nom de la catégorie"
                        value="${empty category.name ? '' : category.name }">
             </div>
 
@@ -26,19 +26,19 @@
                                 name="id" value="${category.idCategory}"
                                 formaction="${pageContext.request.contextPath}/secured/edit-category?id=${category.idCategory}">
                             <i class="bi bi-pencil-square d-inline"></i>
-                            <span class="d-none d-md-inline-block">Edit</span>
+                            <span class="d-none d-md-inline-block">Éditer</span>
                         </button>
 
                         <a role="button" class="btn btn-danger mx-1"
                            href="${pageContext.request.contextPath}/secured/delete-category?id=${category.idCategory}">
                             <i class="bi bi-trash3-fill"></i>
-                            <span class="d-none d-md-inline-block">Delete</span>
+                            <span class="d-none d-md-inline-block">Supprimer</span>
                         </a>
                     </c:when>
                     <c:otherwise>
                         <button class="btn btn-primary my-3" type="submit">
                             <i class="bi bi-check-square-fill"></i>
-                            <span class="d-none d-md-inline-block">Create</span>
+                            <span class="d-none d-md-inline-block">Création</span>
                         </button>
                     </c:otherwise>
                 </c:choose>
