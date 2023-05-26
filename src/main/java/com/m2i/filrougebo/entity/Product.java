@@ -23,7 +23,7 @@ public class Product {
     private String imgUrl;
     private double vat;
     @Size(max = 100, message = "La description doit contenir au maximum 100 caractères.")
-    @Pattern(regexp = "[a-zA-Z0-9.,]{0,100}", message = "La description ne peut contenir que des lettres, des chiffres, des points et des virgules.")
+    @Pattern(regexp = "[a-zA-Z0-9., '’àáèé]{0,100}", message = "La description ne peut contenir que des lettres, des chiffres, des points et des virgules.")
     private String description;
     @DecimalMin(value = "0.0", message = "Le stock doit être supérieur ou égal à 0.")
     private double stock;

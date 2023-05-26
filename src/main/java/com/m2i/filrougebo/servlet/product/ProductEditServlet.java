@@ -88,8 +88,11 @@ public class ProductEditServlet extends HttpServlet {
                 String message = violation.getMessage();
                 errors.put(propertyPath, message);
             }
+            Part filePart = req.getPart("imageFile");
+            imageService.saveProductImage(filePart, product);
             req.setAttribute("errors", errors);
             req.setAttribute("product", product);
+
             req.getRequestDispatcher(JSP).forward(req, resp);
         } else {
             boolean isEdited = productService.editProduct(product);
