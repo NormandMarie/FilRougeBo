@@ -17,7 +17,8 @@ public class Admin {
     private String firstName;
     @Pattern(regexp = "[a-zA-Z]{2,20}", message = "2 à 20 lettres.")
     private String lastName;
-    @Email(message = "Email invalide")
+    //@Email(message = "Email invalide")
+    @Pattern(regexp = "^[A-Za-z0-9-]+(\\.[A-Za-z0-9-]{2,}){0,1}@([A-Za-z0-9-]+\\.)+[A-Za-z]{2,}$", message = "Email invalide")
     private String email;
 
     public Admin() {
