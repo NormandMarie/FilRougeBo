@@ -25,6 +25,9 @@
         <input type="text" class="form-control"
                id="name" name="name"
                value="${empty product.name ? '' : product.name }">
+        <c:if test="${not empty requestScope.errors.name}">
+            <c:out value="${requestScope.errors.name}"/>
+        </c:if>
     </div>
 
     <div class="row row-cols-2">
@@ -75,6 +78,9 @@
                 <input type="text" class="form-control"
                        id="unit" name="unit"
                        value="${empty product.unit ? '' : product.unit }">
+                <c:if test="${not empty requestScope.errors.unit}">
+                    <c:out value="${requestScope.errors.unit}"/>
+                </c:if>
             </div>
 
             <div class="col mb-3">
@@ -82,6 +88,9 @@
                 <input type="text" class="form-control"
                        id="pricePerUnit" name="pricePerUnit"
                        value="${empty product.pricePerUnit ? '' : product.pricePerUnit }">
+                <c:if test="${not empty requestScope.errors.pricePerUnit}">
+                    <c:out value="${requestScope.errors.pricePerUnit}"/>
+                </c:if>
             </div>
 
             <div class="col mb-3">
@@ -89,6 +98,9 @@
                 <input type="text" class="form-control"
                        id="vat" name="vat"
                        value="${empty product.vat ? '' : product.vat }">
+                <c:if test="${not empty requestScope.errors.vat}">
+                    <c:out value="${requestScope.errors.vat}"/>
+                </c:if>
             </div>
 
             <div class="col mb-3">
@@ -96,6 +108,9 @@
                 <input type="text" class="form-control"
                        id="stock" name="stock"
                        value="${empty product.stock ? '' : product.stock }">
+                <c:if test="${not empty requestScope.errors.stock}">
+                    <c:out value="${requestScope.errors.stock}"/>
+                </c:if>
             </div>
 
 
@@ -104,6 +119,9 @@
     <label for="description" class="form-control-sm">Description:</label>
     <textarea id="description" class="form-control"
               name="description" rows="7">${empty product.description ? 'Some description' : product.description}</textarea>
+        <c:if test="${not empty requestScope.errors.description}">
+            <c:out value="${requestScope.errors.description}"/>
+        </c:if>
 
 
 <%--    MONTHS    --%>
@@ -144,9 +162,6 @@
                 </button>
             </c:otherwise>
         </c:choose>
-
-
-
 
 </form>
 

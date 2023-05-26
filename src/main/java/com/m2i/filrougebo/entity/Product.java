@@ -1,18 +1,31 @@
 package com.m2i.filrougebo.entity;
 
 import com.m2i.filrougebo.enums.Month;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+import org.hibernate.validator.constraints.URL;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Product {
     private int id;
+    @Pattern(regexp = "[a-zA-Z0-9]{4,20}", message = "4 à 20 caractères.")
     private String name;
+
+    //TODO: option select ou form control pour unit ?
     private String unit;
+    @DecimalMin(value = "0.0", message = "Le prix doit être supérieur ou égal à 0.")
     private double pricePerUnit;
+    @URL
     private String imgUrl;
     private double vat;
+    @Size(max = 100, message = "La description doit contenir au maximum 100 caractères.")
+    @Pattern(regexp = "[a-zA-Z0-9.,]{0,100}", message = "La description ne peut contenir que des lettres, des chiffres, des points et des virgules.")
     private String description;
+    @DecimalMin(value = "0.0", message = "Le stock doit être supérieur ou égal à 0.")
     private double stock;
     private Category category;
     //TODO: Change to EnumSet?
