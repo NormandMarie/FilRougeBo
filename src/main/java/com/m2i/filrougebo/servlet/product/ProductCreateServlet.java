@@ -49,13 +49,11 @@ public class ProductCreateServlet extends HttpServlet {
         req.getRequestDispatcher(ProductCreateServlet.JSP).forward(req, resp);
 
     }
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         String name = req.getParameter("name");
         String unit = req.getParameter("unit");
-
 //        String imgUrl = req.getParameter("imgUrl");
         String imgUrl = "";
         Part filePart = req.getPart("imageFile");
@@ -65,13 +63,11 @@ public class ProductCreateServlet extends HttpServlet {
                 || req.getParameter("stock")==null && req.getParameter("stock").isEmpty()){
 
             req.setAttribute("createError", "Price, vat, stock must not be empty");
-
         }
 
         double pricePerUnit = Double.parseDouble(req.getParameter("pricePerUnit"));
         double vat = Double.parseDouble(req.getParameter("vat"));
         double stock = Double.parseDouble(req.getParameter("stock"));
-
 
         String description = req.getParameter("description");
 
@@ -87,7 +83,6 @@ public class ProductCreateServlet extends HttpServlet {
         }
 
         Product product = new Product(name, unit, pricePerUnit, imgUrl, vat, description, stock, category, seasonalMonths);
-
         Set<ConstraintViolation<Product>> violations = validator.validate(product);
 
         if (!violations.isEmpty()) {
@@ -99,8 +94,6 @@ public class ProductCreateServlet extends HttpServlet {
                 errors.put(propertyPath, message);
             }
             req.setAttribute("errors", errors);
-            req.setAttribute("products", productService.findAll());
-
             req.getRequestDispatcher(JSP).forward(req, resp);
         } else {
             //TODO: check arguments
@@ -112,6 +105,5 @@ public class ProductCreateServlet extends HttpServlet {
             }
             resp.sendRedirect(ProductListServlet.URL);
         }
-
     }
 }
