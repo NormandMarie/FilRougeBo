@@ -1,12 +1,23 @@
 package com.m2i.filrougebo.entity;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Pattern;
+
 public class Admin {
     private int idAdmin;
+    @Pattern(regexp = "[a-zA-Z0-9]{4,20}", message = "4 à 20 caractères.")
+    @NotEmpty
     private String username;
     private boolean isSuperAdmin = false;
+    @Pattern(regexp = "[a-zA-Z0-9]{4,20}", message = "4 à 20 lettres ou chiffres.")
+    @NotEmpty
     private String password;
+    @Pattern(regexp = "[a-zA-Z]{2,20}", message = "2 à 20 lettres.")
     private String firstName;
+    @Pattern(regexp = "[a-zA-Z]{2,20}", message = "2 à 20 lettres.")
     private String lastName;
+    @Email(message = "Email invalide")
     private String email;
 
     public Admin() {
