@@ -25,6 +25,9 @@
         <input type="text" class="form-control"
                id="name" name="name"
                value="${empty product.name ? '' : product.name }">
+        <c:if test="${not empty requestScope.errors.name}">
+            <c:out value="${requestScope.errors.name}"/>
+        </c:if>
     </div>
 
     <div class="row row-cols-2">
@@ -58,44 +61,70 @@
                 <img src="data:image/jpeg;base64,${product.imgUrl}" alt="Product Image"
                      class="table-img rounded border">
             </c:if>
-                <input type="file" name="imageFile">
-
+                <input type="file" name="imageFile" value="">
 
         </div>
-
-
-
     </div>
 
 
     <div class="row row-cols-4">
 
             <div class="col mb-3">
+
                 <label for="unit" class="form-label">Unité</label>
-                <input type="text" class="form-control"
-                       id="unit" name="unit"
-                       value="${empty product.unit ? '' : product.unit }">
+
+                <select class="form-select" id="unit" name="unit">
+
+                    <c:choose>
+                        <c:when test="${! empty product.unit}">
+                            <option value="${product.unit}" selected>${product.unit}</option>
+                            <c:if test="${product.unit == 'kg'}">
+                                <option value="pièce">pièce</option>
+                            </c:if>
+                            <c:if test="${product.unit == 'pièce'}">
+                                <option value="kg">kg</option>
+                            </c:if>
+                        </c:when>
+                        <c:otherwise>
+                            <option selected>Unité:</option>
+                            <option value="kg">kg</option>
+                            <option value="pièce">pièce</option>
+                        </c:otherwise>
+                    </c:choose>
+                </select>
+
             </div>
 
             <div class="col mb-3">
                 <label for="pricePerUnit" class="form-label">Prix</label>
-                <input type="text" class="form-control"
+                <input type="number" class="form-control" step="0.01"
                        id="pricePerUnit" name="pricePerUnit"
-                       value="${empty product.pricePerUnit ? '' : product.pricePerUnit }">
+                       value="${empty product.pricePerUnit ? '' : product.pricePerUnit }" required>
+                <c:if test="${not empty requestScope.errors.pricePerUnit}">
+                    <c:out value="${requestScope.errors.pricePerUnit}"/>
+                </c:if>
             </div>
 
             <div class="col mb-3">
                 <label for="vat" class="form-label">T.V.A</label>
-                <input type="text" class="form-control"
+                <input type="number" step="0.01" min="0" max="1" class="form-control"
                        id="vat" name="vat"
-                       value="${empty product.vat ? '' : product.vat }">
+                       value="${empty product.vat ? '' : product.vat }" required>
+                <c:if test="${not empty requestScope.errors.vat}">
+                    <c:out value="${requestScope.errors.vat}"/>
+                </c:if>
             </div>
 
             <div class="col mb-3">
                 <label for="stock" class="form-label">Stock</label>
-                <input type="text" class="form-control"
-                       id="stock" name="stock"
-                       value="${empty product.stock ? '' : product.stock }">
+
+                    <input type="number"  min="0" class="form-control"
+                           id="stock" name="stock"
+                           value="${empty product.stock ? '' : product.stock }" required>
+
+                <c:if test="${not empty requestScope.errors.stock}">
+                    <c:out value="${requestScope.errors.stock}"/>
+                </c:if>
             </div>
 
 
@@ -103,7 +132,10 @@
 
     <label for="description" class="form-control-sm">Description:</label>
     <textarea id="description" class="form-control"
-              name="description" rows="7">${empty product.description ? 'Some description' : product.description}</textarea>
+              name="description" rows="7" required>${empty product.description ? 'Some description' : product.description}</textarea>
+        <c:if test="${not empty requestScope.errors.description}">
+            <c:out value="${requestScope.errors.description}"/>
+        </c:if>
 
 
 <%--    MONTHS    --%>
@@ -145,12 +177,32 @@
             </c:otherwise>
         </c:choose>
 
-
-
-
 </form>
 
 </div>
+<script>
+    window.onload = function() {
+        var unitSelect = document.getElementById('unit');
+        var stockInput = document.getElementById('stock');
+
+        // Fonction pour mettre à jour le champ de saisie du stock en fonction de l'unité sélectionnée
+        function updateStockInput() {
+            var selectedUnit = unitSelect.value;
+
+            if (selectedUnit === 'kg') {
+                stockInput.step = '0.01'; // Step de 0.01 pour l'unité kg
+            } else {
+                stockInput.step = '1'; // Step de 1 pour l'unité pièce
+            }
+        }
+
+        // Écouter l'événement de changement de l'unité sélectionnée
+        unitSelect.addEventListener('change', updateStockInput);
+
+        // Appeler la fonction de mise à jour initiale
+        updateStockInput();
+    };
+</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 
 </body>
