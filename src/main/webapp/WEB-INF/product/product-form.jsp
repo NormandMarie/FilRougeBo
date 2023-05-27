@@ -61,33 +61,45 @@
                 <img src="data:image/jpeg;base64,${product.imgUrl}" alt="Product Image"
                      class="table-img rounded border">
             </c:if>
-                <input type="file" name="imageFile">
-
+                <input type="file" name="imageFile" value="">
 
         </div>
-
-
-
     </div>
 
 
     <div class="row row-cols-4">
 
             <div class="col mb-3">
+
                 <label for="unit" class="form-label">Unité</label>
-                <input type="text" class="form-control"
-                       id="unit" name="unit"
-                       value="${empty product.unit ? '' : product.unit }">
-                <c:if test="${not empty requestScope.errors.unit}">
-                    <c:out value="${requestScope.errors.unit}"/>
-                </c:if>
+
+                <select class="form-select" id="unit" name="unit">
+
+                    <c:choose>
+                        <c:when test="${! empty product.unit}">
+                            <option value="${product.unit}" selected>${product.unit}</option>
+                            <c:if test="${product.unit == 'kg'}">
+                                <option value="pièce">pièce</option>
+                            </c:if>
+                            <c:if test="${product.unit == 'pièce'}">
+                                <option value="Kg">Kg</option>
+                            </c:if>
+                        </c:when>
+                        <c:otherwise>
+                            <option selected>Unité:</option>
+                            <option value="kg">kg</option>
+                            <option value="pièce">pièce</option>
+                        </c:otherwise>
+                    </c:choose>
+                </select>
+
             </div>
 
             <div class="col mb-3">
                 <label for="pricePerUnit" class="form-label">Prix</label>
-                <input type="text" class="form-control"
+                <input type="number" class="form-control"
                        id="pricePerUnit" name="pricePerUnit"
-                       value="${empty product.pricePerUnit ? '' : product.pricePerUnit }">
+                       value="${empty product.pricePerUnit ? '' : product.pricePerUnit }" required>
                 <c:if test="${not empty requestScope.errors.pricePerUnit}">
                     <c:out value="${requestScope.errors.pricePerUnit}"/>
                 </c:if>
@@ -95,9 +107,9 @@
 
             <div class="col mb-3">
                 <label for="vat" class="form-label">T.V.A</label>
-                <input type="text" class="form-control"
+                <input type="number" class="form-control"
                        id="vat" name="vat"
-                       value="${empty product.vat ? '' : product.vat }">
+                       value="${empty product.vat ? '' : product.vat }" required>
                 <c:if test="${not empty requestScope.errors.vat}">
                     <c:out value="${requestScope.errors.vat}"/>
                 </c:if>
@@ -105,9 +117,9 @@
 
             <div class="col mb-3">
                 <label for="stock" class="form-label">Stock</label>
-                <input type="text" class="form-control"
+                <input type="number" class="form-control"
                        id="stock" name="stock"
-                       value="${empty product.stock ? '' : product.stock }">
+                       value="${empty product.stock ? '' : product.stock }" required>
                 <c:if test="${not empty requestScope.errors.stock}">
                     <c:out value="${requestScope.errors.stock}"/>
                 </c:if>
@@ -118,7 +130,7 @@
 
     <label for="description" class="form-control-sm">Description:</label>
     <textarea id="description" class="form-control"
-              name="description" rows="7">${empty product.description ? 'Some description' : product.description}</textarea>
+              name="description" rows="7" required>${empty product.description ? 'Some description' : product.description}</textarea>
         <c:if test="${not empty requestScope.errors.description}">
             <c:out value="${requestScope.errors.description}"/>
         </c:if>
