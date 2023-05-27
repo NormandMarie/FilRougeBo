@@ -35,12 +35,17 @@ public class ProductService {
 
         return productDao.create(product);
     }
+    public Product addProduct(Product product){
+        return productDao.create(product);
+    }
+    public boolean editProduct(Product product){
+        return productDao.update(product);
+    }
 
     public boolean updateProduct(int id, String name, String unit, double pricePerUnit, String imgUrl, double vat,
                                  String description, double stock, Category category, List<Month> seasonalMonths) {
 
         Product product = new Product(id, name, unit, pricePerUnit, imgUrl, vat, description, stock, category, seasonalMonths);
-
         return productDao.update(product);
     }
 

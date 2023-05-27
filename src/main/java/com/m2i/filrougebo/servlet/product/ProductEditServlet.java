@@ -16,10 +16,12 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @WebServlet(urlPatterns = ProductEditServlet.URL)
 @MultipartConfig
@@ -27,11 +29,11 @@ public class ProductEditServlet extends HttpServlet {
 
     public static final String URL = "/secured/edit-product";
     private static final String JSP = "/WEB-INF/product/product-form.jsp";
-
-    ProductService productService = new ProductService();
-    CategoryService categoryService = new CategoryService();
-    MonthService monthService = new MonthService();
-    ImageService imageService = new ImageService();
+    private ProductService productService = new ProductService();
+    private CategoryService categoryService = new CategoryService();
+    private MonthService monthService = new MonthService();
+    private ImageService imageService = new ImageService();
+    private Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -56,40 +58,78 @@ public class ProductEditServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         int id = Integer.parseInt(req.getParameter("id"));
-
         String name = req.getParameter("name");
         String unit = req.getParameter("unit");
-        double pricePerUnit = Double.parseDouble(req.getParameter("pricePerUnit"));
         //String imgUrl = req.getParameter("imgUrl");
-        String imgUrl = "";
-        double vat = Double.parseDouble(req.getParameter("vat"));
+        //String imgUrl = "";
         String description = req.getParameter("description");
+        double pricePerUnit = Double.parseDouble(req.getParameter("pricePerUnit"));
+        double vat = Double.parseDouble(req.getParameter("vat"));
         double stock = Double.parseDouble(req.getParameter("stock"));
+
+        String imgUrl = productService.findById(id).getImgUrl();
+
         Category category = categoryService.findById(Integer.parseInt(req.getParameter("category")));
 
         List<Month> seasonalMonths = new ArrayList<>();
+
         String[] months = req.getParameterValues("months");
         for(String s :months) {
             seasonalMonths.add(Month.valueOf(s.toUpperCase()));
         }
 
+        Product product = new Product(id,name, unit, pricePerUnit, imgUrl, vat, description, stock, category, seasonalMonths);
+        Set<ConstraintViolation<Product>> violations = validator.validate(product);
+
+        if (!violations.isEmpty()) {
+            Map<String, String> errors = new HashMap<>();
+
+            for (ConstraintViolation<Product> violation : violations) {
+                String propertyPath = violation.getPropertyPath().toString();
+                String message = violation.getMessage();
+                errors.put(propertyPath, message);
+            }
+            Part filePart = req.getPart("imageFile");
+            if(filePart.getSize()>0){
+                imageService.saveProductImage(filePart, product);
+            }
+            //imageService.saveProductImage(filePart, product);
+            req.setAttribute("errors", errors);
+            req.setAttribute("product", product);
+
+            req.getRequestDispatcher(JSP).forward(req, resp);
+        } else {
+
+            Part filePart = req.getPart("imageFile");
+            if(filePart.getSize()>0){
+                imageService.saveProductImage(filePart, productService.findById(id));
+                resp.sendRedirect(ProductListServlet.URL);
+            } else{
+                boolean isEdited = productService.editProduct(product);
+                if (!isEdited) {
+                    req.setAttribute("editError", "Error while editing product.");
+                }
+                resp.sendRedirect(ProductListServlet.URL);
+            }
+
+
+        }
+
 
         //TODO: check arguments
-        if ( name.isBlank() ) {
-            req.setAttribute("editError", "Empty name is not allowed");
-        }
 
-        boolean success = productService.updateProduct(
-                id, name, unit, pricePerUnit, imgUrl, vat, description, stock, category, seasonalMonths);
 
-        Part filePart = req.getPart("imageFile");
-        imageService.saveProductImage(filePart, productService.findById(id));
-
-        if (!success) {
-            req.setAttribute("editError", "Error while editing product.");
-        }
-
-        resp.sendRedirect(ProductListServlet.URL);
+        //boolean success = productService.updateProduct(
+        //                id, name, unit, pricePerUnit, imgUrl, vat, description, stock, category, seasonalMonths);
+        //
+        //        Part filePart = req.getPart("imageFile");
+        //        imageService.saveProductImage(filePart, productService.findById(id));
+        //
+        //        if (!success) {
+        //            req.setAttribute("editError", "Error while editing product.");
+        //        }
+        //
+        //        resp.sendRedirect(ProductListServlet.URL);
 
     }
 

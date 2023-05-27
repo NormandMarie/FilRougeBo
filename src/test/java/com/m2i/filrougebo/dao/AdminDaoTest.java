@@ -250,8 +250,8 @@ class AdminDaoTest {
                 "    CONSTRAINT Product_months_months_id_fk FOREIGN KEY (idMonth) REFERENCES Months (id) ON DELETE CASCADE ON UPDATE CASCADE\n" +
                 ");" +
                 "INSERT INTO Admins" +
-                        " (id, username, isSuperAdmin, password, firstName, lastName, email)" +
-                        "VALUES (1,'superadmin', 1, 'superadmin', 'Super', 'Admin', 'superadmin@panierprimeur.m2i.com');";
+                        " (username, isSuperAdmin, password, firstName, lastName, email)" +
+                        "VALUES ('superadmin', 1, 'superadmin', 'Super', 'Admin', 'superadmin@panierprimeur.m2i.com');";
 
         Statement statement = conn.createStatement();
         statement.execute(createQuery);
