@@ -27,9 +27,9 @@ public class ProductListServlet extends HttpServlet {
 
         // TODO : should use DTO
         for (Product product : listOfAllProducts) {
-            String base64Image = imageService.getImageAsBase64FromProduct(product);
-            product.setImgUrl(base64Image);
-        }
+                    String base64Image = imageService.getImageAsBase64FromProduct(product);
+                    product.setImgUrl(base64Image);
+                }
 
         req.setAttribute("products", listOfAllProducts);
 

@@ -82,7 +82,7 @@
                                 <option value="pièce">pièce</option>
                             </c:if>
                             <c:if test="${product.unit == 'pièce'}">
-                                <option value="Kg">Kg</option>
+                                <option value="kg">kg</option>
                             </c:if>
                         </c:when>
                         <c:otherwise>
@@ -97,7 +97,7 @@
 
             <div class="col mb-3">
                 <label for="pricePerUnit" class="form-label">Prix</label>
-                <input type="number" class="form-control"
+                <input type="number" class="form-control" step="0.01"
                        id="pricePerUnit" name="pricePerUnit"
                        value="${empty product.pricePerUnit ? '' : product.pricePerUnit }" required>
                 <c:if test="${not empty requestScope.errors.pricePerUnit}">
@@ -107,7 +107,7 @@
 
             <div class="col mb-3">
                 <label for="vat" class="form-label">T.V.A</label>
-                <input type="number" class="form-control"
+                <input type="number" step="0.01" min="0" max="1" class="form-control"
                        id="vat" name="vat"
                        value="${empty product.vat ? '' : product.vat }" required>
                 <c:if test="${not empty requestScope.errors.vat}">
@@ -117,9 +117,11 @@
 
             <div class="col mb-3">
                 <label for="stock" class="form-label">Stock</label>
-                <input type="number" class="form-control"
-                       id="stock" name="stock"
-                       value="${empty product.stock ? '' : product.stock }" required>
+
+                    <input type="number"  min="0" class="form-control"
+                           id="stock" name="stock"
+                           value="${empty product.stock ? '' : product.stock }" required>
+
                 <c:if test="${not empty requestScope.errors.stock}">
                     <c:out value="${requestScope.errors.stock}"/>
                 </c:if>
@@ -178,6 +180,29 @@
 </form>
 
 </div>
+<script>
+    window.onload = function() {
+        var unitSelect = document.getElementById('unit');
+        var stockInput = document.getElementById('stock');
+
+        // Fonction pour mettre à jour le champ de saisie du stock en fonction de l'unité sélectionnée
+        function updateStockInput() {
+            var selectedUnit = unitSelect.value;
+
+            if (selectedUnit === 'kg') {
+                stockInput.step = '0.01'; // Step de 0.01 pour l'unité kg
+            } else {
+                stockInput.step = '1'; // Step de 1 pour l'unité pièce
+            }
+        }
+
+        // Écouter l'événement de changement de l'unité sélectionnée
+        unitSelect.addEventListener('change', updateStockInput);
+
+        // Appeler la fonction de mise à jour initiale
+        updateStockInput();
+    };
+</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 
 </body>

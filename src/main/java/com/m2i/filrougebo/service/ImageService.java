@@ -13,6 +13,7 @@ import java.util.StringJoiner;
 public class ImageService {
 
     private static final String FALLBACK_PRODUCT_IMAGE_PATH = "/media/img/product/placeholder.jpg";
+    private ProductService productService = new ProductService();
 
     private String removesDiacritics(String inputString) {
         String normalizedString = inputString == null ? null : Normalizer.normalize(inputString, Normalizer.Form.NFKD);
@@ -24,8 +25,8 @@ public class ImageService {
         // Only one image per product, so that it can be erased each time a new one is uploaded
         // The image name is saved as {idProduct}_{product.name}.jpg
 
-        String fileName = product.getId() + "_";
-        fileName += removesDiacritics(product.getName()).toLowerCase().replaceAll(" ", "-");
+        String fileName = String.valueOf(product.getId());
+        //fileName += removesDiacritics(product.getName()).toLowerCase().replaceAll(" ", "-");
         fileName += ".jpg";
         String pathArr[] = {"media", "img", "product", fileName};
 
@@ -34,12 +35,17 @@ public class ImageService {
 
     public void saveProductImage(Part part, Product product) {
 
-        String pathToUpload = getPathToSource() + File.separator + getRelativeImgPathFromProduct(product);
+        if(part!=null){
+            String pathToUpload = getPathToSource() + File.separator + getRelativeImgPathFromProduct(product);
 
-        try {
-            part.write(pathToUpload);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            try {
+                part.write(pathToUpload);
+                String newImgUrl = getRelativeImgPathFromProduct(product);
+                product.setImgUrl(newImgUrl);
+                productService.editProduct(product);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 

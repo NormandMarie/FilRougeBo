@@ -58,12 +58,12 @@ public class ProductCreateServlet extends HttpServlet {
         String imgUrl = "";
         Part filePart = req.getPart("imageFile");
 
-        if(req.getParameter("pricePerUnit")==null && req.getParameter("pricePerUnit").isEmpty()
-            || req.getParameter("vat")==null && req.getParameter("vat").isEmpty()
-                || req.getParameter("stock")==null && req.getParameter("stock").isEmpty()){
-
-            req.setAttribute("createError", "Price, vat, stock must not be empty");
-        }
+        //if(req.getParameter("pricePerUnit")==null && req.getParameter("pricePerUnit").isEmpty()
+        //            || req.getParameter("vat")==null && req.getParameter("vat").isEmpty()
+        //                || req.getParameter("stock")==null && req.getParameter("stock").isEmpty()){
+        //
+        //            req.setAttribute("createError", "Price, vat, stock must not be empty");
+        //        }
 
         double pricePerUnit = Double.parseDouble(req.getParameter("pricePerUnit"));
         double vat = Double.parseDouble(req.getParameter("vat"));
@@ -93,10 +93,12 @@ public class ProductCreateServlet extends HttpServlet {
                 String message = violation.getMessage();
                 errors.put(propertyPath, message);
             }
+
+
             req.setAttribute("errors", errors);
             req.getRequestDispatcher(JSP).forward(req, resp);
         } else {
-            //TODO: check arguments
+
             Product newProduct = productService.addProduct(product);
             imageService.saveProductImage(filePart, product);
 

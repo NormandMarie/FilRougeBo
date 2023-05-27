@@ -61,12 +61,13 @@ public class ProductEditServlet extends HttpServlet {
         String name = req.getParameter("name");
         String unit = req.getParameter("unit");
         //String imgUrl = req.getParameter("imgUrl");
-        String imgUrl = "";
+        //String imgUrl = "";
         String description = req.getParameter("description");
-
         double pricePerUnit = Double.parseDouble(req.getParameter("pricePerUnit"));
         double vat = Double.parseDouble(req.getParameter("vat"));
         double stock = Double.parseDouble(req.getParameter("stock"));
+
+        String imgUrl = productService.findById(id).getImgUrl();
 
         Category category = categoryService.findById(Integer.parseInt(req.getParameter("category")));
 
@@ -89,21 +90,29 @@ public class ProductEditServlet extends HttpServlet {
                 errors.put(propertyPath, message);
             }
             Part filePart = req.getPart("imageFile");
-            imageService.saveProductImage(filePart, product);
+            if(filePart.getSize()>0){
+                imageService.saveProductImage(filePart, product);
+            }
+            //imageService.saveProductImage(filePart, product);
             req.setAttribute("errors", errors);
             req.setAttribute("product", product);
 
             req.getRequestDispatcher(JSP).forward(req, resp);
         } else {
-            boolean isEdited = productService.editProduct(product);
-
-            if (!isEdited) {
-                req.setAttribute("editError", "Error while editing product.");
-            }
 
             Part filePart = req.getPart("imageFile");
-            imageService.saveProductImage(filePart, productService.findById(id));
-            resp.sendRedirect(ProductListServlet.URL);
+            if(filePart.getSize()>0){
+                imageService.saveProductImage(filePart, productService.findById(id));
+                resp.sendRedirect(ProductListServlet.URL);
+            } else{
+                boolean isEdited = productService.editProduct(product);
+                if (!isEdited) {
+                    req.setAttribute("editError", "Error while editing product.");
+                }
+                resp.sendRedirect(ProductListServlet.URL);
+            }
+
+
         }
 
 
