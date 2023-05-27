@@ -23,4 +23,10 @@
         <url-pattern>/webapi/*</url-pattern>
     </servlet-mapping>
 
+    <session-config>
+        <cookie-config>
+            <name>MY_JSESSIONID_BO</name>
+        </cookie-config>
+    </session-config>
+
 </web-app>
