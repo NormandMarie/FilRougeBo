@@ -22,8 +22,6 @@ public class ListAdminServlet extends HttpServlet {
 
         List<AdminDto> AdminDtos = adminService.getAllAdmins();
 
-        System.out.println(AdminDtos);
-
         req.setAttribute("AdminDtos", AdminDtos);
         req.getRequestDispatcher(JSP).forward(req, resp);
 
