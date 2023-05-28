@@ -4,7 +4,7 @@ import jakarta.validation.constraints.Pattern;
 
 public class Category {
     private int idCategory;
-    @Pattern(regexp = "[a-zA-Z0-9 -]{4,20}", message = "4 à 20 caractères.")
+    @Pattern(regexp = "[a-zA-Z0-9 -.,'\\p{L}]{4,20}", message = "4 à 20 caractères.")
     private String name;
 
     public Category(int idCategory, String name) {
