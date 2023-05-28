@@ -2,7 +2,6 @@ package com.m2i.filrougebo.service;
 import com.m2i.filrougebo.dao.IntCategoryDao;
 import com.m2i.filrougebo.entity.Category;
 import com.m2i.filrougebo.entity.Product;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
