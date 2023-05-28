@@ -17,6 +17,9 @@
                        id="name" name="name"
                        placeholder="Nom de la catégorie"
                        value="${empty category.name ? '' : category.name }">
+                <c:if test="${not empty requestScope.errors.name}">
+                    <c:out value="${requestScope.errors.name}"/>
+                </c:if>
             </div>
 
             <div class="col-4">

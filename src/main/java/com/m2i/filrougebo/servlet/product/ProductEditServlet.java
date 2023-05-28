@@ -60,9 +60,8 @@ public class ProductEditServlet extends HttpServlet {
         int id = Integer.parseInt(req.getParameter("id"));
         String name = req.getParameter("name");
         String unit = req.getParameter("unit");
-        //String imgUrl = req.getParameter("imgUrl");
-        //String imgUrl = "";
         String description = req.getParameter("description");
+
         double pricePerUnit = Double.parseDouble(req.getParameter("pricePerUnit"));
         double vat = Double.parseDouble(req.getParameter("vat"));
         double stock = Double.parseDouble(req.getParameter("stock"));
@@ -90,14 +89,15 @@ public class ProductEditServlet extends HttpServlet {
                 errors.put(propertyPath, message);
             }
             Part filePart = req.getPart("imageFile");
+
             if(filePart.getSize()>0){
                 imageService.saveProductImage(filePart, product);
             }
-            //imageService.saveProductImage(filePart, product);
+
             req.setAttribute("errors", errors);
             req.setAttribute("product", product);
-
             req.getRequestDispatcher(JSP).forward(req, resp);
+
         } else {
 
             Part filePart = req.getPart("imageFile");
@@ -111,26 +111,6 @@ public class ProductEditServlet extends HttpServlet {
                 }
                 resp.sendRedirect(ProductListServlet.URL);
             }
-
-
         }
-
-
-        //TODO: check arguments
-
-
-        //boolean success = productService.updateProduct(
-        //                id, name, unit, pricePerUnit, imgUrl, vat, description, stock, category, seasonalMonths);
-        //
-        //        Part filePart = req.getPart("imageFile");
-        //        imageService.saveProductImage(filePart, productService.findById(id));
-        //
-        //        if (!success) {
-        //            req.setAttribute("editError", "Error while editing product.");
-        //        }
-        //
-        //        resp.sendRedirect(ProductListServlet.URL);
-
     }
-
 }

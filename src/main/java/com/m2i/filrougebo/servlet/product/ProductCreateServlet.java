@@ -54,16 +54,8 @@ public class ProductCreateServlet extends HttpServlet {
 
         String name = req.getParameter("name");
         String unit = req.getParameter("unit");
-//        String imgUrl = req.getParameter("imgUrl");
         String imgUrl = "";
         Part filePart = req.getPart("imageFile");
-
-        //if(req.getParameter("pricePerUnit")==null && req.getParameter("pricePerUnit").isEmpty()
-        //            || req.getParameter("vat")==null && req.getParameter("vat").isEmpty()
-        //                || req.getParameter("stock")==null && req.getParameter("stock").isEmpty()){
-        //
-        //            req.setAttribute("createError", "Price, vat, stock must not be empty");
-        //        }
 
         double pricePerUnit = Double.parseDouble(req.getParameter("pricePerUnit"));
         double vat = Double.parseDouble(req.getParameter("vat"));
@@ -78,8 +70,6 @@ public class ProductCreateServlet extends HttpServlet {
 
         for (String s : months) {
             seasonalMonths.add(Month.valueOf(s.toUpperCase()));
-            System.out.println(Month.valueOf(s.toUpperCase()));
-
         }
 
         Product product = new Product(name, unit, pricePerUnit, imgUrl, vat, description, stock, category, seasonalMonths);
@@ -93,7 +83,6 @@ public class ProductCreateServlet extends HttpServlet {
                 String message = violation.getMessage();
                 errors.put(propertyPath, message);
             }
-
 
             req.setAttribute("errors", errors);
             req.getRequestDispatcher(JSP).forward(req, resp);
