@@ -53,10 +53,6 @@
         </div>
 
         <div class="col mb-3">
-<%--            <label for="imgUrl" class="form-label">Img URL</label>--%>
-<%--            <input type="text" class="form-control"--%>
-<%--                   id="imgUrl" name="imgUrl"--%>
-<%--                   value="${empty product.imgUrl ? '' : product.imgUrl }">--%>
             <c:if test="${!empty product.id}">
                 <img src="data:image/jpeg;base64,${product.imgUrl}" alt="Product Image"
                      class="table-img rounded border">
@@ -118,7 +114,7 @@
             <div class="col mb-3">
                 <label for="stock" class="form-label">Stock</label>
 
-                    <input type="number"  min="0" class="form-control"
+                    <input type="number" min="0" class="form-control"
                            id="stock" name="stock"
                            value="${empty product.stock ? '' : product.stock }" required>
 
@@ -130,7 +126,7 @@
 
         </div>
 
-    <label for="description" class="form-control-sm">Description:</label>
+    <label for="description" class="form-control-sm">Description :</label>
     <textarea id="description" class="form-control"
               name="description" rows="7" required>${empty product.description ? 'Some description' : product.description}</textarea>
         <c:if test="${not empty requestScope.errors.description}">
