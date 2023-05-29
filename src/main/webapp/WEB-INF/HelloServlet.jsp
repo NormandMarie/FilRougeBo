@@ -1,15 +1,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
-
-<%@ page import="com.m2i.filrougebo.service.AuthenticationService" %><%--
+<%--
   Created by IntelliJ IDEA.
   User: warie
   Date: 26/04/2023
-  Time: 19:49
+  Time: 17:06
   To change this template use File | Settings | File Templates.
 --%>
-
 <!doctype html>
 <html lang="en">
 <head>
@@ -24,15 +22,15 @@
 
 <h1>Holà!</h1>
 
-<% if(request.getSession().getAttribute("username") != null) { %>
-<% if (AuthenticationService.isSuperAdmin((String) session.getAttribute("username"))) { %>
-<a href="${pageContext.request.contextPath}/SuperAdmin/ListAdmin">List Admins</a>
-<a href="${pageContext.request.contextPath}/SuperAdmin/add-admin">add Admins</a>
-<% } %>
+<c:if test="${sessionScope.isSuperAdmin}">
 <a href="${pageContext.request.contextPath}/secured/logout">Déconnexion</a>
+    <a href="${pageContext.request.contextPath}/secured/ListAdmin">List Admins</a>
 <% } else { %>
 <a href="${pageContext.request.contextPath}/login">connexion</a>
 <% } %>
+<%--<c:if test="${sessionScope.isSuperAdmin}">--%>
+<%--    <a href="${pageContext.request.contextPath}/secured/ListAdmin">List Admins</a>--%>
+<%--</c:if>--%>
 
 </body>
 </html>
