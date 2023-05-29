@@ -25,7 +25,7 @@
             <div class="col-4">
                 <c:choose>
                     <c:when test="${! empty category}">
-                        <button class="btn btn-primary my-3" type="submit"
+                        <button class="btn btn-success my-3" type="submit"
                                 name="id" value="${category.idCategory}"
                                 formaction="${pageContext.request.contextPath}/secured/edit-category?id=${category.idCategory}">
                             <i class="bi bi-pencil-square d-inline"></i>

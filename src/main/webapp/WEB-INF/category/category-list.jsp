@@ -17,7 +17,7 @@
             <button class="btn btn-outline-success" type="submit">Rechercher</button>
         </form>
 
-        <a class="btn btn-primary col-12 col-sm-5 my-2"
+        <a class="btn btn-success col-12 col-sm-5 my-2"
            href="${pageContext.request.contextPath}/secured/add-category"
            role="button">Créer une catégorie</a>
 

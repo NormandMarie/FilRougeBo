@@ -57,3 +57,66 @@ body {
     height: 30px;
     margin-right: 20px;
 }
+/*grid admin */
+.grid-for-admin{
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-column-gap: 10px;
+    grid-row-gap: 10px;
+}
+@media (max-width: 850px) {
+    .grid-for-admin {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        grid-gap: 10px;
+    }
+}
+
+    @media (max-width: 650px) {
+        .grid-for-admin {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+
+        }
+        .mx-2{
+        }
+        }
+        @media (max-width: 550px) {
+            .grid-for-admin {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+
+            }
+            }
+            @media (max-width: 450px) {
+                .grid-for-admin {
+                    display: grid;
+                    grid-template-columns: repeat(3, 1fr);
+                }
+                }
+                @media (max-width: 400px) {
+                    .grid-for-admin{
+                        display: grid;
+                        grid-template-columns: repeat(2, 1fr);
+
+                    }}
+/*Truncate*/
+.email-hover-mobile {
+    display: none;
+}
+
+@media (max-width: 850px) {
+    .table-group-divider tr {
+        position: relative;
+    }
+    .email-hover-mobile {
+        display: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: white;
+    }
+
+}

@@ -11,6 +11,6 @@
     <style>
         <%@include file="/resources/css/custom.css" %>
     </style>
-
+<%--    <script src="${pageContext.request.contextPath}/resources/JavaScript/Script.js"></script>--%>
 </head>
 <body>

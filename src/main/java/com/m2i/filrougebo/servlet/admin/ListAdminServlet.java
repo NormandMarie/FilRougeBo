@@ -21,9 +21,13 @@ public class ListAdminServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         List<AdminDto> AdminDtos = adminService.getAllAdmins();
+//        int emailMaxLength = (screenWidth <= 576) ? 20 : 50;
+//
+//        req.setAttribute("AdminDto.emailMaxLength", emailMaxLength);
 
         req.setAttribute("AdminDtos", AdminDtos);
         req.getRequestDispatcher(JSP).forward(req, resp);
+
 
     }
 }
