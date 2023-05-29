@@ -44,13 +44,7 @@
                         <td>${category.name}</td>
 
 
-                        <td class="row-cols-1 row-cols-xs-3">
-                            <a class="btn btn-outline-secondary btn-sm m-1 col-9 col-md-3"
-                               href="${pageContext.request.contextPath}/secured/details-category?id=${category.idCategory}"
-                               role="button">
-                                <i class="bi bi-card-heading"></i>
-                                <span class="d-none d-sm-inline-block">Détails</span>
-                            </a>
+                        <td class="row-cols-1 row-cols-xs-2">
 
                             <a class="btn btn-primary btn-sm m-1 col-9 col-md-3"
                                href="${pageContext.request.contextPath}/secured/edit-category?id=${category.idCategory}"

@@ -12,7 +12,7 @@
             <form class="d-flex col-12 col-sm-7 my-2"
                   role="search" method="post"
                   action="${pageContext.request.contextPath}/secured/search-product">
-                <input class="form-control me-2" type="search" placeholder="chercher un produit" aria-label="Search"
+                <input class="form-control me-2" type="search" placeholder="Rechercher un produit" aria-label="Search"
                     value="${!empty searchQuery ? searchQuery : ''}"  name="search">
                 <button class="btn btn-outline-success" type="submit">Rechercher</button>
             </form>
