@@ -137,9 +137,9 @@ CREATE TABLE filrouge_bdd.Product_Months
 (
     idProduct INT NOT NULL,
     idMonth   INT NOT NULL,
-    PRIMARY KEY (`idProduct`, `idMonth`), # Prevents two months for same product
-    KEY `Product_months_product_id_fk` (`idProduct`),
-    KEY `Product_months_months_id_fk` (`idMonth`),
-    CONSTRAINT `Product_months_product_id_fk` FOREIGN KEY (`idProduct`) REFERENCES `Products` (`id`) ON DELETE CASCADE,
-    CONSTRAINT `Product_months_months_id_fk` FOREIGN KEY (`idMonth`) REFERENCES `Months` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+    PRIMARY KEY (idProduct, idMonth), # Prevents two months for same product
+    KEY Product_months_product_id_fk (idProduct),
+    KEY Product_months_months_id_fk (idMonth),
+    CONSTRAINT Product_months_product_id_fk FOREIGN KEY (idProduct) REFERENCES Products (id) ON DELETE CASCADE,
+    CONSTRAINT Product_months_months_id_fk FOREIGN KEY (idMonth) REFERENCES Months (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
