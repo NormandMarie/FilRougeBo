@@ -5,8 +5,8 @@
 
 <nav class="navbar navbar-expand-lg bg-light">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">Panier Primeur </a>
-        <img src="https://cdn.discordapp.com/attachments/1099647573217771521/1111304265827360928/image.png" class="img-navBar mr-3" >
+        <img src="${pageContext.request.contextPath}/resources/img/logo.png" class="img-navBar mr-3">
+        <a class="navbar-brand" href="#">Panier Primeur</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -31,7 +31,7 @@
                         <li>
                             <a class="dropdown-item"
                                href="${pageContext.request.contextPath}/secured/add-category">
-                                ajouter une catégorie
+                                Ajouter une catégorie
                             </a>
                         </li>
                     </ul>
@@ -42,13 +42,13 @@
                     <a class="nav-link dropdown-toggle"
                        href="${pageContext.request.contextPath}/secured/list-product"
                        role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        produits
+                        Produits
                     </a>
                     <ul class="dropdown-menu">
                         <li>
                             <a class="dropdown-item"
                                href="${pageContext.request.contextPath}/secured/list-product">
-                                Liste de produits
+                                Liste des produits
                             </a>
                         </li>
                         <li><hr class="dropdown-divider"></li>
@@ -71,7 +71,7 @@
                         <a class="nav-link"
                            href="${pageContext.request.contextPath}/SuperAdmin/ListAdmin"
                            role="button"  aria-expanded="false">
-                            administrateur·rice
+                            Administrateur&middot;rice
                         </a>
                     </li>
                     <%
