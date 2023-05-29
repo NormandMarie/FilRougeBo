@@ -1,10 +1,10 @@
 package com.m2i.filrougebo.dao;
+
 import com.m2i.filrougebo.entity.Category;
 import org.junit.jupiter.api.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -104,152 +104,154 @@ class CategoryDaoTest {
 
         String createQuery ="DROP SCHEMA IF EXISTS test_db;\n" +
                 "CREATE SCHEMA test_db;\n" +
-                "create table Admins\n" +
+                "CREATE TABLE Admins\n" +
                 "(\n" +
-                "    id           int auto_increment\n" +
-                "        primary key,\n" +
-                "    isSuperAdmin bit          not null,\n" +
-                "    password     varchar(255) null,\n" +
-                "    username     varchar(255) null,\n" +
-                "    firstName     varchar(255) null,\n" +
-                "    lastName     varchar(255) null,\n" +
-                "    email        varchar(255) null,\n" +
-                "    constraint UK_sr28qnsnytjjht54j6fa88uvn\n" +
-                "        unique (username)\n" +
+                "    id           INT AUTO_INCREMENT\n" +
+                "        PRIMARY KEY,\n" +
+                "    email        VARCHAR(255) NULL,\n" +
+                "    firstName    VARCHAR(255) NULL,\n" +
+                "    isSuperAdmin BIT          NOT NULL,\n" +
+                "    lastName     VARCHAR(255) NULL,\n" +
+                "    password     VARCHAR(255) NULL,\n" +
+                "    username     VARCHAR(255) NULL,\n" +
+                "    CONSTRAINT UK_sr28qnsnytjjht54j6fa88uvn\n" +
+                "        UNIQUE (username)\n" +
                 ");\n" +
                 "\n" +
-                "create table Categories\n" +
+                "CREATE TABLE Categories\n" +
                 "(\n" +
-                "    id   int auto_increment\n" +
-                "        primary key,\n" +
-                "    name varchar(255) null,\n" +
-                "    constraint UK_cqsfg7tv7vfw6vjx36u4ym0i9\n" +
-                "        unique (name)\n" +
+                "    id   INT AUTO_INCREMENT\n" +
+                "        PRIMARY KEY,\n" +
+                "    name VARCHAR(255) NULL,\n" +
+                "    CONSTRAINT UK_cqsfg7tv7vfw6vjx36u4ym0i9\n" +
+                "        UNIQUE (name)\n" +
                 ");\n" +
                 "\n" +
-                "create table Clients\n" +
+                "CREATE TABLE Clients\n" +
                 "(\n" +
-                "    id        bigint auto_increment\n" +
-                "        primary key,\n" +
-                "    avatarUrl varchar(255) null,\n" +
-                "    email     varchar(255) null,\n" +
-                "    firstName varchar(255) null,\n" +
-                "    lastName  varchar(255) null,\n" +
-                "    password  varchar(255) null,\n" +
-                "    constraint UK_96icggkuasv49rrd8osfg6g7w\n" +
-                "        unique (email)\n" +
+                "    id        BIGINT AUTO_INCREMENT\n" +
+                "        PRIMARY KEY,\n" +
+                "    avatarUrl VARCHAR(255) NULL,\n" +
+                "    email     VARCHAR(255) NULL,\n" +
+                "    firstName VARCHAR(255) NULL,\n" +
+                "    lastName  VARCHAR(255) NULL,\n" +
+                "    password  VARCHAR(255) NULL,\n" +
+                "    CONSTRAINT UK_96icggkuasv49rrd8osfg6g7w\n" +
+                "        UNIQUE (email)\n" +
                 ");\n" +
                 "\n" +
-                "create table Adresses\n" +
+                "CREATE TABLE Addresses\n" +
                 "(\n" +
-                "    id         bigint auto_increment\n" +
-                "        primary key,\n" +
-                "    city       varchar(255) null,\n" +
-                "    complement varchar(255) null,\n" +
-                "    number     varchar(255) null,\n" +
-                "    roadName   varchar(255) null,\n" +
-                "    roadPrefix varchar(255) null,\n" +
-                "    title      varchar(255) null,\n" +
-                "    zipCode    varchar(255) null,\n" +
-                "    id_client  bigint       null,\n" +
-                "    constraint FKalivqho1bc99sh3rbn3pl40ow\n" +
-                "        foreign key (id_client) references Clients (id)\n" +
+                "    id         BIGINT AUTO_INCREMENT\n" +
+                "        PRIMARY KEY,\n" +
+                "    city       VARCHAR(255) NULL,\n" +
+                "    complement VARCHAR(255) NULL,\n" +
+                "    number     VARCHAR(255) NULL,\n" +
+                "    roadName   VARCHAR(255) NULL,\n" +
+                "    roadPrefix VARCHAR(255) NULL,\n" +
+                "    title      VARCHAR(255) NULL,\n" +
+                "    zipCode    VARCHAR(255) NULL,\n" +
+                "    id_client  BIGINT       NULL,\n" +
+                "    CONSTRAINT FKsh6p949g7ck7cqvkrtm3nu0t\n" +
+                "        FOREIGN KEY (id_client) REFERENCES Clients (id)\n" +
                 ");\n" +
                 "\n" +
-                "create table Months\n" +
+                "CREATE TABLE Months\n" +
                 "(\n" +
-                "    id   int auto_increment\n" +
-                "        primary key,\n" +
-                "    name varchar(255) null\n" +
+                "    id   INT AUTO_INCREMENT\n" +
+                "        PRIMARY KEY,\n" +
+                "    name VARCHAR(255) NULL\n" +
                 ");\n" +
                 "\n" +
-                "create table OrderStatuses\n" +
+                "CREATE TABLE OrderStatuses\n" +
                 "(\n" +
-                "    id   bigint auto_increment\n" +
-                "        primary key,\n" +
-                "    name varchar(255) null\n" +
+                "    id   BIGINT AUTO_INCREMENT\n" +
+                "        PRIMARY KEY,\n" +
+                "    name VARCHAR(255) NULL\n" +
                 ");\n" +
                 "\n" +
-                "create table PaymentMethods\n" +
+                "CREATE TABLE PaymentMethods\n" +
                 "(\n" +
-                "    id   bigint auto_increment\n" +
-                "        primary key,\n" +
-                "    name varchar(255) null\n" +
+                "    id   BIGINT AUTO_INCREMENT\n" +
+                "        PRIMARY KEY,\n" +
+                "    name VARCHAR(255) NULL\n" +
                 ");\n" +
                 "\n" +
-                "create table Orders\n" +
+                "CREATE TABLE Orders\n" +
                 "(\n" +
-                "    id               bigint auto_increment\n" +
-                "        primary key,\n" +
-                "    date             date   null,\n" +
-                "    id_client        bigint null,\n" +
-                "    id_paymentMethod bigint null,\n" +
-                "    id_status        bigint null,\n" +
-                "    constraint FKlqi0cg9pm1dv88xnqhdl6lxmw\n" +
-                "        foreign key (id_paymentMethod) references PaymentMethods (id),\n" +
-                "    constraint FKnjt0mo5eqgqpdsl0qkxm8pr5e\n" +
-                "        foreign key (id_status) references OrderStatuses (id),\n" +
-                "    constraint FKnkb0ephnwm59q78xaedb3m95\n" +
-                "        foreign key (id_client) references Clients (id)\n" +
+                "    id               BIGINT AUTO_INCREMENT\n" +
+                "        PRIMARY KEY,\n" +
+                "    date             DATE   NULL,\n" +
+                "    id_client        BIGINT NULL,\n" +
+                "    id_paymentMethod BIGINT NULL,\n" +
+                "    id_status        BIGINT NULL,\n" +
+                "    CONSTRAINT FKlqi0cg9pm1dv88xnqhdl6lxmw\n" +
+                "        FOREIGN KEY (id_paymentMethod) REFERENCES PaymentMethods (id),\n" +
+                "    CONSTRAINT FKnjt0mo5eqgqpdsl0qkxm8pr5e\n" +
+                "        FOREIGN KEY (id_status) REFERENCES OrderStatuses (id),\n" +
+                "    CONSTRAINT FKnkb0ephnwm59q78xaedb3m95\n" +
+                "        FOREIGN KEY (id_client) REFERENCES Clients (id)\n" +
                 ");\n" +
                 "\n" +
-                "create table PhoneNumbers\n" +
+                "CREATE TABLE PhoneNumbers\n" +
                 "(\n" +
-                "    id          bigint auto_increment\n" +
-                "        primary key,\n" +
-                "    phoneNumber varchar(255) null,\n" +
-                "    id_client   bigint       null,\n" +
-                "    constraint FKqntxxridd3hhrjqk7pnebr6ax\n" +
-                "        foreign key (id_client) references Clients (id)\n" +
+                "    id          BIGINT AUTO_INCREMENT\n" +
+                "        PRIMARY KEY,\n" +
+                "    phoneNumber VARCHAR(255) NULL,\n" +
+                "    id_client   BIGINT       NULL,\n" +
+                "    CONSTRAINT FKqntxxridd3hhrjqk7pnebr6ax\n" +
+                "        FOREIGN KEY (id_client) REFERENCES Clients (id)\n" +
                 ");\n" +
                 "\n" +
-                "create table Products\n" +
+                "CREATE TABLE Products\n" +
                 "(\n" +
-                "    id           int auto_increment\n" +
-                "        primary key,\n" +
-                "    description  varchar(255)   null,\n" +
-                "    imgUrl       varchar(255)   null,\n" +
-                "    name         varchar(255)   null,\n" +
-                "    pricePerUnit decimal(38, 2) null,\n" +
-                "    stock        decimal(38, 2) null,\n" +
-                "    unit         varchar(255)   null,\n" +
-                "    vat          decimal(38, 2) null,\n" +
-                "    idCategory   int            null,\n" +
-                "    constraint UK_fx9yjtfi73058657et69e5ywj\n" +
-                "        unique (name),\n" +
-                "    constraint FK31ime15l4wjjes1jgg9qlada\n" +
-                "        foreign key (idCategory) references Categories (id)\n" +
+                "    id           INT AUTO_INCREMENT\n" +
+                "        PRIMARY KEY,\n" +
+                "    description  VARCHAR(255)   NULL,\n" +
+                "    imgUrl       VARCHAR(255)   NULL,\n" +
+                "    name         VARCHAR(255)   NULL,\n" +
+                "    pricePerUnit DECIMAL(38, 2) NULL,\n" +
+                "    stock        DECIMAL(38, 2) NULL,\n" +
+                "    unit         VARCHAR(255)   NULL,\n" +
+                "    vat          DECIMAL(38, 2) NULL,\n" +
+                "    idCategory   INT            NULL,\n" +
+                "    CONSTRAINT UK_fx9yjtfi73058657et69e5ywj\n" +
+                "        UNIQUE (name),\n" +
+                "    CONSTRAINT FK31ime15l4wjjes1jgg9qlada\n" +
+                "        FOREIGN KEY (idCategory) REFERENCES Categories (id)\n" +
                 ");\n" +
                 "\n" +
-                "create table OrderLines\n" +
+                "CREATE TABLE OrderLines\n" +
                 "(\n" +
-                "    id        bigint auto_increment\n" +
-                "        primary key,\n" +
-                "    discount  decimal(38, 2) null,\n" +
-                "    quantity  decimal(38, 2) null,\n" +
-                "    idOrder   bigint         null,\n" +
-                "    idProduct int            null,\n" +
-                "    constraint FKcvf51kqpiiym3m1kkejb0xsy9\n" +
-                "        foreign key (idOrder) references Orders (id),\n" +
-                "    constraint FKfa5s8mrn2qj7ymwde5pf4odmp\n" +
-                "        foreign key (idProduct) references Products (id)\n" +
+                "    id        BIGINT AUTO_INCREMENT\n" +
+                "        PRIMARY KEY,\n" +
+                "    discount  DECIMAL(38, 2) NULL,\n" +
+                "    quantity  DECIMAL(38, 2) NULL,\n" +
+                "    idOrder   BIGINT         NULL,\n" +
+                "    idProduct INT            NULL,\n" +
+                "    CONSTRAINT FKcvf51kqpiiym3m1kkejb0xsy9\n" +
+                "        FOREIGN KEY (idOrder) REFERENCES Orders (id),\n" +
+                "    CONSTRAINT FKfa5s8mrn2qj7ymwde5pf4odmp\n" +
+                "        FOREIGN KEY (idProduct) REFERENCES Products (id)\n" +
                 ");\n" +
                 "\n" +
-                "create table product_months\n" +
+                "CREATE TABLE Product_Months\n" +
                 "(\n" +
-                "    idProduct int not null,\n" +
-                "    idMonth   int not null,\n" +
-                "    PRIMARY KEY(idProduct, idMonth),\n" +
+                "    idProduct INT NOT NULL,\n" +
+                "    idMonth   INT NOT NULL,\n" +
+                "    PRIMARY KEY (idProduct, idMonth),\n" +
                 "    CONSTRAINT Product_months_product_id_fk FOREIGN KEY (idProduct) REFERENCES Products (id) ON DELETE CASCADE,\n" +
                 "    CONSTRAINT Product_months_months_id_fk FOREIGN KEY (idMonth) REFERENCES Months (id) ON DELETE CASCADE ON UPDATE CASCADE\n" +
                 ");" +
+                "INSERT INTO Admins" +
+                " (username, isSuperAdmin, password, firstName, lastName, email)" +
+                "VALUES ('superadmin', 1, 'superadmin', 'Super', 'Admin', 'superadmin@panierprimeur.m2i.com');"+
                 "INSERT INTO Categories" +
                 " (name)" +
                 "VALUES ('categ1');";
 
         Statement statement = conn.createStatement();
         statement.execute(createQuery);
-        //System.out.println(row);
 
         statement.close();
     }
