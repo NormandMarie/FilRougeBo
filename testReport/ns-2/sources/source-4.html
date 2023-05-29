@@ -1,0 +1,342 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > ProductDao</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.m2i.filrougebo.dao</a>
+</div>
+
+<h1>Coverage Summary for Class: ProductDao (com.m2i.filrougebo.dao)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ProductDao</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (8/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    87,5%
+  </span>
+  <span class="absValue">
+    (112/128)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.m2i.filrougebo.dao;
+&nbsp;
+&nbsp;import com.m2i.filrougebo.entity.Category;
+&nbsp;import com.m2i.filrougebo.entity.Product;
+&nbsp;import com.m2i.filrougebo.enums.Month;
+&nbsp;
+&nbsp;import java.sql.*;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;
+<b class="fc">&nbsp;public class ProductDao implements IntProductDao{</b>
+&nbsp;
+<b class="fc">&nbsp;    Connection conn = DataBase.getInstance();</b>
+&nbsp;
+&nbsp;    private Product mapToProduct(ResultSet resultSet) throws SQLException {
+&nbsp;
+<b class="fc">&nbsp;        int id = resultSet.getInt(&quot;id&quot;);</b>
+<b class="fc">&nbsp;        String name = resultSet.getString(&quot;name&quot;);</b>
+<b class="fc">&nbsp;        String unit = resultSet.getString(&quot;unit&quot;);</b>
+<b class="fc">&nbsp;        double pricePerUnit = resultSet.getDouble(&quot;pricePerUnit&quot;);</b>
+<b class="fc">&nbsp;        String imgUrl = resultSet.getString(&quot;imgUrl&quot;);</b>
+<b class="fc">&nbsp;        double vat = resultSet.getDouble(&quot;vat&quot;);</b>
+<b class="fc">&nbsp;        String description = resultSet.getString(&quot;description&quot;);</b>
+<b class="fc">&nbsp;        Double stock = resultSet.getDouble(&quot;stock&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        int idCategory = resultSet.getInt(&quot;idCategory&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        CategoryDao categoryDAO = new CategoryDao();</b>
+<b class="fc">&nbsp;        Category category = categoryDAO.findById(idCategory);</b>
+&nbsp;
+<b class="fc">&nbsp;        List&lt;Month&gt; seasonalMonths = new ArrayList&lt;&gt;();</b>
+<b class="fc">&nbsp;        ProductMonthsDao productMonthsDao = new ProductMonthsDao();</b>
+<b class="fc">&nbsp;        seasonalMonths = productMonthsDao.findAllMonthsPerProduct(id);</b>
+&nbsp;
+<b class="fc">&nbsp;        return new Product(id, name, unit, pricePerUnit, imgUrl, vat, description, stock, category, seasonalMonths);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public Product create(Product product) {
+&nbsp;
+<b class="fc">&nbsp;        String sqlQueryCreateProduct =</b>
+&nbsp;                &quot;INSERT INTO Products(name, unit, pricePerUnit, imgUrl, vat, description, stock, idCategory)&quot; +
+&nbsp;                        &quot; VALUES (?,?,?,?,?,?,?,?)&quot;;
+<b class="fc">&nbsp;        String sqlQueryCreateProductMonths = &quot;INSERT INTO product_months(idProduct, idMonth) VALUES (?, ?)&quot;;</b>
+&nbsp;
+<b class="fc">&nbsp;        try (PreparedStatement pstCreateProduct = conn.prepareStatement(sqlQueryCreateProduct, PreparedStatement.RETURN_GENERATED_KEYS);</b>
+<b class="fc">&nbsp;             PreparedStatement pstCreateProductMonths = conn.prepareStatement(sqlQueryCreateProductMonths)) {</b>
+&nbsp;
+&nbsp;
+<b class="fc">&nbsp;            pstCreateProduct.setString(1, product.getName());</b>
+<b class="fc">&nbsp;            pstCreateProduct.setString(2, product.getUnit());</b>
+<b class="fc">&nbsp;            pstCreateProduct.setDouble(3, product.getPricePerUnit());</b>
+<b class="fc">&nbsp;            pstCreateProduct.setString(4, product.getImgUrl());</b>
+<b class="fc">&nbsp;            pstCreateProduct.setDouble(5, product.getVat());</b>
+<b class="fc">&nbsp;            pstCreateProduct.setString(6, product.getDescription());</b>
+<b class="fc">&nbsp;            pstCreateProduct.setDouble(7, product.getStock());</b>
+<b class="fc">&nbsp;            pstCreateProduct.setInt(8, product.getCategory().getIdCategory());</b>
+&nbsp;
+<b class="fc">&nbsp;            int row = pstCreateProduct.executeUpdate();</b>
+&nbsp;
+<b class="fc">&nbsp;            if (row == 1) {</b>
+<b class="fc">&nbsp;                ResultSet generatedKeys = pstCreateProduct.getGeneratedKeys();</b>
+<b class="fc">&nbsp;                if (generatedKeys.next()) {</b>
+<b class="fc">&nbsp;                    int id = generatedKeys. getInt(1);</b>
+<b class="fc">&nbsp;                    product.setId(id);</b>
+&nbsp;                }
+&nbsp;            }
+&nbsp;
+<b class="fc">&nbsp;            for (Month month : product.getSeasonalMonths()) {</b>
+<b class="fc">&nbsp;                pstCreateProductMonths.setInt(1, product.getId());</b>
+<b class="fc">&nbsp;                pstCreateProductMonths.setInt(2, month.id);</b>
+<b class="fc">&nbsp;                pstCreateProductMonths.executeUpdate();</b>
+<b class="fc">&nbsp;            }</b>
+&nbsp;
+<b class="fc">&nbsp;        } catch (SQLException e) {</b>
+<b class="nc">&nbsp;            throw new RuntimeException(&quot;Error creating Product&quot;, e);</b>
+<b class="fc">&nbsp;        }</b>
+&nbsp;
+<b class="fc">&nbsp;        return product;</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public List&lt;Product&gt; findAll() {
+&nbsp;
+<b class="fc">&nbsp;        List&lt;Product&gt; productList = new ArrayList&lt;&gt;();</b>
+<b class="fc">&nbsp;        String sqlQuery = &quot;SELECT id, name, unit, pricePerUnit, imgUrl, vat, description, stock, idCategory FROM Products&quot;;</b>
+&nbsp;
+<b class="fc">&nbsp;        try (PreparedStatement pst = conn.prepareStatement(sqlQuery);</b>
+<b class="fc">&nbsp;            ResultSet rs = pst.executeQuery()) {</b>
+&nbsp;
+<b class="fc">&nbsp;            while (rs.next()) {</b>
+<b class="fc">&nbsp;                Product product = mapToProduct(rs);</b>
+<b class="fc">&nbsp;                productList.add(product);</b>
+<b class="fc">&nbsp;            }</b>
+&nbsp;
+<b class="fc">&nbsp;        } catch (SQLException e) {</b>
+<b class="nc">&nbsp;            throw new RuntimeException(&quot;Error fetching Products&quot;, e);</b>
+<b class="fc">&nbsp;        }</b>
+<b class="fc">&nbsp;        return productList;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public Product findById(Integer productId) {
+&nbsp;
+<b class="fc">&nbsp;        Product productFound = null;</b>
+<b class="fc">&nbsp;        String sqlQuery = &quot;SELECT * FROM Products WHERE id = ?&quot;;</b>
+&nbsp;
+<b class="fc">&nbsp;        try (PreparedStatement ps = conn.prepareStatement(sqlQuery)) {</b>
+&nbsp;
+<b class="fc">&nbsp;            ps.setInt(1, productId);</b>
+&nbsp;
+<b class="fc">&nbsp;            try (ResultSet rs = ps.executeQuery()) {</b>
+<b class="fc">&nbsp;                while (rs.next()) {</b>
+<b class="fc">&nbsp;                    productFound = mapToProduct(rs);</b>
+&nbsp;                }
+<b class="fc">&nbsp;            }</b>
+<b class="fc">&nbsp;        } catch (SQLException e) {</b>
+<b class="nc">&nbsp;            throw new RuntimeException(&quot;Error fetching Product&quot;, e);</b>
+<b class="fc">&nbsp;        }</b>
+<b class="fc">&nbsp;        return productFound;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public boolean update(Product product) {
+&nbsp;
+<b class="fc">&nbsp;        String sqlQueryUpdateProduct = &quot;UPDATE Products SET&quot; +</b>
+&nbsp;                &quot; name = ?&quot; +
+&nbsp;                &quot;, unit = ?&quot; +
+&nbsp;                &quot;, pricePerUnit = ?&quot; +
+&nbsp;                &quot;, imgUrl = ?&quot; +
+&nbsp;                &quot;, vat = ?&quot; +
+&nbsp;                &quot;, description = ?&quot; +
+&nbsp;                &quot;, stock = ?&quot; +
+&nbsp;                &quot;, idCategory = ?&quot; +
+&nbsp;                &quot; WHERE id = ?&quot;;
+&nbsp;
+<b class="fc">&nbsp;        String sqlQueryDeleteProductMonths = &quot;DELETE FROM product_months WHERE idProduct = ?&quot;;</b>
+<b class="fc">&nbsp;        String sqlQueryInsertProductMonths = &quot;INSERT INTO product_months(idProduct, idMonth) VALUES (?, ?)&quot;;</b>
+&nbsp;
+<b class="fc">&nbsp;        try (PreparedStatement pstUpdateProduct = conn.prepareStatement(sqlQueryUpdateProduct);</b>
+<b class="fc">&nbsp;             PreparedStatement pstDeleteProductMonths = conn.prepareStatement(sqlQueryDeleteProductMonths);</b>
+<b class="fc">&nbsp;             PreparedStatement pstInsertProductMonths = conn.prepareStatement(sqlQueryInsertProductMonths);) {</b>
+&nbsp;
+<b class="fc">&nbsp;            conn.setAutoCommit(false); // To avoid updating Product table if any errors are raised when deleting/inserting Months</b>
+&nbsp;
+&nbsp;            // UPDATE PRODUCT
+<b class="fc">&nbsp;            pstUpdateProduct.setString(1, product.getName());</b>
+<b class="fc">&nbsp;            pstUpdateProduct.setString(2, product.getUnit());</b>
+<b class="fc">&nbsp;            pstUpdateProduct.setDouble(3, product.getPricePerUnit());</b>
+<b class="fc">&nbsp;            pstUpdateProduct.setString(4, product.getImgUrl());</b>
+<b class="fc">&nbsp;            pstUpdateProduct.setDouble(5, product.getVat());</b>
+<b class="fc">&nbsp;            pstUpdateProduct.setString(6, product.getDescription());</b>
+<b class="fc">&nbsp;            pstUpdateProduct.setDouble(7, product.getStock());</b>
+<b class="fc">&nbsp;            pstUpdateProduct.setInt(8, product.getCategory().getIdCategory());</b>
+<b class="fc">&nbsp;            pstUpdateProduct.setInt(9, product.getId());</b>
+&nbsp;
+<b class="fc">&nbsp;            pstUpdateProduct.executeUpdate();</b>
+&nbsp;
+&nbsp;            // DELETE PRODUCT_MONTHS
+<b class="fc">&nbsp;            pstDeleteProductMonths.setInt(1, product.getId());</b>
+<b class="fc">&nbsp;            pstDeleteProductMonths.executeUpdate();</b>
+&nbsp;
+&nbsp;            // INSERT PRODUCT_MONTHS
+<b class="fc">&nbsp;            for (Month month : product.getSeasonalMonths()) {</b>
+&nbsp;
+<b class="nc">&nbsp;                pstInsertProductMonths.setInt(1, product.getId());</b>
+<b class="nc">&nbsp;                pstInsertProductMonths.setInt(2, month.id);</b>
+&nbsp;
+<b class="nc">&nbsp;                pstInsertProductMonths.executeUpdate();</b>
+<b class="nc">&nbsp;            }</b>
+&nbsp;
+<b class="fc">&nbsp;            conn.commit();</b>
+&nbsp;
+<b class="fc">&nbsp;        } catch (SQLException e) {</b>
+<b class="nc">&nbsp;            if (conn != null) {</b>
+&nbsp;                try {
+<b class="nc">&nbsp;                    conn.rollback();</b>
+<b class="nc">&nbsp;                    System.err.print(&quot;Transaction is being rolled back&quot;);</b>
+<b class="nc">&nbsp;                } catch (SQLException ex) {</b>
+<b class="nc">&nbsp;                    throw new RuntimeException(&quot;Error updating Product&quot;, ex);</b>
+<b class="nc">&nbsp;                }</b>
+&nbsp;            }
+<b class="nc">&nbsp;            throw new RuntimeException(&quot;Error updating Product&quot;, e);</b>
+<b class="fc">&nbsp;        }</b>
+&nbsp;        // TODO: conn.setAutoCommit(true); ?
+<b class="fc">&nbsp;        return true;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public boolean delete(Product product) {
+&nbsp;
+<b class="fc">&nbsp;        String sqlQuery = &quot;DELETE FROM Products WHERE id = ?&quot;;</b>
+&nbsp;
+<b class="fc">&nbsp;        try (PreparedStatement ps = conn.prepareStatement(sqlQuery)) {</b>
+&nbsp;
+<b class="fc">&nbsp;            ps.setInt(1, product.getId());</b>
+<b class="fc">&nbsp;            ps.executeUpdate();</b>
+&nbsp;
+&nbsp;            // Delete from Products Months -&gt; automated in the DB !
+&nbsp;
+<b class="fc">&nbsp;        } catch (SQLException e) {</b>
+<b class="nc">&nbsp;            throw new RuntimeException(&quot;Error deleting Product&quot;, e);</b>
+<b class="fc">&nbsp;        }</b>
+&nbsp;
+<b class="fc">&nbsp;        return true;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public List&lt;Product&gt; searchProductPerNameOrDescriptionOrCategoryName(String search) {
+&nbsp;
+<b class="fc">&nbsp;        List&lt;Product&gt; productList = new ArrayList&lt;&gt;();</b>
+<b class="fc">&nbsp;        String sqlQuery =</b>
+&nbsp;                &quot;SELECT DISTINCT p.* FROM Categories c &quot; +
+&nbsp;                &quot;LEFT JOIN Products p ON c.id = p.idCategory &quot; +
+&nbsp;                &quot;WHERE c.name LIKE ? OR p.name LIKE ? OR p.description LIKE ?&quot;;
+&nbsp;
+<b class="fc">&nbsp;        try (PreparedStatement pst = conn.prepareStatement(sqlQuery)) {</b>
+&nbsp;
+<b class="fc">&nbsp;            String searchTerm = &quot;%&quot; + search + &quot;%&quot;;</b>
+&nbsp;
+<b class="fc">&nbsp;            pst.setString(1, searchTerm);</b>
+<b class="fc">&nbsp;            pst.setString(2, searchTerm);</b>
+<b class="fc">&nbsp;            pst.setString(3, searchTerm);</b>
+&nbsp;
+<b class="fc">&nbsp;            try (ResultSet rs = pst.executeQuery()) {</b>
+<b class="fc">&nbsp;                while (rs.next()) {</b>
+<b class="fc">&nbsp;                    Product product = mapToProduct(rs);</b>
+<b class="fc">&nbsp;                    productList.add(product);</b>
+<b class="fc">&nbsp;                }</b>
+<b class="fc">&nbsp;            }</b>
+&nbsp;
+<b class="fc">&nbsp;        } catch (SQLException e) {</b>
+<b class="nc">&nbsp;            e.printStackTrace();</b>
+<b class="fc">&nbsp;        }</b>
+<b class="fc">&nbsp;        return productList;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-05-29 23:54</div>
+</div>
+</body>
+</html>
