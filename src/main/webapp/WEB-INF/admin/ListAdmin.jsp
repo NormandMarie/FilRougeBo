@@ -16,35 +16,35 @@
     <form  class="d-flex justify-content-around align-items-center my-3 p-3 background-add-Admin" action="${pageContext.request.contextPath}/SuperAdmin/add-admin" method="post">
         <p class="my-2"><strong>administrateur·rice</strong></p>
         <div class="d-flex">
-            <div class="col">
+            <div class="col mx-1">
                 <input  class="form-control mx-2"type="text" name="username" placeholder="nom d'utilisateur">
                 <c:if test="${not empty requestScope.errors.username}">
                     <c:out value="${requestScope.errors.username}"/>
                 </c:if>
             </div>
 
-            <div class="col">
-                <input  class="form-control" type="password" name="password" placeholder="Mots de passe">
+            <div class="col mx-1">
+                <input  class="form-control mx-2" type="password" name="password" placeholder="Mots de passe">
                 <c:if test="${not empty requestScope.errors.password}">
                     <c:out value="${requestScope.errors.password}" />
                 </c:if>
             </div>
 
-            <div class="col">
+            <div class="col mx-1">
                 <input  class="form-control mx-2"type="text" name="firstName" placeholder="Prénom">
                 <c:if test="${not empty requestScope.errors.firstName}">
                     <c:out value="${requestScope.errors.firstName}" />
                 </c:if>
             </div>
 
-            <div class="col">
-                <input  class="form-control" type="text" name="lastName" placeholder="Nom">
+            <div class="col mx-1">
+                <input  class="form-control mx-2" type="text" name="lastName" placeholder="Nom">
                 <c:if test="${not empty requestScope.errors.lastName}">
                     <c:out value="${requestScope.errors.lastName}" />
                 </c:if>
             </div>
 
-            <div class="col">
+            <div class="col mx-1">
                 <input  class="form-control mx-2 " type="email" name="email" placeholder="email">
                 <c:if test="${not empty requestScope.errors.email}">
                     <c:out value="${requestScope.errors.email}" />
