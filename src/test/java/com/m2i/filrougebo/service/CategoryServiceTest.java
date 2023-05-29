@@ -18,7 +18,7 @@ class CategoryServiceTest {
     @Mock
     private IntCategoryDao categoryDaoMock;
     @InjectMocks
-    private CategoryService categoryService;
+    private CategoryService underTest;
     @Test
     void ShouldReturnAllCategories(){
 
@@ -28,7 +28,7 @@ class CategoryServiceTest {
 
         when(categoryDaoMock.findAll()).thenReturn(expected);
 
-        List<Category> result = categoryService.findAll();
+        List<Category> result = underTest.findAll();
 
         assertEquals(expected,result);
 
@@ -42,7 +42,7 @@ class CategoryServiceTest {
 
         when(categoryDaoMock.create(any(Category.class))).thenReturn(expected);
 
-        Category result = categoryService.create(expected);
+        Category result = underTest.create(expected);
 
         assertEquals(expected, result);
     }
@@ -54,7 +54,7 @@ class CategoryServiceTest {
 
         when(categoryDaoMock.create(any(Category.class))).thenReturn(new Category(id,name));
 
-        Category createdCategory = categoryService.create(name);
+        Category createdCategory = underTest.create(name);
 
         assertEquals(name, createdCategory.getName());
         assertEquals(id, createdCategory.getIdCategory());
@@ -67,7 +67,7 @@ class CategoryServiceTest {
 
         when(categoryDaoMock.findById(any(int.class))).thenReturn(expected);
 
-        Category result = categoryService.findById(id);
+        Category result = underTest.findById(id);
 
         assertEquals(expected, result);
     }
@@ -77,7 +77,7 @@ class CategoryServiceTest {
         int id = 1;
         when(categoryDaoMock.update(any(Category.class))).thenReturn(true);
 
-        boolean isModified = categoryService.update(new Category(id,"updated name"));
+        boolean isModified = underTest.update(new Category(id,"updated name"));
 
         assertEquals(true, isModified);
 
@@ -88,7 +88,7 @@ class CategoryServiceTest {
         int id = 1;
         when(categoryDaoMock.delete(any(Category.class))).thenReturn(true);
 
-        boolean isDeleted = categoryService.delete(new Category(id,"updated name"));
+        boolean isDeleted = underTest.delete(new Category(id,"updated name"));
 
         assertEquals(true, isDeleted);
     }
@@ -104,7 +104,7 @@ class CategoryServiceTest {
         List<Category> expected = List.of(cat2);
 
         when(categoryDaoMock.findAll()).thenReturn(categories);
-        List<Category> result = categoryService.findAllCategoriesExceptProductCategory(p);
+        List<Category> result = underTest.findAllCategoriesExceptProductCategory(p);
 
         assertEquals(expected.get(0),result.get(0));
     }
@@ -118,7 +118,7 @@ class CategoryServiceTest {
         List<Category> expected = List.of(cat1,cat2);
 
         when(categoryDaoMock.searchByName(any(String.class))).thenReturn(expected);
-        List<Category> result = categoryService.searchByName(search);
+        List<Category> result = underTest.searchByName(search);
 
         assertEquals(expected.get(0),result.get(0));
         assertEquals(expected.get(1),result.get(1));
