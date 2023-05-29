@@ -1,0 +1,146 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > SuperAdminFilter</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.m2i.filrougebo.servlet.filter</a>
+</div>
+
+<h1>Coverage Summary for Class: SuperAdminFilter (com.m2i.filrougebo.servlet.filter)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">SuperAdminFilter</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/13)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.m2i.filrougebo.servlet.filter;
+&nbsp;
+&nbsp;import com.m2i.filrougebo.service.AuthenticationService;
+&nbsp;import jakarta.servlet.FilterChain;
+&nbsp;import jakarta.servlet.ServletException;
+&nbsp;import jakarta.servlet.ServletRequest;
+&nbsp;import jakarta.servlet.ServletResponse;
+&nbsp;import jakarta.servlet.annotation.WebFilter;
+&nbsp;import jakarta.servlet.http.HttpFilter;
+&nbsp;import jakarta.servlet.http.HttpServletRequest;
+&nbsp;import jakarta.servlet.http.HttpServletResponse;
+&nbsp;import jakarta.servlet.http.HttpSession;
+&nbsp;
+&nbsp;import java.io.IOException;
+&nbsp;
+&nbsp;@WebFilter(urlPatterns = SuperAdminFilter.URL)
+<b class="nc">&nbsp;public class SuperAdminFilter extends HttpFilter {</b>
+&nbsp;    public static final String URL = &quot;/SuperAdmin/*&quot;;
+<b class="nc">&nbsp;    AuthenticationService authenticationService = new AuthenticationService();</b>
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException, ServletException {
+&nbsp;
+<b class="nc">&nbsp;        HttpServletResponse response = (HttpServletResponse) resp;</b>
+<b class="nc">&nbsp;        HttpServletRequest request = (HttpServletRequest) req;</b>
+<b class="nc">&nbsp;        HttpSession session = request.getSession();</b>
+<b class="nc">&nbsp;        String requestUri = request.getRequestURI().substring(request.getContextPath().length());</b>
+&nbsp;
+<b class="nc">&nbsp;        boolean isSuperAdmin = session.getAttribute(&quot;isSuperAdmin&quot;) != null &amp;&amp; (boolean) session.getAttribute(&quot;isSuperAdmin&quot;);</b>
+<b class="nc">&nbsp;        System.out.println(session.getAttribute(&quot;isSuperAdmin&quot;));</b>
+<b class="nc">&nbsp;        if (isSuperAdmin) {</b>
+&nbsp;            // L&#39;utilisateur est un super-admin
+<b class="nc">&nbsp;            chain.doFilter(req, resp);</b>
+&nbsp;        } else {
+&nbsp;            // L&#39;utilisateur n&#39;est pas un super-admin
+&nbsp;            // TODO: Marie Norman check here
+<b class="nc">&nbsp;            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);</b>
+<b class="nc">&nbsp;            response.setContentType(&quot;text/plain&quot;);</b>
+<b class="nc">&nbsp;            response.getWriter().write(&quot;401 Unauthorized&quot;);</b>
+&nbsp;        }
+&nbsp;
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-05-29 23:54</div>
+</div>
+</body>
+</html>

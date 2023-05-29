@@ -1,0 +1,173 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > AdminService</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.m2i.filrougebo.service</a>
+</div>
+
+<h1>Coverage Summary for Class: AdminService (com.m2i.filrougebo.service)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">AdminService</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    77,8%
+  </span>
+  <span class="absValue">
+    (7/9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    34,4%
+  </span>
+  <span class="absValue">
+    (11/32)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.m2i.filrougebo.service;
+&nbsp;
+&nbsp;import com.m2i.filrougebo.dto.AdminDto;
+&nbsp;import com.m2i.filrougebo.dao.AdminDao;
+&nbsp;import com.m2i.filrougebo.dao.IntAdminDao;
+&nbsp;import com.m2i.filrougebo.entity.Admin;
+&nbsp;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;public class AdminService {
+&nbsp;    private IntAdminDao adminDao;
+&nbsp;
+<b class="nc">&nbsp;    public AdminService() {</b>
+<b class="nc">&nbsp;        adminDao = new AdminDao();</b>
+&nbsp;    }
+<b class="fc">&nbsp;    public AdminService(IntAdminDao adminDao) {</b>
+<b class="fc">&nbsp;        this.adminDao = adminDao;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public Admin create(Admin admin){
+<b class="fc">&nbsp;        return adminDao.create(admin);</b>
+&nbsp;    }
+&nbsp;    public List&lt;Admin&gt; findAll(){
+<b class="fc">&nbsp;        return adminDao.findAll();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public List&lt;AdminDto&gt; getAllAdmins() {
+<b class="fc">&nbsp;        List&lt;Admin&gt; admins = adminDao.findAll();</b>
+<b class="fc">&nbsp;        List&lt;AdminDto&gt; adminDTOs = new ArrayList&lt;&gt;();</b>
+&nbsp;
+<b class="fc">&nbsp;        for (Admin admin : admins) {</b>
+<b class="nc">&nbsp;            AdminDto adminDTO = new AdminDto(</b>
+<b class="nc">&nbsp;                    admin.getIdAdmin(),</b>
+<b class="nc">&nbsp;                    admin.getUsername(),</b>
+<b class="nc">&nbsp;                    admin.getIsSuperAdmin(),</b>
+<b class="nc">&nbsp;                    admin.getFirstName(),</b>
+<b class="nc">&nbsp;                    admin.getLastName(),</b>
+<b class="nc">&nbsp;                    admin.getEmail());</b>
+<b class="nc">&nbsp;            adminDTOs.add(adminDTO);</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;
+<b class="fc">&nbsp;        return adminDTOs;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public Admin findById(int id){
+<b class="fc">&nbsp;        return adminDao.findById(id);</b>
+&nbsp;    }
+&nbsp;    public boolean update(Admin admin){
+<b class="fc">&nbsp;        return adminDao.update(admin);</b>
+&nbsp;    }
+&nbsp;    public boolean delete(Admin admin){
+<b class="fc">&nbsp;        return adminDao.delete(admin);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public AdminDto getAdminDtoById(int id) {
+<b class="nc">&nbsp;        Admin admin = adminDao.findById(id);</b>
+<b class="nc">&nbsp;        if (admin == null) {</b>
+<b class="nc">&nbsp;            return null;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return new AdminDto(</b>
+<b class="nc">&nbsp;                admin.getIdAdmin(),</b>
+<b class="nc">&nbsp;                admin.getUsername(),</b>
+<b class="nc">&nbsp;                admin.getIsSuperAdmin(),</b>
+<b class="nc">&nbsp;                admin.getFirstName(),</b>
+<b class="nc">&nbsp;                admin.getLastName(),</b>
+<b class="nc">&nbsp;                admin.getEmail());</b>
+&nbsp;    }
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-05-29 23:54</div>
+</div>
+</body>
+</html>

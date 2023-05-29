@@ -1,0 +1,141 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > ProductListServlet</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.m2i.filrougebo.servlet.product</a>
+</div>
+
+<h1>Coverage Summary for Class: ProductListServlet (com.m2i.filrougebo.servlet.product)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ProductListServlet</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/10)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.m2i.filrougebo.servlet.product;
+&nbsp;
+&nbsp;import com.m2i.filrougebo.entity.Product;
+&nbsp;import com.m2i.filrougebo.service.ImageService;
+&nbsp;import com.m2i.filrougebo.service.ProductService;
+&nbsp;import jakarta.servlet.ServletException;
+&nbsp;import jakarta.servlet.annotation.WebServlet;
+&nbsp;import jakarta.servlet.http.HttpServlet;
+&nbsp;import jakarta.servlet.http.HttpServletRequest;
+&nbsp;import jakarta.servlet.http.HttpServletResponse;
+&nbsp;
+&nbsp;import java.io.IOException;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;@WebServlet(urlPatterns = ProductListServlet.URL)
+<b class="nc">&nbsp;public class ProductListServlet extends HttpServlet {</b>
+&nbsp;
+&nbsp;    public static final String URL = &quot;/secured/list-product&quot;;
+&nbsp;    public static final String JSP = &quot;/WEB-INF/product/product-list.jsp&quot;;
+<b class="nc">&nbsp;    private static final ImageService imageService = new ImageService();</b>
+&nbsp;
+&nbsp;    @Override
+&nbsp;    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+&nbsp;
+<b class="nc">&nbsp;        ProductService productService = new ProductService();</b>
+<b class="nc">&nbsp;        List&lt;Product&gt; listOfAllProducts = productService.findAll();</b>
+&nbsp;
+&nbsp;        // TODO : should use DTO
+<b class="nc">&nbsp;        for (Product product : listOfAllProducts) {</b>
+<b class="nc">&nbsp;                    String base64Image = imageService.getImageAsBase64FromProduct(product);</b>
+<b class="nc">&nbsp;                    product.setImgUrl(base64Image);</b>
+<b class="nc">&nbsp;                }</b>
+&nbsp;
+<b class="nc">&nbsp;        req.setAttribute(&quot;products&quot;, listOfAllProducts);</b>
+&nbsp;
+<b class="nc">&nbsp;        req.getRequestDispatcher(JSP).forward(req, resp);</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-05-29 23:54</div>
+</div>
+</body>
+</html>
